@@ -8,13 +8,18 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
+  html, body {
+    height: 100%;
     font-family: 'DM Sans', sans-serif;
     background: #f5f7f6;
+  }
+
+  body {
     min-height: 100vh;
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     padding: 2rem 1rem 4rem;
   }
 
@@ -34,7 +39,6 @@
   .screen { display: none; }
   .screen.active { display: block; }
 
-  /* CARD */
   .card {
     background: white;
     border-radius: 20px;
@@ -42,7 +46,6 @@
     border: 1px solid #e8ebe9;
   }
 
-  /* INTRO */
   .intro-title {
     font-family: 'Sora', sans-serif;
     font-size: 30px;
@@ -75,7 +78,6 @@
   .phase-box .phase-title { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 600; color: #0d1f18; margin-bottom: 3px; }
   .phase-box .phase-desc { font-size: 12px; color: #888; }
 
-  /* PROGRESS */
   .progress-wrap { margin-bottom: 1.75rem; }
   .progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .progress-label { font-size: 13px; color: #888; }
@@ -83,7 +85,6 @@
   .progress-bar { height: 4px; background: #e8ebe9; border-radius: 100px; overflow: hidden; }
   .progress-fill { height: 100%; background: #1d9e75; border-radius: 100px; transition: width 0.35s ease; }
 
-  /* QUESTION */
   .q-text {
     font-family: 'Sora', sans-serif;
     font-size: 18px;
@@ -102,16 +103,7 @@
     color: #444;
     margin-bottom: 1.25rem;
   }
-  .q-tag {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    padding: 3px 10px;
-    border-radius: 100px;
-    margin-bottom: 1rem;
-  }
+  .q-tag { display: inline-block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; padding: 3px 10px; border-radius: 100px; margin-bottom: 1rem; }
   .tag-math { background: #fff3e0; color: #e65100; }
   .tag-rw { background: #e8f5e9; color: #2e7d32; }
   .tag-diag { background: #e3f2fd; color: #1565c0; }
@@ -150,7 +142,6 @@
   .explanation.show { display: block; }
   .explanation strong { color: #0d1f18; }
 
-  /* NAV */
   .nav-row { display: flex; justify-content: space-between; align-items: center; }
   .btn-back {
     background: none;
@@ -181,7 +172,6 @@
   .btn-next.ready { opacity: 1; pointer-events: all; }
   .btn-next:hover { background: #0f6e56; }
 
-  /* LEAD */
   .lead-title { font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 600; color: #0d1f18; margin-bottom: 0.5rem; }
   .lead-sub { font-size: 15px; color: #666; margin-bottom: 1.75rem; line-height: 1.6; }
   .field { margin-bottom: 1.25rem; }
@@ -200,7 +190,6 @@
   }
   .field input:focus { border-color: #1d9e75; }
 
-  /* LOADING */
   .loading-state { text-align: center; padding: 4rem 2rem; }
   .spinner {
     width: 42px; height: 42px;
@@ -212,7 +201,6 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* RESULT */
   .result-header {
     background: linear-gradient(135deg, #1d9e75, #0f6e56);
     border-radius: 16px;
@@ -225,13 +213,10 @@
   .result-header .rs { font-family: 'Sora', sans-serif; font-size: 64px; font-weight: 600; line-height: 1; margin-bottom: 0.25rem; }
   .result-header .rr { font-size: 14px; opacity: 0.75; }
 
-  .score-breakdown {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 1.5rem;
-  }
+  .score-breakdown { display: flex; gap: 12px; margin-bottom: 1.5rem; flex-wrap: wrap; }
   .score-box {
     flex: 1;
+    min-width: 120px;
     background: white;
     border: 1px solid #e8ebe9;
     border-radius: 14px;
@@ -253,41 +238,15 @@
     border: 1px solid #e8ebe9;
   }
 
-  .section-title {
-    font-family: 'Sora', sans-serif;
-    font-size: 17px;
-    font-weight: 600;
-    color: #0d1f18;
-    margin: 1.75rem 0 1rem;
-  }
+  .section-title { font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 600; color: #0d1f18; margin: 1.75rem 0 1rem; }
 
   .plan-cards { display: flex; flex-direction: column; gap: 10px; margin-bottom: 2rem; }
-  .plan-card {
-    border: 1px solid #e8ebe9;
-    border-radius: 14px;
-    padding: 1rem 1.25rem;
-    background: white;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  .plan-icon {
-    width: 36px; height: 36px; flex-shrink: 0;
-    background: #e1f5ee;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-  }
+  .plan-card { border: 1px solid #e8ebe9; border-radius: 14px; padding: 1rem 1.25rem; background: white; display: flex; gap: 12px; align-items: flex-start; }
+  .plan-icon { width: 36px; height: 36px; flex-shrink: 0; background: #e1f5ee; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
   .plan-card-title { font-weight: 500; font-size: 15px; color: #0d1f18; margin-bottom: 4px; }
   .plan-card-body { font-size: 13px; color: #777; line-height: 1.55; }
 
-  .cta-box {
-    background: #0d1f18;
-    border-radius: 18px;
-    padding: 2rem;
-    text-align: center;
-    color: white;
-  }
+  .cta-box { background: #0d1f18; border-radius: 18px; padding: 2rem; text-align: center; color: white; }
   .cta-box h3 { font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 600; margin-bottom: 0.5rem; }
   .cta-box p { font-size: 14px; opacity: 0.7; margin-bottom: 1.5rem; line-height: 1.6; }
 
@@ -309,33 +268,41 @@
   }
   .btn-primary:hover { background: #0f6e56; }
 
-  .btn-tg {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #1d9e75;
-    color: white;
-    border: none;
-    padding: 13px 28px;
-    border-radius: 12px;
-    font-size: 15px;
+  /* FULLSCREEN BUTTON */
+  .fs-btn {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    background: white;
+    border: 1px solid #e0e5e2;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 13px;
     font-weight: 500;
+    color: #555;
     cursor: pointer;
     font-family: 'DM Sans', sans-serif;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 6px;
     transition: background 0.15s;
-    text-decoration: none;
   }
-  .btn-tg:hover { background: #0f6e56; }
+  .fs-btn:hover { background: #f0faf6; color: #1d9e75; border-color: #1d9e75; }
 
   @media (max-width: 500px) {
     .phase-row { flex-direction: column; }
-    .score-breakdown { flex-direction: column; }
     .intro-title { font-size: 24px; }
     .card { padding: 1.5rem; }
+    .rs { font-size: 48px !important; }
   }
 </style>
 </head>
 <body>
+
+<!-- Fullscreen button -->
+<button class="fs-btn" onclick="toggleFullscreen()" id="fs-btn">⛶ Full screen</button>
+
 <div class="app">
   <div class="logo">SAT <span>Samarkand</span></div>
 
@@ -384,7 +351,7 @@
     <div class="lead-sub">Enter your details to unlock your predicted SAT score and personalized study plan.</div>
     <div class="field"><label>Full name</label><input type="text" id="lead-name" placeholder="Your full name"></div>
     <div class="field"><label>Phone number</label><input type="tel" id="lead-phone" placeholder="+998 XX XXX XX XX"></div>
-    <button class="btn-primary" style="width:100%; justify-content:center;" onclick="showResult()">See my results →</button>
+    <button class="btn-primary" style="width:100%;justify-content:center;" onclick="showResult()">See my results →</button>
   </div>
 
   <!-- LOADING -->
@@ -403,40 +370,23 @@
       <div class="rs" id="result-score">1240</div>
       <div class="rr" id="result-range">Range: 1180 – 1300</div>
     </div>
-
     <div class="score-breakdown">
-      <div class="score-box">
-        <div class="sb-label">Math (Part 2)</div>
-        <div class="sb-val" id="math-score">3/5</div>
-        <div class="sb-sub">correct answers</div>
-      </div>
-      <div class="score-box">
-        <div class="sb-label">Reading & Writing (Part 2)</div>
-        <div class="sb-val" id="rw-score">4/5</div>
-        <div class="sb-sub">correct answers</div>
-      </div>
-      <div class="score-box">
-        <div class="sb-label">Diagnostic Score</div>
-        <div class="sb-val" id="diag-score">72%</div>
-        <div class="sb-sub">background assessment</div>
-      </div>
+      <div class="score-box"><div class="sb-label">Math</div><div class="sb-val" id="math-score">3/5</div><div class="sb-sub">correct</div></div>
+      <div class="score-box"><div class="sb-label">Reading & Writing</div><div class="sb-val" id="rw-score">4/5</div><div class="sb-sub">correct</div></div>
+      <div class="score-box"><div class="sb-label">Diagnostic</div><div class="sb-val" id="diag-score">72%</div><div class="sb-sub">background</div></div>
     </div>
-
     <div class="result-summary" id="result-summary"></div>
-
     <div class="section-title">Your personalized study plan</div>
     <div class="plan-cards" id="plan-cards"></div>
-
     <div class="cta-box">
       <h3>Ready to reach your target score?</h3>
       <p>Join SAT Samarkand. Expert instructors, small groups, proven results. Let's talk about your goals.</p>
-      <a class="btn-tg" href="https://t.me/satsamarkand" target="_blank">Contact us on Telegram →</a>
+      <a class="btn-primary" href="https://t.me/sat_samarkand" target="_blank">Contact us on Telegram →</a>
     </div>
   </div>
 </div>
 
 <script>
-// ─── PART 1: 20 DIAGNOSTIC QUESTIONS ───────────────────────────────────────
 const diagQuestions = [
   { q: "Have you ever taken an official SAT exam before?", opts: ["Never", "Once", "2–3 times", "More than 3 times"], scores: [0, 40, 70, 90] },
   { q: "What was your most recent SAT score (or best estimate)?", opts: ["Below 900", "900–1050", "1050–1200", "Above 1200"], scores: [0, 30, 60, 90] },
@@ -460,103 +410,25 @@ const diagQuestions = [
   { q: "How would you describe your learning style?", opts: ["I need a teacher", "I learn with a mix", "I can self-study well", "Practice tests only"], scores: [10, 20, 30, 20] }
 ];
 
-// ─── PART 2: 10 SAT-STYLE QUESTIONS ────────────────────────────────────────
 const satQuestions = [
-  {
-    type: "math",
-    q: "If 3x + 7 = 22, what is the value of x?",
-    opts: ["3", "5", "7", "15"],
-    correct: 1,
-    explanation: "Subtract 7 from both sides: 3x = 15. Divide by 3: x = 5."
-  },
-  {
-    type: "math",
-    q: "A store sells a jacket for $120 after applying a 20% discount. What was the original price?",
-    opts: ["$140", "$144", "$150", "$160"],
-    correct: 2,
-    explanation: "If the discounted price is 80% of the original, then original = 120 ÷ 0.80 = $150."
-  },
-  {
-    type: "math",
-    passage: "A line passes through the points (0, 3) and (4, 11).",
-    q: "What is the slope of the line?",
-    opts: ["1", "2", "3", "4"],
-    correct: 1,
-    explanation: "Slope = (y₂ - y₁) / (x₂ - x₁) = (11 - 3) / (4 - 0) = 8 / 4 = 2."
-  },
-  {
-    type: "math",
-    q: "If f(x) = 2x² - 3x + 1, what is f(3)?",
-    opts: ["8", "10", "12", "16"],
-    correct: 1,
-    explanation: "f(3) = 2(9) - 3(3) + 1 = 18 - 9 + 1 = 10."
-  },
-  {
-    type: "math",
-    q: "The average of five numbers is 14. If four of the numbers are 10, 12, 16, and 18, what is the fifth number?",
-    opts: ["12", "13", "14", "15"],
-    correct: 2,
-    explanation: "Total = 5 × 14 = 70. Sum of four numbers = 56. Fifth number = 70 - 56 = 14."
-  },
-  {
-    type: "rw",
-    passage: "The ancient city of Samarkand was a major hub of the Silk Road, connecting traders from China, Persia, and Europe. Its architecture, particularly the Registan complex, reflects a blend of artistic traditions from across Eurasia.",
-    q: "Which choice best states the main idea of the passage?",
-    opts: [
-      "Samarkand's architecture was built by European designers.",
-      "Samarkand's location and culture were shaped by its role as a trade crossroads.",
-      "The Registan complex is the oldest building in Central Asia.",
-      "Trade on the Silk Road was primarily controlled by Persian merchants."
-    ],
-    correct: 1,
-    explanation: "The passage focuses on Samarkand's role as a Silk Road hub and how this shaped its cultural and architectural identity."
-  },
-  {
-    type: "rw",
-    passage: "Many scientists argue that microplastics — tiny plastic particles less than 5mm in size — have become pervasive in ecosystems worldwide. They have been detected in ocean water, freshwater rivers, soil, and even in the air we breathe.",
-    q: "As used in the passage, 'pervasive' most nearly means:",
-    opts: ["dangerous", "widespread", "invisible", "synthetic"],
-    correct: 1,
-    explanation: "'Pervasive' means spread throughout. The passage describes microplastics found in oceans, rivers, soil, and air — confirming 'widespread.'"
-  },
-  {
-    type: "rw",
-    passage: "The committee reviewed three proposals. Proposal A was the most cost-effective, but required the longest timeline. Proposal B was faster but more expensive. Proposal C balanced cost and time but lacked technical detail.",
-    q: "Which proposal would be best for a team with a limited budget but no strict deadline?",
-    opts: ["Proposal A", "Proposal B", "Proposal C", "None of the proposals"],
-    correct: 0,
-    explanation: "Proposal A is most cost-effective — fitting a limited budget — and its longer timeline is not a problem since there is no strict deadline."
-  },
-  {
-    type: "rw",
-    q: "Choose the option that best completes the sentence: 'The researcher's findings were ______, contradicting decades of established scientific consensus.'",
-    opts: ["predictable", "controversial", "irrelevant", "traditional"],
-    correct: 1,
-    explanation: "'Controversial' fits because findings that contradict established consensus would be disputed and debated."
-  },
-  {
-    type: "rw",
-    passage: "Urban green spaces — parks, gardens, and tree-lined streets — have been linked to improved mental health outcomes in city residents. Studies show that access to nature, even in small doses, reduces stress hormones and improves mood.",
-    q: "Which statement is best supported by the passage?",
-    opts: [
-      "Cities should replace all roads with parks.",
-      "Mental health treatment should be moved outdoors.",
-      "Even limited access to nature in cities can benefit mental health.",
-      "Stress hormones are only affected by large natural environments."
-    ],
-    correct: 2,
-    explanation: "The passage states 'access to nature, even in small doses' improves mood — directly supporting option C."
-  }
+  { type:"math", q:"If 3x + 7 = 22, what is the value of x?", opts:["3","5","7","15"], correct:1, explanation:"Subtract 7 from both sides: 3x = 15. Divide by 3: x = 5." },
+  { type:"math", q:"A store sells a jacket for $120 after a 20% discount. What was the original price?", opts:["$140","$144","$150","$160"], correct:2, explanation:"If the discounted price is 80% of the original, then original = 120 ÷ 0.80 = $150." },
+  { type:"math", passage:"A line passes through the points (0, 3) and (4, 11).", q:"What is the slope of the line?", opts:["1","2","3","4"], correct:1, explanation:"Slope = (y₂ - y₁) / (x₂ - x₁) = (11 - 3) / (4 - 0) = 8 / 4 = 2." },
+  { type:"math", q:"If f(x) = 2x² - 3x + 1, what is f(3)?", opts:["8","10","12","16"], correct:1, explanation:"f(3) = 2(9) - 3(3) + 1 = 18 - 9 + 1 = 10." },
+  { type:"math", q:"The average of five numbers is 14. Four of them are 10, 12, 16, and 18. What is the fifth?", opts:["12","13","14","15"], correct:2, explanation:"Total = 5 × 14 = 70. Sum of four = 56. Fifth = 70 - 56 = 14." },
+  { type:"rw", passage:"The ancient city of Samarkand was a major hub of the Silk Road, connecting traders from China, Persia, and Europe. Its architecture, particularly the Registan complex, reflects a blend of artistic traditions from across Eurasia.", q:"Which choice best states the main idea of the passage?", opts:["Samarkand's architecture was built by European designers.","Samarkand's location and culture were shaped by its role as a trade crossroads.","The Registan complex is the oldest building in Central Asia.","Trade on the Silk Road was primarily controlled by Persian merchants."], correct:1, explanation:"The passage focuses on Samarkand's role as a Silk Road hub and how this shaped its cultural and architectural identity." },
+  { type:"rw", passage:"Many scientists argue that microplastics — tiny plastic particles less than 5mm — have become pervasive in ecosystems worldwide. They have been detected in ocean water, freshwater rivers, soil, and even the air we breathe.", q:"As used in the passage, 'pervasive' most nearly means:", opts:["dangerous","widespread","invisible","synthetic"], correct:1, explanation:"'Pervasive' means spread throughout. The passage describes microplastics found in oceans, rivers, soil, and air — confirming 'widespread.'" },
+  { type:"rw", passage:"The committee reviewed three proposals. Proposal A was most cost-effective but required the longest timeline. Proposal B was faster but more expensive. Proposal C balanced cost and time but lacked technical detail.", q:"Which proposal would be best for a team with a limited budget but no strict deadline?", opts:["Proposal A","Proposal B","Proposal C","None of the proposals"], correct:0, explanation:"Proposal A is most cost-effective — fitting a limited budget — and its longer timeline is not a problem since there is no strict deadline." },
+  { type:"rw", q:"Choose the option that best completes the sentence: 'The researcher's findings were ______, contradicting decades of established scientific consensus.'", opts:["predictable","controversial","irrelevant","traditional"], correct:1, explanation:"'Controversial' fits because findings that contradict established consensus would be disputed and debated." },
+  { type:"rw", passage:"Urban green spaces — parks, gardens, and tree-lined streets — have been linked to improved mental health outcomes in city residents. Studies show that access to nature, even in small doses, reduces stress hormones and improves mood.", q:"Which statement is best supported by the passage?", opts:["Cities should replace all roads with parks.","Mental health treatment should be moved outdoors.","Even limited access to nature in cities can benefit mental health.","Stress hormones are only affected by large natural environments."], correct:2, explanation:"The passage states 'access to nature, even in small doses' improves mood — directly supporting option C." }
 ];
 
-const allQuestions = [...diagQuestions.map(q => ({...q, type: 'diag'})), ...satQuestions];
+const allQuestions = [...diagQuestions.map(q => ({...q, type:'diag'})), ...satQuestions];
 const TOTAL = allQuestions.length;
-
 let current = 0;
 let diagAnswers = new Array(20).fill(null);
 let satAnswers = new Array(10).fill(null);
-let satCorrect = [0, 0]; // [math, rw]
-let answeredSAT = false;
+let satCorrect = [0, 0];
 
 function show(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -567,30 +439,24 @@ function show(id) {
 function startQuiz() { show('quiz'); renderQ(); }
 
 function getAnswer() {
-  if (current < 20) return diagAnswers[current];
-  return satAnswers[current - 20];
+  return current < 20 ? diagAnswers[current] : satAnswers[current - 20];
 }
 
 function renderQ() {
   const q = allQuestions[current];
   const isPart2 = current >= 20;
-  const qNum = current + 1;
 
-  document.getElementById('q-meta').textContent = `Question ${qNum} of ${TOTAL}`;
+  document.getElementById('q-meta').textContent = `Question ${current + 1} of ${TOTAL}`;
   document.getElementById('q-phase-label').textContent = isPart2 ? 'Part 2: SAT Questions' : 'Part 1: Diagnostic';
   document.getElementById('progress-fill').style.width = ((current / TOTAL) * 100) + '%';
   document.getElementById('btn-back').style.visibility = current === 0 ? 'hidden' : 'visible';
 
-  // Tag
   const tagWrap = document.getElementById('q-tag-wrap');
   if (q.type === 'math') tagWrap.innerHTML = '<span class="q-tag tag-math">Math</span>';
   else if (q.type === 'rw') tagWrap.innerHTML = '<span class="q-tag tag-rw">Reading & Writing</span>';
   else tagWrap.innerHTML = '<span class="q-tag tag-diag">Diagnostic</span>';
 
-  // Passage
-  const passWrap = document.getElementById('q-passage-wrap');
-  passWrap.innerHTML = q.passage ? `<div class="q-passage">${q.passage}</div>` : '';
-
+  document.getElementById('q-passage-wrap').innerHTML = q.passage ? `<div class="q-passage">${q.passage}</div>` : '';
   document.getElementById('q-text').textContent = q.q;
 
   const answered = getAnswer() !== null;
@@ -609,7 +475,6 @@ function renderQ() {
     const btn = document.createElement('button');
     btn.className = 'option';
     btn.textContent = opt;
-
     if (!isPart2) {
       if (diagAnswers[current] === i) btn.classList.add('selected');
       btn.onclick = () => selectDiag(i);
@@ -639,23 +504,15 @@ function selectDiag(i) {
 function selectSAT(i) {
   const q = allQuestions[current];
   satAnswers[current - 20] = i;
-
-  if (i === q.correct) {
-    if (q.type === 'math') satCorrect[0]++;
-    else satCorrect[1]++;
-  }
-
-  // Show feedback
+  if (i === q.correct) { if (q.type === 'math') satCorrect[0]++; else satCorrect[1]++; }
   document.querySelectorAll('.option').forEach((b, idx) => {
     b.classList.add('disabled');
     if (idx === q.correct) b.classList.add('correct');
     else if (idx === i) b.classList.add('wrong');
   });
-
   const explanation = document.getElementById('explanation');
   explanation.innerHTML = `<strong>${i === q.correct ? '✓ Correct!' : '✗ Incorrect.'}</strong> ${q.explanation}`;
   explanation.classList.add('show');
-
   document.getElementById('btn-next').classList.add('ready');
 }
 
@@ -679,21 +536,13 @@ function showResult() {
   const name = document.getElementById('lead-name').value.trim();
   const phone = document.getElementById('lead-phone').value.trim();
   if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
-
   show('loading');
-
   setTimeout(() => {
     const diagPct = calcDiagScore();
     const mathPct = satCorrect[0] / 5;
     const rwPct = satCorrect[1] / 5;
-
-    // Weighted score calculation
-    const baseScore = 400;
-    const diagContrib = diagPct * 3.5;
-    const satContrib = (mathPct + rwPct) / 2 * 600;
-    let predicted = Math.round((baseScore + diagContrib + satContrib) / 10) * 10;
+    let predicted = Math.round((400 + diagPct * 3.5 + (mathPct + rwPct) / 2 * 600) / 10) * 10;
     predicted = Math.min(1580, Math.max(400, predicted));
-
     const low = Math.max(400, predicted - 70);
     const high = Math.min(1600, predicted + 70);
 
@@ -703,14 +552,10 @@ function showResult() {
     document.getElementById('rw-score').textContent = `${satCorrect[1]}/5`;
     document.getElementById('diag-score').textContent = `${diagPct}%`;
 
-    // Summary
-    const targetLabels = ['1050', '1150', '1280', '1400+'];
-    const targetIdx = diagAnswers[10] ?? 1;
-    const target = targetLabels[targetIdx];
-    const monthsIdx = diagAnswers[11] ?? 2;
-    const months = [1, 2, 4, 6][monthsIdx];
-    const hoursIdx = diagAnswers[12] ?? 1;
-    const hoursPerWeek = [2, 3, 6, 9][hoursIdx];
+    const targetLabels = ['1050','1150','1280','1400+'];
+    const target = targetLabels[diagAnswers[10] ?? 1];
+    const months = [1,2,4,6][diagAnswers[11] ?? 2];
+    const hoursPerWeek = [2,3,6,9][diagAnswers[12] ?? 1];
     const weakMath = satCorrect[0] < 3;
     const weakRW = satCorrect[1] < 3;
 
@@ -718,58 +563,43 @@ function showResult() {
     if (predicted >= 1300) summary += `You're already performing at a strong level. Targeted practice can push you into the top tier.`;
     else if (predicted >= 1100) summary += `You have a solid foundation. With ${months} months of focused prep, reaching ${target} is realistic.`;
     else summary += `There's clear room to grow. With consistent study over ${months} months, you can make significant gains.`;
-
     document.getElementById('result-summary').textContent = summary;
 
-    // Study plan
     const plans = [
-      {
-        icon: '📅',
-        title: `${hoursPerWeek}h/week study schedule`,
-        body: `A ${months}-month plan with ${Math.ceil(hoursPerWeek / 2)}h sessions, 3–4 days a week. Include one full practice test every 2–3 weeks.`
-      },
-      {
-        icon: weakMath ? '⚠️' : '✓',
-        title: weakMath ? 'Math: Priority area' : 'Math: Maintain momentum',
-        body: weakMath
-          ? `You got ${satCorrect[0]}/5 on the Math section. Focus on algebra, linear equations, and word problems. Use Khan Academy SAT Math daily (free).`
-          : `You got ${satCorrect[0]}/5 on Math. Keep doing timed problem sets. Focus on advanced topics: systems of equations, quadratics, and data analysis.`
-      },
-      {
-        icon: weakRW ? '⚠️' : '✓',
-        title: weakRW ? 'Reading & Writing: Priority area' : 'Reading & Writing: Sharpen skills',
-        body: weakRW
-          ? `You got ${satCorrect[1]}/5 on Reading & Writing. Practice reading academic passages daily. Focus on main idea, inference, and vocabulary in context.`
-          : `You got ${satCorrect[1]}/5 on Reading & Writing. Work on grammar rules, transitions, and time management on long passages.`
-      },
-      {
-        icon: '📝',
-        title: 'Practice test schedule',
-        body: `Take 1 full-length official SAT practice test every ${Math.ceil(months / 3)} weeks. Always review every wrong answer within 24 hours — this is where the biggest improvements happen.`
-      },
-      {
-        icon: '🎯',
-        title: `Goal: ${target} in ${months} month${months > 1 ? 's' : ''}`,
-        body: `Your target is achievable. ${hoursPerWeek < 4 ? 'Consider adding 2 more study hours per week to hit your goal faster.' : 'Your planned hours are strong — consistency is the key factor now.'}`
-      }
+      { icon:'📅', title:`${hoursPerWeek}h/week study schedule`, body:`A ${months}-month plan with ${Math.ceil(hoursPerWeek/2)}h sessions, 3–4 days a week. Include one full practice test every 2–3 weeks.` },
+      { icon: weakMath ? '⚠️' : '✅', title: weakMath ? 'Math: Priority area' : 'Math: Maintain momentum', body: weakMath ? `You got ${satCorrect[0]}/5 on Math. Focus on algebra, linear equations, and word problems. Use Khan Academy SAT Math daily (free).` : `You got ${satCorrect[0]}/5 on Math. Keep doing timed problem sets — focus on quadratics, systems of equations, and data analysis.` },
+      { icon: weakRW ? '⚠️' : '✅', title: weakRW ? 'Reading & Writing: Priority area' : 'Reading & Writing: Sharpen skills', body: weakRW ? `You got ${satCorrect[1]}/5 on Reading & Writing. Practice reading academic passages daily. Focus on main idea, inference, and vocabulary in context.` : `You got ${satCorrect[1]}/5 on Reading & Writing. Work on grammar rules, transitions, and time management on long passages.` },
+      { icon:'📝', title:'Practice test schedule', body:`Take 1 full-length official SAT practice test every ${Math.ceil(months/3)} weeks. Always review every wrong answer within 24 hours.` },
+      { icon:'🎯', title:`Goal: ${target} in ${months} month${months>1?'s':''}`, body:`${hoursPerWeek < 4 ? 'Consider adding 2 more study hours per week to hit your goal faster.' : 'Your planned hours are strong — consistency is the key factor now.'}` }
     ];
 
     const planCards = document.getElementById('plan-cards');
     planCards.innerHTML = '';
     plans.forEach(p => {
-      planCards.innerHTML += `
-        <div class="plan-card">
-          <div class="plan-icon">${p.icon}</div>
-          <div>
-            <div class="plan-card-title">${p.title}</div>
-            <div class="plan-card-body">${p.body}</div>
-          </div>
-        </div>`;
+      planCards.innerHTML += `<div class="plan-card"><div class="plan-icon">${p.icon}</div><div><div class="plan-card-title">${p.title}</div><div class="plan-card-body">${p.body}</div></div></div>`;
     });
 
     show('result');
   }, 2200);
 }
+
+function toggleFullscreen() {
+  const btn = document.getElementById('fs-btn');
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().then(() => {
+      btn.textContent = '✕ Exit full screen';
+    });
+  } else {
+    document.exitFullscreen().then(() => {
+      btn.textContent = '⛶ Full screen';
+    });
+  }
+}
+
+document.addEventListener('fullscreenchange', () => {
+  const btn = document.getElementById('fs-btn');
+  if (!document.fullscreenElement) btn.textContent = '⛶ Full screen';
+});
 </script>
 </body>
 </html>
