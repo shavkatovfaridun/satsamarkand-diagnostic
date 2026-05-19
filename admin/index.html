@@ -343,12 +343,12 @@ input,select{font-family:inherit;outline:none}
         <div class="modal-scores">
           <div class="modal-score-box">
             <div class="modal-score-label">Math</div>
-            <div class="modal-score-num" id="modal-math">0/25</div>
+            <div class="modal-score-num" id="modal-math">0/30</div>
             <div class="modal-score-pct" id="modal-math-pct">0%</div>
           </div>
           <div class="modal-score-box eng">
             <div class="modal-score-label">English</div>
-            <div class="modal-score-num" id="modal-eng">0/25</div>
+            <div class="modal-score-num" id="modal-eng">0/36</div>
             <div class="modal-score-pct" id="modal-eng-pct">0% &middot; CEFR <span id="modal-cefr">-</span></div>
           </div>
         </div>
@@ -405,7 +405,7 @@ const MOCK_DATA = [
     age: 17, grade: '11th grade', goal: '1500', when: '6months', uni: 'METU, Purdue',
     mathScore: 22, mathPct: 88, engScore: 21, engPct: 84, total: 43, totalPct: 86,
     cefr: 'B2', status: 'passed', tabSwitches: 0, fullscreenExits: 0,
-    recommendation: 'SAT MAX (1500+ Guaranteed)'
+    recommendation: 'Advanced Level'
   },
   {
     id: 2, date: '2026-04-28T11:18:00', name: 'Bobur Tashpulatov', phone: '+998-90-123-45-67',
@@ -440,7 +440,7 @@ const MOCK_DATA = [
     age: 16, grade: '10th grade', goal: '1200', when: '1year', uni: 'Inha',
     mathScore: 9, mathPct: 36, engScore: 8, engPct: 32, total: 17, totalPct: 34,
     cefr: 'A2', status: 'failed', tabSwitches: 1, fullscreenExits: 0,
-    recommendation: 'Foundation Program (Pre-SAT)'
+    recommendation: 'Foundation Level'
   },
   {
     id: 7, date: '2026-04-24T13:00:00', name: 'Nodira Yusupova', phone: '+998-97-678-90-12',
@@ -611,7 +611,7 @@ function updateStats() {
   document.getElementById('stat-failed').textContent = failed;
   document.getElementById('stat-avg').textContent = avg + '%';
 
-  document.getElementById('stat-passed-meta').textContent = total > 0 ? Math.round(passed/total*100) + '% pass rate' : 'SAT-ready leads';
+  document.getElementById('stat-passed-meta').textContent = total > 0 ? Math.round(passed/total*100) + '% pass rate' : 'Strong results';
   document.getElementById('stat-failed-meta').textContent = total > 0 ? Math.round(failed/total*100) + '% need foundation' : 'Foundation needed';
 }
 
@@ -723,8 +723,8 @@ function renderTable() {
       '<td><span class="tbl-phone">' + escapeHtml(s.phone) + '</span></td>' +
       '<td>' + s.age + '</td>' +
       '<td>' + escapeHtml(s.grade) + '</td>' +
-      '<td><span class="tbl-score">' + s.mathScore + '/25</span><span class="tbl-pct">' + s.mathPct + '%</span></td>' +
-      '<td><span class="tbl-score">' + s.engScore + '/25</span><span class="tbl-pct">' + s.engPct + '%</span></td>' +
+      '<td><span class="tbl-score">' + s.mathScore + '/30</span><span class="tbl-pct">' + s.mathPct + '%</span></td>' +
+      '<td><span class="tbl-score">' + s.engScore + '/36</span><span class="tbl-pct">' + s.engPct + '%</span></td>' +
       '<td><span class="tbl-score">' + s.total + '/50</span><span class="tbl-pct">' + s.totalPct + '%</span></td>' +
       '<td><span class="tbl-cefr">' + (s.cefr || '-') + '</span></td>' +
       '<td><span class="tbl-status ' + (passed ? 'passed' : 'failed') + '">' + (passed ? 'Passed' : 'Below 60%') + '</span></td>';
@@ -752,9 +752,9 @@ function openModal(s) {
   document.getElementById('modal-when').textContent = s.when ? formatTargetDate(s.when) : 'Not specified';
   document.getElementById('modal-uni').textContent = s.uni || 'Not specified';
 
-  document.getElementById('modal-math').textContent = s.mathScore + '/25';
+  document.getElementById('modal-math').textContent = s.mathScore + '/30';
   document.getElementById('modal-math-pct').textContent = s.mathPct + '%';
-  document.getElementById('modal-eng').textContent = s.engScore + '/25';
+  document.getElementById('modal-eng').textContent = s.engScore + '/36';
   document.getElementById('modal-eng-pct').innerHTML = s.engPct + '% &middot; CEFR <span>' + (s.cefr || '-') + '</span>';
   document.getElementById('modal-cefr').textContent = s.cefr || '-';
 
