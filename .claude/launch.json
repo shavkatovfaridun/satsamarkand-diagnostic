@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "diagnostic-test",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-p", "7823", "/Users/faridunshavkatov/Desktop/satsamarkand-diagnostic"],
+      "port": 7823
+    }
+  ]
+}
