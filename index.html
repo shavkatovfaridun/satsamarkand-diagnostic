@@ -369,8 +369,12 @@ body.in-test{padding:0 !important}
         <div class="intro-mi"><div class="intro-mn">55 <span style="font-size:.85rem">min</span></div><div class="intro-ml" data-en="Duration" data-uz="Vaqt" data-ru="Время">Duration</div></div>
         <div class="intro-mi"><div class="intro-mn" data-en="Free" data-uz="Bepul" data-ru="Бесплатно">Free</div><div class="intro-ml" data-en="No cost" data-uz="To'lovsiz" data-ru="Без оплаты">No cost</div></div>
       </div>
+      <div style="margin-top:1.6rem;position:relative">
+        <button class="btn-primary btn-big" onclick="scrollToInfo()" style="width:100%;max-width:340px" data-en="Begin Test →" data-uz="Testni Boshlash →" data-ru="Начать тест →">Begin Test →</button>
+      </div>
     </div>
 
+    <div id="intro-details-anchor" style="scroll-margin-top:70px"></div>
     <div class="intro-features">
       <div class="if-card">
         <div class="if-icon"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
@@ -413,68 +417,75 @@ body.in-test{padding:0 !important}
 <div class="screen" id="screen-info">
   <div class="wrap">
     <div class="form-card">
-      <h2 data-en="A few details first." data-uz="Avval bir nechta ma'lumot." data-ru="Сначала несколько деталей.">A few details first.</h2>
-      <p class="subtitle" data-en="This helps personalize your report. Fields with * are required." data-uz="Bu hisobotingizni shaxsiylashtiradi. * majburiy." data-ru="Это для персонализации. * обязательные.">This helps personalize your report. Fields with * are required.</p>
-      <div class="error-msg" id="infoError"></div>
-
-      <div class="fg" id="fg-name">
-        <label data-en="Full Name" data-uz="To'liq Ism" data-ru="Полное имя">Full Name <span class="req">*</span></label>
-        <input type="text" id="info-name" placeholder="Anvar Karimov" required autocomplete="name">
-        <div class="err" data-en="Please enter your full name" data-uz="To'liq ismingizni kiriting" data-ru="Введите ваше имя">Please enter your full name</div>
-      </div>
-
-      <div class="fg" id="fg-phone">
-        <label data-en="Phone Number" data-uz="Telefon Raqami" data-ru="Номер телефона">Phone Number <span class="req">*</span></label>
-        <input type="tel" id="info-phone" placeholder="+998-XX-XXX-XX-XX" required maxlength="17" oninput="formatPhone(this)">
-        <div class="hint" data-en="Format: +998-XX-XXX-XX-XX" data-uz="Format: +998-XX-XXX-XX-XX" data-ru="Формат: +998-XX-XXX-XX-XX">Format: +998-XX-XXX-XX-XX</div>
-        <div class="err" data-en="Please enter phone in format: +998-XX-XXX-XX-XX" data-uz="Telefon formatda: +998-XX-XXX-XX-XX" data-ru="Введите номер: +998-XX-XXX-XX-XX">Please enter phone in format: +998-XX-XXX-XX-XX</div>
-      </div>
-
-      <div class="frow">
-        <div class="fg" id="fg-age">
-          <label data-en="Age" data-uz="Yosh" data-ru="Возраст">Age <span class="req">*</span></label>
-          <input type="number" id="info-age" placeholder="17" min="10" max="40" required>
-          <div class="err" data-en="Enter your age" data-uz="Yoshingizni kiriting" data-ru="Введите возраст">Enter your age</div>
+      <!-- STEP 1 -->
+      <div id="form-step1">
+        <h2 data-en="Let's get started." data-uz="Boshlaylik." data-ru="Давайте начнём.">Let's get started.</h2>
+        <p class="subtitle" data-en="Enter your name and phone number to begin." data-uz="Ism va telefon raqamingizni kiriting." data-ru="Введите имя и номер телефона.">Enter your name and phone number to begin.</p>
+        <div class="fg" id="fg-name">
+          <label data-en="Full Name" data-uz="To'liq Ism" data-ru="Полное имя">Full Name <span class="req">*</span></label>
+          <input type="text" id="info-name" placeholder="Anvar Karimov" required autocomplete="name">
+          <div class="err" data-en="Please enter your full name" data-uz="To'liq ismingizni kiriting" data-ru="Введите ваше имя">Please enter your full name</div>
         </div>
-        <div class="fg" id="fg-grade">
-          <label data-en="Grade / School Year" data-uz="Sinf / Kurs" data-ru="Класс / Курс">Grade / School Year <span class="req">*</span></label>
-          <input type="text" id="info-grade" placeholder="11th grade" required>
-          <div class="err" data-en="Enter your grade" data-uz="Sinfingizni kiriting" data-ru="Введите класс">Enter your grade</div>
+        <div class="fg" id="fg-phone">
+          <label data-en="Phone Number" data-uz="Telefon Raqami" data-ru="Номер телефона">Phone Number <span class="req">*</span></label>
+          <input type="tel" id="info-phone" placeholder="+998-XX-XXX-XX-XX" required maxlength="17" oninput="formatPhone(this)">
+          <div class="hint" data-en="Format: +998-XX-XXX-XX-XX" data-uz="Format: +998-XX-XXX-XX-XX" data-ru="Формат: +998-XX-XXX-XX-XX">Format: +998-XX-XXX-XX-XX</div>
+          <div class="err" data-en="Please enter phone: +998-XX-XXX-XX-XX" data-uz="Telefon: +998-XX-XXX-XX-XX" data-ru="Введите номер: +998-XX-XXX-XX-XX">Please enter phone: +998-XX-XXX-XX-XX</div>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:1.5rem;flex-wrap:wrap">
+          <button onclick="backToIntro()" style="background:none;border:none;color:var(--tm);font-size:.88rem;cursor:pointer;padding:8px 0" data-en="Back" data-uz="Orqaga" data-ru="Назад">Back</button>
+          <button class="btn-primary" onclick="goToStep2()" data-en="Next →" data-uz="Keyingi →" data-ru="Далее →">Next →</button>
         </div>
       </div>
-
-      <div class="frow">
+      <!-- STEP 2 -->
+      <div id="form-step2" style="display:none">
+        <h2 data-en="A few more details." data-uz="Yana bir nechta ma'lumot." data-ru="Ещё несколько деталей.">A few more details.</h2>
+        <p class="subtitle" data-en="This helps personalize your report. All fields required." data-uz="Bu hisobotni shaxsiylashtiradi. Barcha maydonlar majburiy." data-ru="Это персонализирует отчёт. Все поля обязательны.">This helps personalize your report. All fields required.</p>
+        <div class="frow">
+          <div class="fg" id="fg-age">
+            <label data-en="Age" data-uz="Yosh" data-ru="Возраст">Age <span class="req">*</span></label>
+            <input type="number" id="info-age" placeholder="17" min="1" max="99" required>
+            <div class="err" data-en="Enter your age (1–99)" data-uz="Yoshingizni kiriting" data-ru="Введите возраст">Enter your age (1–99)</div>
+          </div>
+          <div class="fg" id="fg-grade">
+            <label data-en="Grade / School Year" data-uz="Sinf / Kurs" data-ru="Класс / Курс">Grade / School Year <span class="req">*</span></label>
+            <input type="text" id="info-grade" placeholder="11th grade" required>
+            <div class="err" data-en="Enter your grade" data-uz="Sinfingizni kiriting" data-ru="Введите класс">Enter your grade</div>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fg" id="fg-goal">
+            <label data-en="Goal Score" data-uz="Maqsad Ball" data-ru="Целевой балл"><span>Goal Score</span> <span class="req">*</span></label>
+            <select id="info-goal">
+              <option value="" data-en="Select" data-uz="Tanlang" data-ru="Выберите">Select</option>
+              <option value="1200">1200+</option>
+              <option value="1300">1300+</option>
+              <option value="1400">1400+</option>
+              <option value="1500">1500+</option>
+              <option value="1600">1600 (Perfect)</option>
+            </select>
+            <div class="err" data-en="Please select a goal score" data-uz="Maqsad ballni tanlang" data-ru="Выберите целевой балл">Please select a goal score</div>
+          </div>
+          <div class="fg" id="fg-when">
+            <label data-en="Target Date" data-uz="Maqsad Sanasi" data-ru="Целевая дата"><span>Target Date</span> <span class="req">*</span></label>
+            <select id="info-when">
+              <option value="" data-en="When?" data-uz="Qachon?" data-ru="Когда?">When?</option>
+              <option value="3months" data-en="In 3 months" data-uz="3 oy ichida" data-ru="Через 3 месяца">In 3 months</option>
+              <option value="6months" data-en="In 6 months" data-uz="6 oy ichida" data-ru="Через 6 месяцев">In 6 months</option>
+              <option value="1year" data-en="In 1 year" data-uz="1 yil ichida" data-ru="Через 1 год">In 1 year</option>
+              <option value="unsure" data-en="Not sure yet" data-uz="Hali aniq emas" data-ru="Пока не знаю">Not sure yet</option>
+            </select>
+            <div class="err" data-en="Please select a target date" data-uz="Sanani tanlang" data-ru="Выберите дату">Please select a target date</div>
+          </div>
+        </div>
         <div class="fg">
-          <label data-en="Goal SAT Score" data-uz="Maqsad SAT Bali" data-ru="Целевой балл"><span>Goal SAT Score</span> <span class="optional-note" data-en="(optional)" data-uz="(ixtiyoriy)" data-ru="(необязательно)">(optional)</span></label>
-          <select id="info-goal">
-            <option value="" data-en="Select" data-uz="Tanlang" data-ru="Выберите">Select</option>
-            <option value="1200">1200+</option>
-            <option value="1300">1300+</option>
-            <option value="1400">1400+</option>
-            <option value="1500">1500+</option>
-            <option value="1600">1600 (Perfect)</option>
-          </select>
+          <label data-en="Target University" data-uz="Maqsadli Universitet" data-ru="Целевой университет"><span>Target University</span> <span class="optional-note" data-en="(optional)" data-uz="(ixtiyoriy)" data-ru="(необязательно)">(optional)</span></label>
+          <input type="text" id="info-uni" placeholder="MIT, Purdue, METU...">
         </div>
-        <div class="fg">
-          <label data-en="Target Date" data-uz="Maqsad Sanasi" data-ru="Целевая дата"><span>Target Date</span> <span class="optional-note" data-en="(optional)" data-uz="(ixtiyoriy)" data-ru="(необязательно)">(optional)</span></label>
-          <select id="info-when">
-            <option value="" data-en="When?" data-uz="Qachon?" data-ru="Когда?">When?</option>
-            <option value="3months" data-en="In 3 months" data-uz="3 oy ichida" data-ru="Через 3 месяца">In 3 months</option>
-            <option value="6months" data-en="In 6 months" data-uz="6 oy ichida" data-ru="Через 6 месяцев">In 6 months</option>
-            <option value="1year" data-en="In 1 year" data-uz="1 yil ichida" data-ru="Через 1 год">In 1 year</option>
-            <option value="unsure" data-en="Not sure yet" data-uz="Hali aniq emas" data-ru="Пока не знаю">Not sure yet</option>
-          </select>
+        <div style="display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:1.5rem;flex-wrap:wrap">
+          <button onclick="backToStep1()" style="background:none;border:none;color:var(--tm);font-size:.88rem;cursor:pointer;padding:8px 0" data-en="← Back" data-uz="← Orqaga" data-ru="← Назад">← Back</button>
+          <button class="btn-primary" onclick="startTest()" data-en="Start English Section" data-uz="Ingliz Boshlash" data-ru="Начать английский">Start English Section</button>
         </div>
-      </div>
-
-      <div class="fg">
-        <label data-en="Target University" data-uz="Maqsadli Universitet" data-ru="Целевой университет"><span>Target University</span> <span class="optional-note" data-en="(optional)" data-uz="(ixtiyoriy)" data-ru="(необязательно)">(optional)</span></label>
-        <input type="text" id="info-uni" placeholder="MIT, Purdue, METU...">
-      </div>
-
-      <div style="display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:1.5rem;flex-wrap:wrap">
-        <button onclick="backToIntro()" style="background:none;border:none;color:var(--tm);font-size:.88rem;cursor:pointer;padding:8px 0" data-en="Back" data-uz="Orqaga" data-ru="Назад">Back</button>
-        <button class="btn-primary" onclick="startTest()" data-en="Start Math Section" data-uz="Math Boshlash" data-ru="Начать математику">Start Math Section</button>
       </div>
     </div>
   </div>
@@ -533,16 +544,16 @@ body.in-test{padding:0 !important}
       <div class="break-icon">
         <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
       </div>
-      <h2 data-en="Math Section Complete!" data-uz="Math Tugadi!" data-ru="Математика завершена!">Math Section Complete!</h2>
-      <p data-en="Take a 2-minute break before the English section." data-uz="Inglizdan oldin 2 daqiqa tin oling." data-ru="Отдохните 2 минуты.">Take a 2-minute break before the English section.</p>
+      <h2 data-en="English Section Complete!" data-uz="Ingliz Tugadi!" data-ru="Английский завершён!">English Section Complete!</h2>
+      <p data-en="Take a 2-minute break before the Math section." data-uz="Matematikadan oldin 2 daqiqa tin oling." data-ru="Отдохните 2 минуты перед математикой.">Take a 2-minute break before the Math section.</p>
       
       <div class="break-score-box">
-        <div class="break-score-label" data-en="Math Score" data-uz="Math Bali" data-ru="Балл">Math Score</div>
+        <div class="break-score-label" data-en="English Score" data-uz="Ingliz Bali" data-ru="Балл">English Score</div>
         <div class="break-score-num" id="break-math-score">0/30</div>
         <div class="break-score-out" id="break-math-pct">0%</div>
       </div>
 
-      <button class="btn-white" onclick="startEnglishSection()" data-en="Continue to English" data-uz="Inglizga O'tish" data-ru="К английскому">Continue to English</button>
+      <button class="btn-white" onclick="startMathSection()" data-en="Continue to Math" data-uz="Matematikaga O'tish" data-ru="К математике">Continue to Math</button>
       <div class="break-countdown" id="break-countdown">Auto-continuing in 2:00...</div>
     </div>
   </div>
@@ -3298,21 +3309,27 @@ function showScreen(id) {
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
-function goToInfo() { showScreen('info'); }
+function scrollToInfo() {
+  document.getElementById('intro-details-anchor').scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+function goToInfo() {
+  document.getElementById('form-step1').style.display = 'block';
+  document.getElementById('form-step2').style.display = 'none';
+  showScreen('info');
+}
 function backToIntro() { showScreen('intro'); }
-
-// START TEST
-function startTest() {
-  document.querySelectorAll('.fg').forEach(fg => fg.classList.remove('has-error'));
-  document.querySelectorAll('.fg input').forEach(i => i.classList.remove('invalid'));
-
+function backToStep1() {
+  document.getElementById('form-step1').style.display = 'block';
+  document.getElementById('form-step2').style.display = 'none';
+}
+function goToStep2() {
   const name = document.getElementById('info-name').value.trim();
   const phone = document.getElementById('info-phone').value.trim();
-  const age = document.getElementById('info-age').value.trim();
-  const grade = document.getElementById('info-grade').value.trim();
-
   let hasError = false;
-
+  document.getElementById('fg-name').classList.remove('has-error');
+  document.getElementById('fg-phone').classList.remove('has-error');
+  document.getElementById('info-name').classList.remove('invalid');
+  document.getElementById('info-phone').classList.remove('invalid');
   if (!name) {
     document.getElementById('fg-name').classList.add('has-error');
     document.getElementById('info-name').classList.add('invalid');
@@ -3323,7 +3340,31 @@ function startTest() {
     document.getElementById('info-phone').classList.add('invalid');
     hasError = true;
   }
-  if (!age || parseInt(age) < 10 || parseInt(age) > 40) {
+  if (hasError) {
+    const errEl = document.querySelector('#form-step1 .fg.has-error');
+    if (errEl) errEl.scrollIntoView({behavior: 'smooth', block: 'center'});
+    return;
+  }
+  document.getElementById('form-step1').style.display = 'none';
+  document.getElementById('form-step2').style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// START TEST
+function startTest() {
+  document.querySelectorAll('#form-step2 .fg').forEach(fg => fg.classList.remove('has-error'));
+  document.querySelectorAll('#form-step2 input, #form-step2 select').forEach(i => i.classList.remove('invalid'));
+
+  const name = document.getElementById('info-name').value.trim();
+  const phone = document.getElementById('info-phone').value.trim();
+  const age = document.getElementById('info-age').value.trim();
+  const grade = document.getElementById('info-grade').value.trim();
+  const goal = document.getElementById('info-goal').value;
+  const when = document.getElementById('info-when').value;
+
+  let hasError = false;
+
+  if (!age || parseInt(age) < 1 || parseInt(age) > 99) {
     document.getElementById('fg-age').classList.add('has-error');
     document.getElementById('info-age').classList.add('invalid');
     hasError = true;
@@ -3333,9 +3374,19 @@ function startTest() {
     document.getElementById('info-grade').classList.add('invalid');
     hasError = true;
   }
+  if (!goal) {
+    document.getElementById('fg-goal').classList.add('has-error');
+    document.getElementById('info-goal').classList.add('invalid');
+    hasError = true;
+  }
+  if (!when) {
+    document.getElementById('fg-when').classList.add('has-error');
+    document.getElementById('info-when').classList.add('invalid');
+    hasError = true;
+  }
 
   if (hasError) {
-    const errEl = document.querySelector('.fg.has-error');
+    const errEl = document.querySelector('#form-step2 .fg.has-error');
     if (errEl) errEl.scrollIntoView({behavior: 'smooth', block: 'center'});
     return;
   }
@@ -3353,10 +3404,11 @@ function startTest() {
 
   enableAntiCheating();
   enterFullscreen();
-  startMathSection();
+  startEnglishSection();
 }
 
 function startMathSection() {
+  if (state.breakInterval) { clearInterval(state.breakInterval); state.breakInterval = null; }
   state.section = 'math';
   state.questionIndex = 0;
   state.sectionTimeRemaining = 25 * 60;
@@ -3369,10 +3421,7 @@ function startMathSection() {
 }
 
 function startEnglishSection() {
-  if (state.breakInterval) {
-    clearInterval(state.breakInterval);
-    state.breakInterval = null;
-  }
+  if (state.breakInterval) { clearInterval(state.breakInterval); state.breakInterval = null; }
   state.section = 'english';
   state.questionIndex = 0;
   state.sectionTimeRemaining = 30 * 60;
@@ -3524,21 +3573,20 @@ function submitAnswer() {
 // END SECTION
 function endSection() {
   if (state.timerInterval) clearInterval(state.timerInterval);
-  if (state.section === 'math') {
+  if (state.section === 'english') {
     document.body.classList.remove('in-test');
-    const mathAnswers = state.answers.filter(a => a.section === 'math');
-    const correct = mathAnswers.filter(a => a.isCorrect).length;
-    const pct = Math.round((correct / 30) * 100);
-    document.getElementById('break-math-score').textContent = correct + '/30';
+    const engAnswers = state.answers.filter(a => a.section === 'english');
+    const correct = engAnswers.filter(a => a.isCorrect).length;
+    const pct = Math.round((correct / 36) * 100);
+    document.getElementById('break-math-score').textContent = correct + '/36';
     document.getElementById('break-math-pct').textContent = pct + '%';
     showScreen('break');
-
     let secs = 120;
     state.breakInterval = setInterval(() => {
       secs--;
       if (secs <= 0) {
         clearInterval(state.breakInterval);
-        startEnglishSection();
+        startMathSection();
       } else {
         const m = Math.floor(secs / 60);
         const s = secs % 60;
