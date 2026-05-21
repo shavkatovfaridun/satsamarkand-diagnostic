@@ -1151,18 +1151,18 @@ const MATH_QUESTIONS = [
   {
     id: 'm22',
     topic: 'linear_algebra',
-    difficulty: 4,
+    difficulty: 3,
     q: {
-      en: 'For what value of m do the lines mx + 3y = 9 and 4x − my = 6 intersect at infinitely many points?',
-      uz: 'Qaysi m qiymatida mx + 3y = 9 va 4x − my = 6 chiziqlar cheksiz ko\'p nuqtada kesishadi?',
-      ru: 'При каком значении m прямые mx + 3y = 9 и 4x − my = 6 пересекаются в бесконечно многих точках?'
+      en: 'Two numbers have a sum of 20 and a difference of 6. What is their product?',
+      uz: 'Ikki sonning yig'indisi 20 va farqi 6. Ularning ko'paytmasi qancha?',
+      ru: 'Сумма двух чисел равна 20, а разность — 6. Чему равно их произведение?'
     },
-    choices: ['m = 2', 'm = −2', 'm = 3', 'm = −3'],
+    choices: ['91', '84', '96', '78'],
     correct: 0,
     explanation: {
-      en: 'For infinitely many solutions, equations must be proportional: m/4 = 3/(−m) = 9/6 = 3/2. From m/4 = 3/2: m = 6. From 3/(−m) = 3/2: m = −2. These contradict, so the system as stated gives m = −2 if we require 3/(−m) = 9/6 → m = −2. Then m/4 = −2/4 = −1/2 ≠ 3/2. Actually for the lines to be the same (infinitely many intersections): mx+3y=9 and 4x−my=6 must be proportional. m/4 = 3/(−m) and 9/6=3/2. From m/4 = 3/(−m): −m² = 12, m² = −12 (no real solution). So these lines can never coincide. They intersect at exactly one point unless parallel. m=−2 makes them parallel (no solution). Closest valid answer given choices: m=−2 for parallel (no intersections), but for exactly one intersection any other m works. This question has an issue; m=−2 is the "special" value.',
-      uz: 'm = −2 da chiziqlar parallel bo\'ladi (kesishmaydi). Boshqa qiymatlarda bir marta kesishadi.',
-      ru: 'При m = −2 прямые параллельны. При других значениях пересекаются ровно в одной точке.'
+      en: 'x + y = 20, x − y = 6 → x = 13, y = 7. Product = 13 × 7 = 91.',
+      uz: 'x + y = 20, x − y = 6 → x = 13, y = 7. Ko'paytma = 13 × 7 = 91.',
+      ru: 'x + y = 20, x − y = 6 → x = 13, y = 7. Произведение = 13 × 7 = 91.'
     }
   },
 
@@ -1478,52 +1478,52 @@ const MATH_QUESTIONS = [
   {
     id: 'm41',
     topic: 'functions',
-    difficulty: 4,
+    difficulty: 3,
     q: {
-      en: 'If f(x) = x² + 1 and g(x) = √x, what is the domain of g(f(x))?',
-      uz: 'Agar f(x) = x² + 1 va g(x) = √x bo\'lsa, g(f(x)) ning aniqlanish sohasi nima?',
-      ru: 'Если f(x) = x² + 1 и g(x) = √x, какова область определения g(f(x))?'
+      en: 'If f(x) = 2x + 3, what is f(f(2))?',
+      uz: 'Agar f(x) = 2x + 3 bo'lsa, f(f(2)) qancha?',
+      ru: 'Если f(x) = 2x + 3, чему равно f(f(2))?'
     },
-    choices: ['x ≥ 0', 'x ≥ 1', 'all real numbers', 'x ≥ −1'],
-    correct: 2,
+    choices: ['17', '14', '19', '10'],
+    correct: 0,
     explanation: {
-      en: 'g(f(x)) = √(x²+1). Since x²+1 ≥ 1 > 0 for all real x, the domain is all real numbers.',
-      uz: 'g(f(x)) = √(x²+1). Barcha haqiqiy x uchun x²+1 ≥ 1 > 0, shuning uchun aniqlanish sohasi barcha haqiqiy sonlar.',
-      ru: 'g(f(x)) = √(x²+1). Поскольку x²+1 ≥ 1 > 0 для всех вещественных x, область определения — все вещественные числа.'
+      en: 'f(2) = 2(2) + 3 = 7. f(f(2)) = f(7) = 2(7) + 3 = 17.',
+      uz: 'f(2) = 2(2) + 3 = 7. f(f(2)) = f(7) = 2(7) + 3 = 17.',
+      ru: 'f(2) = 2(2) + 3 = 7. f(f(2)) = f(7) = 2(7) + 3 = 17.'
     }
   },
   {
     id: 'm42',
     topic: 'functions',
-    difficulty: 4,
+    difficulty: 3,
     q: {
-      en: 'The graph of y = f(x) passes through (1, 5). The graph of y = f(2x) + 3 passes through:',
-      uz: 'y = f(x) grafigi (1, 5) nuqtadan o\'tadi. y = f(2x) + 3 grafigi qaysi nuqtadan o\'tadi?',
-      ru: 'График y = f(x) проходит через (1, 5). График y = f(2x) + 3 проходит через:'
+      en: 'The graph of y = x² is shifted 3 units to the right and 2 units up. What is the new equation?',
+      uz: 'y = x² grafigi 3 birlik o'ngga va 2 birlik yuqoriga siljitildi. Yangi tenglama qanday?',
+      ru: 'График y = x² сдвинут на 3 единицы вправо и 2 единицы вверх. Какое новое уравнение?'
     },
-    choices: ['(2, 8)', '(1/2, 8)', '(2, 5)', '(1/2, 5)'],
-    correct: 1,
+    choices: ['y = (x − 3)² + 2', 'y = (x + 3)² + 2', 'y = (x − 3)² − 2', 'y = x² + 5'],
+    correct: 0,
     explanation: {
-      en: 'f(2x)+3: need 2x=1, so x=1/2. y=f(1)+3=5+3=8. Point: (1/2, 8).',
-      uz: 'f(2x)+3: 2x=1 bo\'lishi kerak, demak x=1/2. y=f(1)+3=5+3=8. Nuqta: (1/2, 8).',
-      ru: 'f(2x)+3: нужно 2x=1, поэтому x=1/2. y=f(1)+3=5+3=8. Точка: (1/2, 8).'
+      en: 'Shift right by 3: replace x with (x−3). Shift up by 2: add 2. Result: y = (x−3)² + 2.',
+      uz: '3 birlik o'ngga: x ni (x−3) bilan almashtiring. 2 birlik yuqoriga: 2 qo'shing. Natija: y = (x−3)² + 2.',
+      ru: 'Сдвиг вправо на 3: замените x на (x−3). Сдвиг вверх на 2: прибавьте 2. Результат: y = (x−3)² + 2.'
     }
   },
   {
     id: 'm43',
     topic: 'functions',
-    difficulty: 4,
+    difficulty: 3,
     q: {
-      en: 'A function f is defined by f(x) = (2x − 1)/(x + 3). What is the range restriction (horizontal asymptote)?',
-      uz: 'f(x) = (2x − 1)/(x + 3) funksiyasi uchun gorizontal asimptota qancha?',
-      ru: 'Для функции f(x) = (2x − 1)/(x + 3) какова горизонтальная асимптота?'
+      en: 'If f(x) = 3x − 5, what is the inverse function f⁻¹(x)?',
+      uz: 'Agar f(x) = 3x − 5 bo'lsa, teskari funksiya f⁻¹(x) qanday?',
+      ru: 'Если f(x) = 3x − 5, какова обратная функция f⁻¹(x)?'
     },
-    choices: ['y = 0', 'y = 1', 'y = 2', 'y = 3'],
-    correct: 2,
+    choices: ['(x + 5) / 3', '(x − 5) / 3', '3x + 5', '1 / (3x − 5)'],
+    correct: 0,
     explanation: {
-      en: 'The horizontal asymptote of a rational function where degree of numerator equals denominator is the ratio of leading coefficients: 2/1 = 2.',
-      uz: 'Surat va maxrajning darajalari teng bo\'lgan ratsional funksiyaning gorizontal asimptotasi etakchi koefficientlar nisbatiga teng: 2/1 = 2.',
-      ru: 'Горизонтальная асимптота рациональной функции, где степени числителя и знаменателя равны, — это отношение старших коэффициентов: 2/1 = 2.'
+      en: 'To find the inverse: swap x and y, then solve for y. x = 3y − 5 → y = (x + 5) / 3.',
+      uz: 'Teskari funksiyani topish: x va y ni almashtiring, so'ng y ni toping. x = 3y − 5 → y = (x + 5) / 3.',
+      ru: 'Для нахождения обратной функции: поменяйте x и y, затем найдите y. x = 3y − 5 → y = (x + 5) / 3.'
     }
   },
   {
@@ -1689,52 +1689,52 @@ const MATH_QUESTIONS = [
   {
     id: 'm53',
     topic: 'geometry',
-    difficulty: 4,
+    difficulty: 3,
     q: {
-      en: 'A sphere has surface area 100π cm². What is its volume?',
-      uz: 'Sharning yuzasi 100π sm². Uning hajmi qancha?',
-      ru: 'Поверхность шара равна 100π см². Каков его объём?'
+      en: 'A cylinder has a radius of 4 cm and a height of 10 cm. What is its volume?',
+      uz: 'Silindrning radiusi 4 sm va balandligi 10 sm. Uning hajmi qancha?',
+      ru: 'Цилиндр имеет радиус 4 см и высоту 10 см. Каков его объём?'
     },
-    choices: ['(500/3)π cm³', '500π cm³', '(4000/3)π cm³', '250π cm³'],
+    choices: ['160π cm³', '80π cm³', '320π cm³', '40π cm³'],
     correct: 0,
     explanation: {
-      en: 'Surface area = 4πr² = 100π → r² = 25 → r = 5. Volume = (4/3)πr³ = (4/3)π(125) = (500/3)π.',
-      uz: 'Yuza = 4πr² = 100π → r = 5. Hajm = (4/3)π(125) = (500/3)π.',
-      ru: 'Площадь = 4πr² = 100π → r = 5. Объём = (4/3)π(125) = (500/3)π.'
+      en: 'Volume of a cylinder = πr²h = π × 4² × 10 = 160π cm³.',
+      uz: 'Silindr hajmi = πr²h = π × 16 × 10 = 160π sm³.',
+      ru: 'Объём цилиндра = πr²h = π × 4² × 10 = 160π см³.'
     }
   },
   {
     id: 'm54',
     topic: 'geometry',
-    difficulty: 4,
+    difficulty: 3,
     q: {
-      en: 'Two similar triangles have areas 16 cm² and 36 cm². If the shorter side of the smaller triangle is 4 cm, what is the corresponding side of the larger?',
-      uz: 'Ikki o\'xshash uchburchakning yuzalari 16 sm² va 36 sm². Kichik uchburchakning kichik tomoni 4 sm bo\'lsa, kattasining mos tomoni qancha?',
-      ru: 'Два подобных треугольника имеют площади 16 см² и 36 см². Если меньшая сторона малого треугольника 4 см, какова соответствующая сторона большего?'
+      en: 'Two similar rectangles have lengths 6 cm and 9 cm. If the width of the smaller rectangle is 4 cm, what is the width of the larger?',
+      uz: 'Ikki o'xshash to'rtburchakning uzunliklari 6 sm va 9 sm. Agar kichikining eni 4 sm bo'lsa, kattasining eni qancha?',
+      ru: 'Два подобных прямоугольника имеют длины 6 см и 9 см. Если ширина меньшего равна 4 см, какова ширина большего?'
     },
-    choices: ['5 cm', '6 cm', '8 cm', '9 cm'],
+    choices: ['5 cm', '6 cm', '8 cm', '7 cm'],
     correct: 1,
     explanation: {
-      en: 'Ratio of areas = (ratio of sides)². 36/16 = 9/4 = (side ratio)². Side ratio = 3/2. Larger side = 4 × (3/2) = 6 cm.',
-      uz: 'Yuzalar nisbati = (tomonlar nisbati)². 36/16 = 9/4. Tomonlar nisbati = 3/2. Katta tomon = 4 × 3/2 = 6 sm.',
-      ru: 'Отношение площадей = (отношение сторон)². 36/16 = 9/4. Отношение сторон = 3/2. Большая сторона = 4 × 3/2 = 6 см.'
+      en: 'The ratio of lengths = 9/6 = 3/2. Width of larger = 4 × (3/2) = 6 cm.',
+      uz: 'Uzunliklar nisbati = 9/6 = 3/2. Katta to'rtburchak eni = 4 × 3/2 = 6 sm.',
+      ru: 'Отношение длин = 9/6 = 3/2. Ширина большего = 4 × 3/2 = 6 см.'
     }
   },
   {
     id: 'm55',
     topic: 'geometry',
-    difficulty: 4,
+    difficulty: 3,
     q: {
-      en: 'A rectangle is inscribed in a circle of radius 5. If one side of the rectangle is 6, what is the other side?',
-      uz: 'Radiusi 5 bo\'lgan doiraga to\'rtburchak chizilgan. Agar to\'rtburchakning bir tomoni 6 bo\'lsa, ikkinchi tomoni qancha?',
-      ru: 'Прямоугольник вписан в окружность радиуса 5. Если одна сторона прямоугольника равна 6, какова другая?'
+      en: 'A right triangle has legs of length 9 and 12. What is the length of the hypotenuse?',
+      uz: 'To'g'ri burchakli uchburchakning katetlari 9 va 12. Gipotenuza qancha?',
+      ru: 'В прямоугольном треугольнике катеты равны 9 и 12. Чему равна гипотенуза?'
     },
-    choices: ['6', '7', '8', '9'],
+    choices: ['13', '14', '15', '16'],
     correct: 2,
     explanation: {
-      en: 'The diagonal of the rectangle = diameter = 10. Using Pythagoras: 6² + side² = 10², side² = 64, side = 8.',
-      uz: 'To\'rtburchakning diagonali = diametr = 10. Pifagor: 6² + tomon² = 10², tomon = 8.',
-      ru: 'Диагональ прямоугольника = диаметр = 10. По Пифагору: 6² + сторона² = 10², сторона = 8.'
+      en: 'By the Pythagorean theorem: c² = 9² + 12² = 81 + 144 = 225. c = √225 = 15.',
+      uz: 'Pifagor teoremasi: c² = 9² + 12² = 81 + 144 = 225. c = √225 = 15.',
+      ru: 'По теореме Пифагора: c² = 9² + 12² = 81 + 144 = 225. c = √225 = 15.'
     }
   },
   {
@@ -2026,23 +2026,18 @@ const MATH_QUESTIONS = [
   {
     id: 'm72',
     topic: 'trigonometry',
-    difficulty: 4,
+    difficulty: 3,
     q: {
-      en: 'In triangle ABC, a = 7, b = 10, and angle C = 45°. Use the Law of Cosines to find c. Which expression gives c²?',
-      uz: 'ABC uchburchagida a = 7, b = 10 va C burchak = 45°. Kosinuslar teoremasi yordamida c² ni toping.',
-      ru: 'В треугольнике ABC a = 7, b = 10 и угол C = 45°. Используя теорему косинусов, найдите c².'
+      en: 'In a right triangle, one acute angle is 30° and the hypotenuse is 20. What is the length of the side opposite the 30° angle?',
+      uz: 'To'g'ri burchakli uchburchakda o'tkir burchak 30° va gipotenuza 20. 30° burchakka qarshi tomon qancha?',
+      ru: 'В прямоугольном треугольнике один острый угол равен 30°, а гипотенуза — 20. Чему равна сторона, противолежащая углу 30°?'
     },
-    choices: [
-      'c² = 49 + 100 − 70√2',
-      'c² = 49 + 100 + 70√2',
-      'c² = 49 − 100 − 70√2',
-      'c² = 49 × 100 − 70√2'
-    ],
-    correct: 0,
+    choices: ['8', '10', '12', '14'],
+    correct: 1,
     explanation: {
-      en: 'Law of Cosines: c² = a² + b² − 2ab·cos(C) = 49 + 100 − 2(7)(10)cos(45°) = 149 − 140·(√2/2) = 149 − 70√2.',
-      uz: 'Kosinuslar teoremasi: c² = a² + b² − 2ab·cos(C) = 49 + 100 − 140·cos(45°) = 149 − 70√2.',
-      ru: 'Теорема косинусов: c² = a² + b² − 2ab·cos(C) = 49 + 100 − 140·cos(45°) = 149 − 70√2.'
+      en: 'sin(30°) = opposite / hypotenuse = 0.5. Opposite = 20 × 0.5 = 10.',
+      uz: 'sin(30°) = qarshi tomon / gipotenuza = 0.5. Qarshi tomon = 20 × 0.5 = 10.',
+      ru: 'sin(30°) = противолежащая / гипотенуза = 0.5. Противолежащая = 20 × 0.5 = 10.'
     }
   },
   {
@@ -2065,40 +2060,40 @@ const MATH_QUESTIONS = [
   {
     id: 'm74',
     topic: 'trigonometry',
-    difficulty: 4,
+    difficulty: 3,
     q: {
-      en: 'If tan(θ) = 3/4 and θ is in the third quadrant, what is sin(θ)?',
-      uz: 'Agar tan(θ) = 3/4 va θ uchinchi chorakda bo\'lsa, sin(θ) qancha?',
-      ru: 'Если tan(θ) = 3/4 и θ находится в третьей четверти, чему равен sin(θ)?'
+      en: 'In a right triangle, if sin(θ) = 5/13, what is cos(θ)?',
+      uz: 'To'g'ri burchakli uchburchakda sin(θ) = 5/13 bo'lsa, cos(θ) qancha?',
+      ru: 'В прямоугольном треугольнике sin(θ) = 5/13. Чему равен cos(θ)?'
     },
-    choices: ['3/5', '−3/5', '4/5', '−4/5'],
-    correct: 1,
+    choices: ['12/13', '5/12', '13/5', '8/13'],
+    correct: 0,
     explanation: {
-      en: 'In Q3, both sin and cos are negative. tan = opp/adj = 3/4 (magnitudes). Hypotenuse = 5. sin(θ) = −3/5.',
-      uz: 'III chorakda sin va cos ham manfiy. tan = 3/4 (kattaliklar). Gipotenuza = 5. sin(θ) = −3/5.',
-      ru: 'В III четверти sin и cos оба отрицательны. tan = 3/4 (по модулю). Гипотенуза = 5. sin(θ) = −3/5.'
+      en: 'Using sin²(θ) + cos²(θ) = 1: (5/13)² + cos²(θ) = 1 → cos²(θ) = 1 − 25/169 = 144/169 → cos(θ) = 12/13.',
+      uz: 'sin²(θ) + cos²(θ) = 1: (5/13)² + cos²(θ) = 1 → cos²(θ) = 144/169 → cos(θ) = 12/13.',
+      ru: 'sin²(θ) + cos²(θ) = 1: (5/13)² + cos²(θ) = 1 → cos²(θ) = 144/169 → cos(θ) = 12/13.'
     }
   },
   {
     id: 'm75',
     topic: 'trigonometry',
-    difficulty: 4,
+    difficulty: 3,
     q: {
-      en: 'Which of the following is equivalent to cos(2θ)?',
-      uz: 'Quyidagilardan qaysi biri cos(2θ) ga teng?',
-      ru: 'Что из следующего равно cos(2θ)?'
+      en: 'Which of the following identities is always true for any angle θ?',
+      uz: 'Quyidagi tengliklardan qaysi biri har qanday θ uchun to'g'ri?',
+      ru: 'Какое из следующих тождеств верно для любого угла θ?'
     },
     choices: [
-      '2sin(θ)cos(θ)',
-      'sin²(θ) − cos²(θ)',
-      '1 − 2sin²(θ)',
-      '2sin²(θ) − 1'
+      'sin²(θ) + cos²(θ) = 1',
+      'sin(θ) + cos(θ) = 1',
+      'sin(θ) × cos(θ) = 1',
+      'tan(θ) = sin(θ) + cos(θ)'
     ],
-    correct: 2,
+    correct: 0,
     explanation: {
-      en: 'The double angle identity: cos(2θ) = cos²(θ) − sin²(θ) = 1 − 2sin²(θ). Option C is correct.',
-      uz: 'Ikki burchak identligi: cos(2θ) = cos²(θ) − sin²(θ) = 1 − 2sin²(θ). C javob to\'g\'ri.',
-      ru: 'Формула двойного угла: cos(2θ) = cos²(θ) − sin²(θ) = 1 − 2sin²(θ). Правильный ответ C.'
+      en: 'The Pythagorean identity: sin²(θ) + cos²(θ) = 1 is always true for any angle θ.',
+      uz: 'Pifagor identligi: sin²(θ) + cos²(θ) = 1 har qanday θ uchun to'g'ri.',
+      ru: 'Тождество Пифагора: sin²(θ) + cos²(θ) = 1 всегда верно для любого угла θ.'
     }
   }
 ];
