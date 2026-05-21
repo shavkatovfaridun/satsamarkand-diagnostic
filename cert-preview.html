@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1300">
+<title>Certificate Preview</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; padding: 40px; background: #c8c9ca; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; }
+#cert-canvas-container{display:none}
+
+/* ═══════════ PREMIUM CERTIFICATE STYLES ═══════════ */
+.cert-design{
+  width:1200px;height:850px;
+  background:#FFFEF5;
+  position:relative;
+  font-family:Georgia,'Times New Roman',serif;
+  box-sizing:border-box;color:#0B1F3A;overflow:hidden;
+}
+
+/* Diagonal texture watermark */
+.cert-bg-lines{
+  position:absolute;inset:0;
+  background-image:repeating-linear-gradient(
+    -55deg,
+    rgba(201,168,76,.07) 0px,rgba(201,168,76,.07) 1px,
+    transparent 1px,transparent 28px
+  );
+  pointer-events:none;z-index:0;
+}
+
+/* Large faint watermark text */
+.cert-watermark{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-30deg);
+  font-size:120px;font-weight:900;
+  color:rgba(11,31,58,.04);
+  white-space:nowrap;letter-spacing:8px;
+  pointer-events:none;z-index:0;
+  font-family:Georgia,serif;
+}
+
+/* Outer border */
+.cert-outer-border{
+  position:absolute;inset:14px;
+  border:3px solid #0B1F3A;
+  pointer-events:none;z-index:1;
+}
+/* Gold inner border */
+.cert-inner-border{
+  position:absolute;inset:22px;
+  border:1.5px solid #C9A84C;
+  pointer-events:none;z-index:1;
+}
+/* Second gold line */
+.cert-inner-border2{
+  position:absolute;inset:27px;
+  border:0.5px solid rgba(201,168,76,.4);
+  pointer-events:none;z-index:1;
+}
+
+/* Corner ornaments */
+.cert-corner-tl,.cert-corner-tr,.cert-corner-bl,.cert-corner-br{
+  position:absolute;width:64px;height:64px;z-index:2;
+}
+.cert-corner-tl{top:10px;left:10px}
+.cert-corner-tr{top:10px;right:10px;transform:rotate(90deg)}
+.cert-corner-bl{bottom:10px;left:10px;transform:rotate(-90deg)}
+.cert-corner-br{bottom:10px;right:10px;transform:rotate(180deg)}
+
+/* Navy top header band */
+.cert-top-band{
+  position:relative;z-index:2;
+  background:#0B1F3A;
+  height:108px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:4px;
+  margin:33px 33px 0;
+}
+.cert-top-band-dots{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:2px;
+}
+.cert-top-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:#C9A84C;
+}
+.cert-top-line{width:60px;height:1px;background:rgba(201,168,76,.5)}
+.cert-brand-main{
+  font-size:26px;font-weight:700;letter-spacing:10px;
+  color:#FFFFFF;text-transform:uppercase;
+  font-family:Georgia,serif;
+}
+.cert-brand-sub{
+  font-size:10px;letter-spacing:5px;color:#C9A84C;
+  text-transform:uppercase;font-family:Arial,sans-serif;
+}
+
+/* Main content area */
+.cert-body{
+  position:relative;z-index:2;
+  text-align:center;padding:0 80px;
+}
+
+/* Ornamental divider */
+.cert-orn-divider{
+  display:flex;align-items:center;justify-content:center;
+  gap:12px;margin:18px auto 0;
+}
+.cert-orn-line{flex:1;max-width:140px;height:1px;background:linear-gradient(90deg,transparent,#C9A84C)}
+.cert-orn-line.r{background:linear-gradient(90deg,#C9A84C,transparent)}
+
+/* Title */
+.cert-main-title{
+  font-size:44px;font-weight:700;letter-spacing:8px;
+  color:#0B1F3A;text-transform:uppercase;
+  margin:14px 0 0;line-height:1;
+  font-family:Georgia,serif;
+}
+.cert-title-sub{
+  font-size:11px;letter-spacing:5px;color:#C9A84C;
+  text-transform:uppercase;margin:6px 0 0;
+  font-family:Arial,sans-serif;font-weight:600;
+}
+.cert-gold-rule{
+  width:60px;height:2px;
+  background:linear-gradient(90deg,transparent,#C9A84C,transparent);
+  margin:12px auto 0;
+}
+
+/* Presented to / Name */
+.cert-presented{
+  font-size:13px;color:#6B7280;font-style:italic;
+  margin:14px 0 6px;font-family:Georgia,serif;
+}
+.cert-student-name{
+  font-size:54px;font-weight:700;
+  color:#0B1F3A;
+  font-family:'Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
+  font-style:italic;letter-spacing:1px;
+  line-height:1.1;margin:0 0 6px;
+}
+.cert-name-underline{
+  width:420px;height:1px;
+  background:linear-gradient(90deg,transparent,#0B1F3A 20%,#0B1F3A 80%,transparent);
+  margin:0 auto 10px;
+}
+
+/* Description */
+.cert-desc-text{
+  font-size:13px;color:#374151;line-height:1.8;
+  font-family:Arial,Helvetica,sans-serif;
+  margin:0 auto;max-width:680px;
+}
+.cert-desc-text strong{color:#0B1F3A;font-weight:700}
+
+/* Score boxes */
+.cert-scores-row{
+  display:flex;align-items:stretch;justify-content:center;
+  gap:0;margin:16px auto 0;max-width:560px;
+}
+.cert-score-box{
+  flex:1;text-align:center;padding:12px 20px;
+  background:#0B1F3A;border-radius:0;
+}
+.cert-score-box:first-child{border-radius:6px 0 0 6px}
+.cert-score-box:last-child{border-radius:0 6px 6px 0}
+.cert-score-val{
+  font-size:28px;font-weight:700;color:#C9A84C;
+  font-family:Georgia,serif;line-height:1;
+}
+.cert-score-lbl{
+  font-size:8px;letter-spacing:2px;color:rgba(255,255,255,.65);
+  text-transform:uppercase;margin-top:4px;
+  font-family:Arial,sans-serif;
+}
+.cert-score-sep{
+  width:1px;background:rgba(201,168,76,.3);
+  flex-shrink:0;
+}
+
+/* Footer */
+.cert-footer-row{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  padding:0 10px;margin-top:16px;
+}
+.cert-sig-block{text-align:center;flex:1}
+.cert-sig-line{
+  width:190px;height:1px;background:#0B1F3A;
+  margin:0 auto 5px;
+}
+.cert-sig-name{font-size:11px;color:#0B1F3A;font-weight:700;letter-spacing:1px;font-family:Arial,sans-serif}
+.cert-sig-title{font-size:9px;color:#6B7280;margin-top:2px;letter-spacing:1px;font-family:Arial,sans-serif}
+
+/* Seal */
+.cert-seal-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:flex-end;flex:0 0 auto;
+}
+
+/* Date block */
+.cert-date-block{text-align:right;flex:1}
+.cert-date-lbl{font-size:9px;letter-spacing:2px;color:#6B7280;text-transform:uppercase;font-family:Arial,sans-serif}
+.cert-date-val{font-size:13px;color:#0B1F3A;font-weight:700;margin-top:3px;font-family:Arial,sans-serif}
+</style>
+</head>
+<body>
+
+#cert-canvas-container { display: block !important; position: static !important; left: auto !important; top: auto !important; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+</style>
+</head>
+<body>
+<div id="cert-canvas-container">
+  <div class="cert-design" id="cert-design">
+
+    <!-- Background texture -->
+    <div class="cert-bg-lines"></div>
+    <div class="cert-watermark">SAT</div>
+
+    <!-- Borders -->
+    <div class="cert-outer-border"></div>
+    <div class="cert-inner-border"></div>
+    <div class="cert-inner-border2"></div>
+
+    <!-- Corner ornaments -->
+    <div class="cert-corner-tl"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4 60 L4 4 L60 4" stroke="#C9A84C" stroke-width="2.5" fill="none"/>
+  <path d="M4 4 L16 4" stroke="#C9A84C" stroke-width="2.5"/>
+  <path d="M4 4 L4 16" stroke="#C9A84C" stroke-width="2.5"/>
+  <circle cx="4" cy="4" r="3" fill="#C9A84C"/>
+  <circle cx="60" cy="4" r="2" fill="#C9A84C" opacity="0.5"/>
+  <circle cx="4" cy="60" r="2" fill="#C9A84C" opacity="0.5"/>
+</svg></div>
+    <div class="cert-corner-tr"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4 60 L4 4 L60 4" stroke="#C9A84C" stroke-width="2.5" fill="none"/>
+  <path d="M4 4 L16 4" stroke="#C9A84C" stroke-width="2.5"/>
+  <path d="M4 4 L4 16" stroke="#C9A84C" stroke-width="2.5"/>
+  <circle cx="4" cy="4" r="3" fill="#C9A84C"/>
+  <circle cx="60" cy="4" r="2" fill="#C9A84C" opacity="0.5"/>
+  <circle cx="4" cy="60" r="2" fill="#C9A84C" opacity="0.5"/>
+</svg></div>
+    <div class="cert-corner-bl"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4 60 L4 4 L60 4" stroke="#C9A84C" stroke-width="2.5" fill="none"/>
+  <path d="M4 4 L16 4" stroke="#C9A84C" stroke-width="2.5"/>
+  <path d="M4 4 L4 16" stroke="#C9A84C" stroke-width="2.5"/>
+  <circle cx="4" cy="4" r="3" fill="#C9A84C"/>
+  <circle cx="60" cy="4" r="2" fill="#C9A84C" opacity="0.5"/>
+  <circle cx="4" cy="60" r="2" fill="#C9A84C" opacity="0.5"/>
+</svg></div>
+    <div class="cert-corner-br"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4 60 L4 4 L60 4" stroke="#C9A84C" stroke-width="2.5" fill="none"/>
+  <path d="M4 4 L16 4" stroke="#C9A84C" stroke-width="2.5"/>
+  <path d="M4 4 L4 16" stroke="#C9A84C" stroke-width="2.5"/>
+  <circle cx="4" cy="4" r="3" fill="#C9A84C"/>
+  <circle cx="60" cy="4" r="2" fill="#C9A84C" opacity="0.5"/>
+  <circle cx="4" cy="60" r="2" fill="#C9A84C" opacity="0.5"/>
+</svg></div>
+
+    <!-- Top navy band -->
+    <div class="cert-top-band">
+      <div class="cert-top-band-dots">
+        <div class="cert-top-line"></div>
+        <div class="cert-top-dot"></div>
+        <div class="cert-top-dot"></div>
+        <div class="cert-top-dot"></div>
+        <div class="cert-top-line"></div>
+      </div>
+      <div class="cert-brand-main">SAT Samarkand</div>
+      <div class="cert-brand-sub">Test Preparation Center &nbsp;·&nbsp; Samarkand, Uzbekistan</div>
+    </div>
+
+    <!-- Body -->
+    <div class="cert-body">
+
+      <!-- Ornamental divider -->
+      <div class="cert-orn-divider">
+        <div class="cert-orn-line"></div>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+  <path d="M7 1L13 7L7 13L1 7Z" fill="#C9A84C"/>
+  <path d="M7 3L11 7L7 11L3 7Z" fill="#FFFEF5"/>
+</svg>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+  <path d="M7 1L13 7L7 13L1 7Z" fill="#C9A84C"/>
+  <path d="M7 3L11 7L7 11L3 7Z" fill="#FFFEF5"/>
+</svg>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+  <path d="M7 1L13 7L7 13L1 7Z" fill="#C9A84C"/>
+  <path d="M7 3L11 7L7 11L3 7Z" fill="#FFFEF5"/>
+</svg>
+        <div class="cert-orn-line r"></div>
+      </div>
+
+      <div class="cert-main-title">Certificate</div>
+      <div class="cert-title-sub">of Diagnostic Assessment</div>
+      <div class="cert-gold-rule"></div>
+
+      <div class="cert-presented">This certifies that</div>
+      <div class="cert-student-name" id="cert-name">Student Name</div>
+      <div class="cert-name-underline"></div>
+
+      <div class="cert-desc-text">
+        has successfully completed the <strong>SAT Samarkand Diagnostic Assessment</strong>,
+        demonstrating measured proficiency in Mathematics and English Language.
+      </div>
+
+      <!-- Score boxes -->
+      <div class="cert-scores-row">
+        <div class="cert-score-box">
+          <div class="cert-score-val" id="cert-level">B1</div>
+          <div class="cert-score-lbl">English (CEFR)</div>
+        </div>
+        <div class="cert-score-sep"></div>
+        <div class="cert-score-box">
+          <div class="cert-score-val" id="cert-pct">0%</div>
+          <div class="cert-score-lbl">Math Score</div>
+        </div>
+        <div class="cert-score-sep"></div>
+        <div class="cert-score-box">
+          <div class="cert-score-val" id="cert-score">0/66</div>
+          <div class="cert-score-lbl">Total Score</div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="cert-footer-row">
+        <div class="cert-sig-block">
+          <div class="cert-sig-line"></div>
+          <div class="cert-sig-name">SAT Samarkand</div>
+          <div class="cert-sig-title">Test Preparation Center</div>
+        </div>
+        <div class="cert-seal-wrap"><svg width="88" height="88" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer ring -->
+  <circle cx="44" cy="44" r="42" fill="#0B1F3A" stroke="#C9A84C" stroke-width="2"/>
+  <!-- Mid ring -->
+  <circle cx="44" cy="44" r="35" fill="none" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+  <!-- 12-point star burst -->
+  <path d="M44 10L46.2 20L52 13L50.4 23.2L58 18.5L52.8 27.4L62 26.5L54.4 33L63 35.5L54.5 39L61.5 44L54.5 49L63 52.5L54.4 55L62 61.5L52.8 60.6L58 69.5L50.4 64.8L52 75L46.2 68L44 78L41.8 68L36 75L37.6 64.8L30 69.5L35.2 60.6L26 61.5L33.6 55L25 52.5L33.5 49L26.5 44L33.5 39L25 35.5L33.6 33L26 26.5L35.2 27.4L30 18.5L37.6 23.2L36 13L41.8 20Z" fill="#C9A84C" opacity="0.15"/>
+  <!-- Inner circle -->
+  <circle cx="44" cy="44" r="26" fill="#C9A84C" opacity="0.08"/>
+  <!-- "S" emblem -->
+  <text x="44" y="40" text-anchor="middle" font-family="Georgia,serif" font-size="22" font-weight="700" fill="#C9A84C" letter-spacing="0">SAT</text>
+  <text x="44" y="54" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" font-weight="600" fill="#C9A84C" letter-spacing="2">CERTIFIED</text>
+  <!-- Outer text ring (decorative dots) -->
+  <circle cx="44" cy="6" r="1.5" fill="#C9A84C" opacity="0.6"/>
+  <circle cx="44" cy="82" r="1.5" fill="#C9A84C" opacity="0.6"/>
+  <circle cx="6" cy="44" r="1.5" fill="#C9A84C" opacity="0.6"/>
+  <circle cx="82" cy="44" r="1.5" fill="#C9A84C" opacity="0.6"/>
+</svg></div>
+        <div class="cert-date-block">
+          <div class="cert-date-lbl">Date Issued</div>
+          <div class="cert-date-val" id="cert-date">2026</div>
+        </div>
+      </div>
+
+    </div><!-- /cert-body -->
+  </div><!-- /cert-design -->
+</div>
+
+
+<script>
+document.getElementById('cert-name').textContent = 'Ahmad Karimov';
+document.getElementById('cert-score').textContent = '52/66';
+document.getElementById('cert-pct').textContent = '79%';
+document.getElementById('cert-level').textContent = 'B2';
+document.getElementById('cert-date').textContent = '21 May 2026';
+</script>
+</body>
+</html>
