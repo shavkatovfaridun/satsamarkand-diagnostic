@@ -907,9 +907,9 @@ const MATH_QUESTIONS = [
       ru: 'Цена увеличилась на 25%, затем уменьшилась на 20%. Каково общее процентное изменение?'
     },
     choices: ['0%', '5%', '−5%', '−10%'],
-    correct: 2,
+    correct: 0,
     explanation: {
-      en: 'Starting with 1: 1 × 1.25 × 0.80 = 1.00 − wait, that gives 1.00. Let me recompute: 1 × 1.25 = 1.25; 1.25 × 0.80 = 1.00. Net change = 0%. Actually: if we start with 100 → 125 → 100, net = 0%. But the standard answer with these exact numbers is 0%. The common trick question uses +20% then −20% giving −4%. Here +25% then −20%: 100 → 125 → 100. Net = 0%.',
+      en: 'Start with 100. After 25% increase: 100 × 1.25 = 125. After 20% decrease: 125 × 0.80 = 100. Net change = 0%.',
       uz: '100 dan boshlasak: 100 × 1.25 = 125; 125 × 0.80 = 100. O\'zgarish = 0%.',
       ru: 'Начнём с 100: 100 × 1.25 = 125; 125 × 0.80 = 100. Изменение = 0%.'
     }
@@ -1125,16 +1125,16 @@ const MATH_QUESTIONS = [
     topic: 'linear_algebra',
     difficulty: 3,
     q: {
-      en: 'Solve for x and y: 2x + 3y = 12 and 4x − y = 5. What is y?',
-      uz: '2x + 3y = 12 va 4x − y = 5 ni yeching. y qancha?',
-      ru: 'Решите: 2x + 3y = 12 и 4x − y = 5. Чему равно y?'
+      en: 'Solve for x and y: 2x + 3y = 12 and 4x − y = 10. What is y?',
+      uz: '2x + 3y = 12 va 4x − y = 10 ni yeching. y qancha?',
+      ru: 'Решите: 2x + 3y = 12 и 4x − y = 10. Чему равно y?'
     },
     choices: ['1', '2', '3', '4'],
     correct: 1,
     explanation: {
-      en: 'From equation 2: y = 4x − 5. Substitute: 2x + 3(4x−5) = 12 → 14x = 27 → x = 27/14. Hmm, let me use elimination: multiply eq2 by 3: 12x − 3y = 15. Add to eq1: 14x = 27, x = 27/14. That gives non-integer. Let me restate: multiply eq2 by 3: 12x − 3y = 15; add eq1: 14x = 27. Actually y = 4(27/14)−5 = 108/14−70/14 = 38/14 = 19/7. Re-checking original: use 2x+3y=12 and 4x−y=5. Multiply eq2 by 3: 12x−3y=15. Add: 14x=27, x=27/14, y=4(27/14)−5=38/14=19/7. Since this gives fractions, the intended system must be different. Using elimination on the stated problem gives y = 2 if we adjust: Let\'s verify y=2: from eq2 4x=7, x=7/4; eq1: 2(7/4)+3(2)=7/2+6=9.5≠12. The correct answer with clean numbers: y=2 when system is 2x+3y=12 and x−y=1 (x=3,y=2). For the stated system the answer is y≈19/7. Choosing closest option: 2.',
-      uz: '2-tenglamadan y = 4x − 5. 1-ga qo\'yamiz va hisoblasak y ≈ 2 ga yaqin.',
-      ru: 'Из уравнения 2: y = 4x − 5. Подставляем и получаем y ≈ 2.'
+      en: 'From equation 2: y = 4x − 10. Substitute into equation 1: 2x + 3(4x − 10) = 12 → 14x − 30 = 12 → 14x = 42 → x = 3. Then y = 4(3) − 10 = 2.',
+      uz: '2-tenglamadan y = 4x − 10. 1-ga qo\'yamiz: 14x = 42, x = 3. y = 4(3) − 10 = 2.',
+      ru: 'Из уравнения 2: y = 4x − 10. Подставляем: 14x = 42, x = 3. y = 4(3) − 10 = 2.'
     }
   },
   {
@@ -1142,16 +1142,16 @@ const MATH_QUESTIONS = [
     topic: 'linear_algebra',
     difficulty: 3,
     q: {
-      en: 'The sum of two numbers is 30. One number is 4 more than twice the other. What is the larger number?',
-      uz: 'Ikki sonning yig\'indisi 30. Bitta son ikkinchisining ikki baravariga 4 tadan ko\'p. Kattaroq son qancha?',
-      ru: 'Сумма двух чисел равна 30. Одно число на 4 больше удвоенного другого. Каково большее число?'
+      en: 'The sum of two numbers is 30. One number is 6 more than twice the other. What is the larger number?',
+      uz: 'Ikki sonning yig\'indisi 30. Bitta son ikkinchisining ikki baravariga 6 tadan ko\'p. Kattaroq son qancha?',
+      ru: 'Сумма двух чисел равна 30. Одно число на 6 больше удвоенного другого. Каково большее число?'
     },
     choices: ['18', '20', '22', '24'],
     correct: 2,
     explanation: {
-      en: 'Let the smaller number be x. Then the larger = 2x + 4. x + 2x + 4 = 30 → 3x = 26 → x = 26/3. Hmm. Let me re-read: one number = 2×other + 4. Let other = x, then larger = 2x+4. x + 2x+4 = 30, 3x = 26, x = 8.67. For clean answer: if larger = 22, smaller = 8, and 22 = 2(8)+6 ≠ 4 more. If we interpret "4 more than twice": larger = 2(smaller)+4 → smaller+(2·smaller+4)=30 → 3·smaller=26 → not integer. Alternatively "twice the other plus 4": same. For answer 22: smaller=8, larger=22, 22−2(8)=6≠4. For answer 20: smaller=10, larger=20, 20=2(10)=20 ✓ (but that\'s twice, not 4 more). Best fit: larger=22, check 22=2×(8.67)+4? Correct answer is 22 based on the algebra giving x≈8.67, 2x+4≈21.33≈22.',
-      uz: 'Kichik son x bo\'lsin. Katta son = 2x + 4. x + 2x + 4 = 30, 3x = 26, x ≈ 8.67, katta son ≈ 21.3 ≈ 22.',
-      ru: 'Пусть меньшее число = x. Большее = 2x + 4. x + 2x + 4 = 30, 3x = 26, x ≈ 8,67, большее ≈ 22.'
+      en: 'Let the smaller number be x. Then the larger = 2x + 6. x + (2x + 6) = 30 → 3x = 24 → x = 8. Larger = 2(8) + 6 = 22.',
+      uz: 'Kichik son x bo\'lsin. Katta son = 2x + 6. x + 2x + 6 = 30, 3x = 24, x = 8. Katta son = 2(8) + 6 = 22.',
+      ru: 'Пусть меньшее число = x. Большее = 2x + 6. x + 2x + 6 = 30, 3x = 24, x = 8. Большее = 2(8) + 6 = 22.'
     }
   },
   {
@@ -2135,6 +2135,40 @@ const MATH_QUESTIONS = [
       uz: 'Pifagor identligi: sin²(θ) + cos²(θ) = 1 har qanday θ uchun to\'g\'ri.',
       ru: 'Тождество Пифагора: sin²(θ) + cos²(θ) = 1 всегда верно для любого угла θ.'
     }
+  },
+  {
+    id: 'm76',
+    topic: 'trigonometry',
+    difficulty: 1,
+    q: {
+      en: 'What is sin(30°)?',
+      uz: 'sin(30°) nechaga teng?',
+      ru: 'Чему равен sin(30°)?'
+    },
+    choices: ['1', '√3/2', '1/2', '0'],
+    correct: 2,
+    explanation: {
+      en: 'sin(30°) = 1/2. This is one of the standard trigonometric values to memorise.',
+      uz: 'sin(30°) = 1/2. Bu yodlab olish kerak bo\'lgan standart trigonometrik qiymatlardan biri.',
+      ru: 'sin(30°) = 1/2. Это стандартное тригонометрическое значение, которое нужно запомнить.'
+    }
+  },
+  {
+    id: 'm77',
+    topic: 'trigonometry',
+    difficulty: 2,
+    q: {
+      en: 'In a right triangle, the side opposite the right angle is called the ___.',
+      uz: 'To\'g\'ri burchakli uchburchakda to\'g\'ri burchakka qarama-qarshi tomon nima deyiladi?',
+      ru: 'В прямоугольном треугольнике сторона, противолежащая прямому углу, называется ___.'
+    },
+    choices: ['adjacent', 'opposite', 'hypotenuse', 'base'],
+    correct: 2,
+    explanation: {
+      en: 'The hypotenuse is the longest side of a right triangle and is always opposite the 90° angle.',
+      uz: 'Gipotenuz — to\'g\'ri burchakli uchburchakning eng uzun tomoni bo\'lib, doimo 90° burchakka qarama-qarshi joylashadi.',
+      ru: 'Гипотенуза — самая длинная сторона прямоугольного треугольника, всегда противолежащая углу 90°.'
+    }
   }
 ];
 
@@ -2563,10 +2597,10 @@ const ENGLISH_QUESTIONS = [
     topic: 'vocabulary',
     difficulty: 2,
     cefr: 'A2',
-    q: 'Which word means "a trip taken for pleasure"?',
-    choices: ['journey', 'vacation', 'excursion', 'commute'],
+    q: 'Which word specifically means "a short trip made for pleasure, often as part of a holiday"?',
+    choices: ['journey', 'errand', 'excursion', 'commute'],
     correct: 2,
-    explanation: 'An "excursion" is a short trip made for pleasure, often as part of a holiday.'
+    explanation: 'An "excursion" is a short trip made for pleasure, often as part of a holiday. A "journey" is any travel from A to B; an "errand" is a trip to do a task; a "commute" is daily travel to work.'
   },
   {
     id: 'e41',
@@ -2784,12 +2818,12 @@ const ENGLISH_QUESTIONS = [
     passage: 'My name is Emma. I am fifteen years old and I live in a small town near the mountains. Every day I walk to school with my best friend Sara. We always talk about our favourite TV shows on the way. After school, I usually go to the library to do my homework. On weekends, my family often goes hiking in the mountains. I love being outdoors. My favourite subject at school is science because our teacher makes it very interesting.',
     q: 'What does Emma do after school?',
     choices: [
-      'She goes hiking with her family.',
-      'She watches TV with Sara.',
       'She goes to the library to do homework.',
+      'She watches TV with Sara.',
+      'She goes hiking with her family.',
       'She plays sports in the park.'
     ],
-    correct: 2,
+    correct: 0,
     explanation: 'The passage states: "After school, I usually go to the library to do my homework."'
   },
   {
@@ -2818,10 +2852,10 @@ const ENGLISH_QUESTIONS = [
     choices: [
       'A receipt from the previous day.',
       'Their school timetable.',
-      'Their school ID card.',
-      'A permission letter from a teacher.'
+      'A permission letter from a teacher.',
+      'Their school ID card.'
     ],
-    correct: 2,
+    correct: 3,
     explanation: 'The passage clearly states: "Students must show their school ID card when they pay."'
   },
   {
@@ -2832,13 +2866,13 @@ const ENGLISH_QUESTIONS = [
     passage: 'London is the capital city of England and the United Kingdom. More than eight million people live there. It is famous for many things, including the River Thames, Buckingham Palace, and the London Eye. Tourists come from all over the world to visit. The city has many museums, most of which are free. London\'s underground railway, called the Tube, is one of the oldest in the world.',
     q: 'Which of the following statements about London is true according to the passage?',
     choices: [
-      'All museums in London charge an entrance fee.',
-      'The London Tube is the newest underground railway in the world.',
       'London has a population of more than eight million.',
+      'The London Tube is the newest underground railway in the world.',
+      'All museums in London charge an entrance fee.',
       'Buckingham Palace is on the River Thames.'
     ],
-    correct: 2,
-    explanation: 'The passage states "More than eight million people live there", making option C correct.'
+    correct: 0,
+    explanation: 'The passage states "More than eight million people live there", making option A correct.'
   },
   {
     id: 'e65',
@@ -2850,10 +2884,10 @@ const ENGLISH_QUESTIONS = [
     choices: [
       'Because the market closes at seven.',
       'Because George only sells to early customers.',
-      'Because the best produce sells quickly.',
-      'Because she has to go to work afterwards.'
+      'Because she has to go to work afterwards.',
+      'Because the best produce sells quickly.'
     ],
-    correct: 2,
+    correct: 3,
     explanation: 'The passage says she arrives early "because the best produce sells quickly".'
   },
   {
@@ -2893,12 +2927,12 @@ const ENGLISH_QUESTIONS = [
     passage: 'Volunteering is an activity in which people give their time to help others without being paid. In many countries, volunteering is popular among teenagers, who may help in hospitals, animal shelters, or community gardens. Experts suggest that volunteering helps young people develop important skills such as teamwork, communication, and responsibility. It also gives them an opportunity to explore possible career paths. Some universities even consider volunteer experience when making admission decisions. Despite its many benefits, volunteering requires commitment, and some young people find it difficult to balance with school and other activities.',
     q: 'What is one reason universities might look at volunteer experience?',
     choices: [
-      'To check if students have enough free time.',
-      'To see if students have paid work experience.',
       'To assess qualities like responsibility and teamwork.',
+      'To see if students have paid work experience.',
+      'To check if students have enough free time.',
       'To decide how much financial aid to offer.'
     ],
-    correct: 2,
+    correct: 0,
     explanation: 'The passage says volunteering helps develop "teamwork, communication, and responsibility" — skills universities value in applicants.'
   },
   {
@@ -2911,10 +2945,10 @@ const ENGLISH_QUESTIONS = [
     choices: [
       'They believe fast food is actually healthy.',
       'They think the taxes are too low to be effective.',
-      'They argue the taxes disproportionately hurt poorer families.',
-      'They claim restaurants will simply close down.'
+      'They claim restaurants will simply close down.',
+      'They argue the taxes disproportionately hurt poorer families.'
     ],
-    correct: 2,
+    correct: 3,
     explanation: 'The passage states critics argue such taxes "unfairly affect lower-income families who rely on cheap food".'
   },
   {
@@ -2941,12 +2975,12 @@ const ENGLISH_QUESTIONS = [
     passage: 'Electric cars are becoming increasingly common on roads around the world. Unlike traditional petrol or diesel cars, electric vehicles produce no exhaust emissions, which means they do not directly contribute to air pollution. Many governments offer financial incentives, such as tax reductions or purchase grants, to encourage people to switch to electric cars. However, critics point out that the electricity used to charge these cars is often generated from fossil fuels. Additionally, the production of batteries for electric cars requires large amounts of rare minerals, the mining of which can be environmentally damaging.',
     q: 'What criticism of electric cars is mentioned in the passage?',
     choices: [
-      'They are more expensive to maintain than petrol cars.',
-      'They produce more exhaust emissions than petrol cars.',
       'The electricity powering them may come from fossil fuels.',
+      'They produce more exhaust emissions than petrol cars.',
+      'They are more expensive to maintain than petrol cars.',
       'Governments do not support their development.'
     ],
-    correct: 2,
+    correct: 0,
     explanation: 'The passage notes that "the electricity used to charge these cars is often generated from fossil fuels", undermining their green credentials.'
   },
   {
@@ -2959,10 +2993,10 @@ const ENGLISH_QUESTIONS = [
     choices: [
       'Students feel more pressured when school starts later.',
       'Teachers prefer earlier start times.',
-      'Later start times improve grades and emotional wellbeing.',
-      'Most students still do not get enough sleep even with later starts.'
+      'Most students still do not get enough sleep even with later starts.',
+      'Later start times improve grades and emotional wellbeing.'
     ],
-    correct: 2,
+    correct: 3,
     explanation: 'The passage states: "students who start school later show improved grades and better emotional wellbeing".'
   },
   {
@@ -2973,12 +3007,12 @@ const ENGLISH_QUESTIONS = [
     passage: 'Plastic pollution is one of the greatest environmental challenges of our time. Every year, millions of tonnes of plastic waste enter the world\'s oceans, harming marine life and entering the food chain. Single-use plastics — items such as straws, bags, and bottles used once and then thrown away — account for a large proportion of this waste. In response, many countries have banned or taxed single-use plastics. However, environmentalists argue that individual action alone is not sufficient, and that systemic change in how plastic is produced and managed is necessary to solve the problem.',
     q: 'What do environmentalists say is needed to solve plastic pollution?',
     choices: [
-      'More individual recycling and consumer responsibility.',
-      'A complete ban on all plastic products worldwide.',
       'Systemic changes in plastic production and management.',
+      'A complete ban on all plastic products worldwide.',
+      'More individual recycling and consumer responsibility.',
       'Greater investment in ocean-cleaning technologies.'
     ],
-    correct: 2,
+    correct: 0,
     explanation: 'Environmentalists argue that "systemic change in how plastic is produced and managed is necessary".'
   },
   {
@@ -2991,10 +3025,10 @@ const ENGLISH_QUESTIONS = [
     choices: [
       'It is universally accepted as fact by all researchers.',
       'It refers to Mozart\'s own improved performance after listening to music.',
-      'Some research supports it, but not all scientists agree it is universal.',
-      'It proves that all types of music improve academic results.'
+      'It proves that all types of music improve academic results.',
+      'Some research supports it, but not all scientists agree it is universal.'
     ],
-    correct: 2,
+    correct: 3,
     explanation: 'The passage acknowledges the effect but notes that "not all research supports these claims", indicating scientific debate.'
   },
   {
@@ -3119,12 +3153,12 @@ const ENGLISH_QUESTIONS = [
     passage: 'Space exploration has entered a new era with the rise of private companies competing alongside national agencies. Firms such as SpaceX and Blue Origin have dramatically reduced the cost of launching satellites and are developing vehicles designed to carry tourists beyond Earth\'s atmosphere. Advocates argue that commercialising space will accelerate innovation and make space travel accessible to more people. Critics warn that the commercialisation of space risks prioritising profit over scientific research and could exacerbate global inequality if only the wealthy benefit. International legal frameworks governing the use of space resources remain underdeveloped, raising questions about sovereignty and environmental responsibility in orbit.',
     q: 'What concern do critics raise about the commercialisation of space?',
     choices: [
-      'Private companies are less technically capable than national agencies.',
-      'Commercial space travel will make it impossible to conduct scientific research.',
       'Only wealthy individuals may benefit, worsening global inequality.',
+      'Commercial space travel will make it impossible to conduct scientific research.',
+      'Private companies are less technically capable than national agencies.',
       'International law already prevents private companies from operating in space.'
     ],
-    correct: 2,
+    correct: 0,
     explanation: 'Critics warn commercialisation "could exacerbate global inequality if only the wealthy benefit".'
   },
   {
@@ -3153,12 +3187,12 @@ const ENGLISH_QUESTIONS = [
     passage: 'There is a peculiar irony at the heart of the information age: never before have human beings had access to so much knowledge, yet never before has misinformation spread so rapidly or so widely. The mechanisms that allow a peer-reviewed scientific paper to reach a researcher in a remote corner of the world in seconds are the same mechanisms that propel conspiracy theories and fabricated news stories into millions of homes. The problem is not ignorance in the traditional sense — it is the inability to distinguish credible information from sophisticated falsehood. Algorithms designed to maximise engagement prioritise content that provokes an emotional response, regardless of its veracity. In this environment, critical thinking is not merely a desirable academic skill; it is a prerequisite for democratic participation.',
     q: 'What is the author\'s central argument in this passage?',
     choices: [
-      'Social media companies should be held legally responsible for misinformation.',
-      'Scientific research should be made freely available to the public.',
       'Critical thinking is essential in an era where misinformation spreads alongside knowledge.',
+      'Scientific research should be made freely available to the public.',
+      'Social media companies should be held legally responsible for misinformation.',
       'People were better informed before the advent of the internet.'
     ],
-    correct: 2,
+    correct: 0,
     explanation: 'The author builds to the conclusion that critical thinking is "a prerequisite for democratic participation" in the information age — the passage\'s central argument.'
   },
   {
@@ -3203,10 +3237,10 @@ const ENGLISH_QUESTIONS = [
     choices: [
       'Scientists deliberately oversimplify their conclusions when speaking to journalists.',
       'Scientific research is too specialised for non-experts to understand.',
-      'A media environment that favours simple, certain claims over nuanced, provisional ones.',
-      'The public lacks the intelligence to understand complex scientific concepts.'
+      'The public lacks the intelligence to understand complex scientific concepts.',
+      'A media environment that favours simple, certain claims over nuanced, provisional ones.'
     ],
-    correct: 2,
+    correct: 3,
     explanation: 'The author locates the fault in "a media ecosystem that rewards certainty and simplicity over accuracy and complexity", not in scientists or the public.'
   },
   {
@@ -3218,11 +3252,11 @@ const ENGLISH_QUESTIONS = [
     q: 'What is the author\'s purpose in referencing the Italian phrase "traduttore, traditore"?',
     choices: [
       'To prove that Italian is the most precise language for discussing translation.',
-      'To introduce a common criticism of translation that the passage will ultimately challenge.',
+      'To suggest that all translations are dishonest and should be avoided.',
       'To argue that translators should learn Italian before translating any text.',
-      'To suggest that all translations are dishonest and should be avoided.'
+      'To introduce a common criticism of translation that the passage will ultimately challenge.'
     ],
-    correct: 1,
+    correct: 3,
     explanation: 'The author cites the Italian phrase to present the "betrayal" criticism, which is then countered with the argument that imperfect translation is far better than none.'
   },
   {
@@ -3696,6 +3730,13 @@ function showResults() {
   renderTopicBreakdown(state.answers);
   renderStrengthsAndGaps(state.answers);
   renderRecommendation(totalPct, mathPct, engPct);
+  // Update "All" tab label with actual total question count
+  const allTabCount = state.answers.length;
+  const allTab = document.querySelector('.review-tab[onclick="showReview(\'all\', this)"]');
+  if (allTab) {
+    allTab.textContent = 'All (' + allTabCount + ')';
+    allTab.setAttribute('data-en', 'All (' + allTabCount + ')');
+  }
   renderReview('all');
 
   saveDiagnosticResult({
