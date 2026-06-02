@@ -15,7 +15,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--navy:#022049;--navy3:#010e24;--blue:#0661de;--blue2:#0450b4;--elec:#2979ff;--green:#16a34a;--red:#dc2626;--amber:#f59e0b;--bpale:#e8f0fe;--bxpale:#f0f4ff;--t:#1d1d1f;--t2:#3d3d3d;--tm:#6e6e73;--tl:#86868b;--bg:#fff;--bg2:#f5f5f7;--bg3:#e8ecf0;--bd:#d2d2d7;--ss:0 1px 3px rgba(0,0,0,.06);--sm:0 2px 12px rgba(0,0,0,.08);--sl:0 8px 32px rgba(0,0,0,.1);--r:12px;--rsm:8px;--rlg:18px;--rxl:24px;--f:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',system-ui,sans-serif;--ft:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',system-ui,sans-serif}
+:root{--navy:#022049;--navy3:#010e24;--blue:#0661de;--blue2:#0450b4;--elec:#2979ff;--green:#0661de;--red:#dc2626;--amber:#f59e0b;--bpale:#e8f0fe;--bxpale:#f0f4ff;--t:#1d1d1f;--t2:#3d3d3d;--tm:#6e6e73;--tl:#86868b;--bg:#fff;--bg2:#f5f5f7;--bg3:#e8ecf0;--bd:#d2d2d7;--ss:0 1px 3px rgba(0,0,0,.06);--sm:0 2px 12px rgba(0,0,0,.08);--sl:0 8px 32px rgba(0,0,0,.1);--r:12px;--rsm:8px;--rlg:18px;--rxl:24px;--f:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',system-ui,sans-serif;--ft:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',system-ui,sans-serif}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
 body{font-family:var(--ft);background:var(--bg2);color:var(--t);line-height:1.6;min-height:100vh}
 a{text-decoration:none;color:inherit}
@@ -97,7 +97,7 @@ nav{position:sticky;top:0;z-index:500;background:rgba(255,255,255,.92);backdrop-
 .q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;font-size:.78rem;color:var(--tm)}
 .q-num{font-weight:600;color:var(--navy);font-family:var(--f)}
 .q-diff{display:inline-flex;padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
-.q-diff.d1{background:#dcfce7;color:#15803d}
+.q-diff.d1{background:#dce9fb;color:#0450b4}
 .q-diff.d2{background:var(--bxpale);color:var(--blue)}
 .q-diff.d3{background:#fef3c7;color:#b45309}
 .q-diff.d4{background:#fee2e2;color:var(--red)}
@@ -144,13 +144,13 @@ body.in-test{padding:0 !important}
 .level-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:30px;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.2rem;position:relative}
 .level-foundation{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
 .level-building{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:#fcd34d}
-.level-passed{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#86efac}
+.level-passed{background:rgba(6,97,222,.15);border:1px solid rgba(6,97,222,.3);color:#a8c4f8}
 .level-advanced{background:linear-gradient(90deg,rgba(96,165,250,.2),rgba(124,58,237,.2));border:1px solid rgba(96,165,250,.4);color:#a5b4fc}
 .level-excellent{background:linear-gradient(90deg,rgba(251,191,36,.2),rgba(245,158,11,.2));border:1px solid rgba(251,191,36,.4);color:#fcd34d}
 .results-score{font-family:var(--f);font-size:clamp(3.5rem,8vw,5.5rem);font-weight:700;color:#fff;letter-spacing:-.04em;line-height:1;position:relative}
 .results-score-out{font-size:1.1rem;color:rgba(255,255,255,.5);margin-top:.3rem;position:relative}
 .results-percent{font-family:var(--f);font-size:1.4rem;font-weight:600;color:#60a5fa;margin-top:.5rem;position:relative}
-.results-status{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);color:#86efac;font-size:.85rem;font-weight:700;padding:8px 18px;border-radius:30px;margin-top:1rem;position:relative}
+.results-status{display:inline-flex;align-items:center;gap:8px;background:rgba(6,97,222,.12);border:1px solid rgba(6,97,222,.3);color:#a8c4f8;font-size:.85rem;font-weight:700;padding:8px 18px;border-radius:30px;margin-top:1rem;position:relative}
 .results-status.fail{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#fca5a5}
 .results-status svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
 .results-sections{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:1.5rem}
@@ -165,7 +165,7 @@ body.in-test{padding:0 !important}
 .rs-bar-wrap{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-bottom:.6rem}
 .rs-bar{height:100%;border-radius:4px;transition:width 1s ease}
 .rs-bar.math{background:linear-gradient(90deg,var(--blue),var(--elec))}
-.rs-bar.english{background:linear-gradient(90deg,var(--green),#22c55e)}
+.rs-bar.english{background:linear-gradient(90deg,var(--green),#0661de)}
 .rs-status{font-size:.8rem;color:var(--tm);line-height:1.5}
 .cefr-badge{display:inline-block;background:var(--bxpale);border:1px solid rgba(6,97,222,.2);color:var(--blue);font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:.4rem}
 @media(max-width:640px){.results-sections{grid-template-columns:1fr}}
@@ -217,14 +217,14 @@ body.in-test{padding:0 !important}
 .review-item-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:.8rem}
 .review-item-num{font-size:.74rem;font-weight:700;color:var(--tl);letter-spacing:.08em;text-transform:uppercase;font-family:var(--f)}
 .review-item-status{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase}
-.review-item-status.correct{background:#dcfce7;color:#15803d}
+.review-item-status.correct{background:#dce9fb;color:#0450b4}
 .review-item-status.incorrect{background:#fee2e2;color:#991b1b}
 .review-q-text{font-size:.88rem;color:var(--t);font-weight:500;margin-bottom:.8rem;line-height:1.5}
 .review-q-passage{background:#fff;border-left:3px solid var(--blue);padding:10px 14px;border-radius:0 var(--rsm) var(--rsm) 0;font-size:.8rem;color:var(--t2);line-height:1.55;margin-bottom:.7rem;font-style:italic}
 .review-ans-row{display:flex;flex-direction:column;gap:6px;margin-bottom:.7rem;font-size:.82rem}
 .review-ans{padding:8px 12px;border-radius:var(--rsm);background:#fff;border:1px solid var(--bd)}
 .review-ans.your{background:#fee2e2;border-color:#fca5a5;color:#991b1b}
-.review-ans.correct-ans{background:#dcfce7;border-color:#86efac;color:#15803d}
+.review-ans.correct-ans{background:#dce9fb;border-color:#a8c4f8;color:#0450b4}
 .review-ans-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
 .review-explanation{font-size:.82rem;color:var(--t2);line-height:1.6;padding:10px 14px;background:var(--bxpale);border-radius:var(--rsm);border-left:3px solid var(--blue)}
 .review-explanation strong{color:var(--navy)}
@@ -266,7 +266,7 @@ body.in-test{padding:0 !important}
 .pr-score-num small{font-size:18px;opacity:.5;font-weight:500}
 .pr-score-pct{font-size:14px;color:#60a5fa;margin-top:4px}
 .pr-status{display:inline-block;padding:4px 14px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:8px}
-.pr-status.pass{background:#16a34a;color:#fff}
+.pr-status.pass{background:#0661de;color:#fff}
 .pr-status.fail{background:#f59e0b;color:#fff}
 .pr-info-table{width:100%;border-collapse:collapse;margin:8px 0;font-size:11px}
 .pr-info-table td{padding:6px 0;border-bottom:1px solid #e8ecf0}
@@ -274,14 +274,14 @@ body.in-test{padding:0 !important}
 .pr-info-table td:last-child{font-weight:600}
 .pr-sections{display:flex;gap:12px;margin:10px 0}
 .pr-sec-box{flex:1;background:#f5f5f7;padding:14px;border-radius:6px;border-left:3px solid #0661de}
-.pr-sec-box.eng{border-left-color:#16a34a}
+.pr-sec-box.eng{border-left-color:#0661de}
 .pr-sec-label{font-size:10px;font-weight:700;text-transform:uppercase;color:#0661de;letter-spacing:1px}
-.pr-sec-box.eng .pr-sec-label{color:#16a34a}
+.pr-sec-box.eng .pr-sec-label{color:#0661de}
 .pr-sec-num{font-size:22px;font-weight:700;color:#022049;margin:4px 0;line-height:1}
 .pr-sec-num small{font-size:14px;color:#86868b;font-weight:500}
 .pr-sec-bar{height:5px;background:#d2d2d7;border-radius:3px;overflow:hidden;margin-top:6px}
 .pr-sec-bar-fill{height:100%;background:#0661de}
-.pr-sec-box.eng .pr-sec-bar-fill{background:#16a34a}
+.pr-sec-box.eng .pr-sec-bar-fill{background:#0661de}
 .pr-cefr-tag{display:inline-block;padding:2px 8px;background:#e8f0fe;color:#0661de;font-size:9px;font-weight:700;border-radius:12px;margin-top:4px}
 .pr-est-box{background:#e8f0fe;border:1px solid #0661de;padding:14px;border-radius:6px;margin:12px 0;text-align:center}
 .pr-est-label{font-size:10px;font-weight:700;color:#0661de;letter-spacing:1px;text-transform:uppercase}
@@ -292,17 +292,17 @@ body.in-test{padding:0 !important}
 .pr-rec-name{font-size:18px;font-weight:700;margin:4px 0}
 .pr-rec-desc{font-size:11px;opacity:.85;line-height:1.5}
 .pr-q{background:#f5f5f7;padding:10px 12px;margin-bottom:8px;border-radius:5px;border-left:3px solid #d2d2d7;page-break-inside:avoid}
-.pr-q.correct{border-left-color:#16a34a}
+.pr-q.correct{border-left-color:#0661de}
 .pr-q.wrong{border-left-color:#dc2626}
 .pr-q-num{font-size:9px;font-weight:700;color:#6e6e73;letter-spacing:1px;text-transform:uppercase}
 .pr-q-status{display:inline-block;font-size:8px;font-weight:700;padding:1px 6px;border-radius:8px;margin-left:6px;letter-spacing:.5px}
-.pr-q-status.correct{background:#dcfce7;color:#15803d}
+.pr-q-status.correct{background:#dce9fb;color:#0450b4}
 .pr-q-status.wrong{background:#fee2e2;color:#991b1b}
 .pr-q-text{font-size:10px;font-weight:600;color:#1d1d1f;margin:4px 0;line-height:1.4}
 .pr-q-passage{font-size:9px;color:#3d3d3d;font-style:italic;padding-left:8px;border-left:2px solid #0661de;margin:4px 0;line-height:1.45}
 .pr-q-ans{font-size:9px;padding:3px 6px;border-radius:3px;margin:2px 0}
 .pr-q-ans.your-wrong{background:#fee2e2;color:#991b1b}
-.pr-q-ans.correct{background:#dcfce7;color:#15803d}
+.pr-q-ans.correct{background:#dce9fb;color:#0450b4}
 .pr-q-expl{font-size:9px;color:#3d3d3d;padding:4px 8px;background:#e8f0fe;border-left:2px solid #0661de;border-radius:0 3px 3px 0;margin-top:4px;line-height:1.4}
 .pr-footer{border-top:1px solid #d2d2d7;padding-top:8px;margin-top:18px;font-size:9px;color:#86868b;text-align:center}
 
@@ -1208,6 +1208,23 @@ const MATH_QUESTIONS = [
 
   // ─── ADVANCED ALGEBRA (12 questions, difficulty 2-4) ─────────────────────
   {
+    id: 'm78',
+    topic: 'advanced_algebra',
+    difficulty: 1,
+    q: {
+      en: 'What is (x + 3)² equal to?',
+      uz: '(x + 3)² ni yoying.',
+      ru: 'Раскройте скобки: (x + 3)²'
+    },
+    choices: ['x² + 6x + 9', 'x² + 9', 'x² + 3x + 9', 'x² + 6x + 6'],
+    correct: 0,
+    explanation: {
+      en: '(x + 3)² = (x + 3)(x + 3) = x² + 3x + 3x + 9 = x² + 6x + 9.',
+      uz: '(x + 3)² = x² + 2·x·3 + 3² = x² + 6x + 9.',
+      ru: '(x + 3)² = x² + 2·x·3 + 3² = x² + 6x + 9.'
+    }
+  },
+  {
     id: 'm23',
     topic: 'advanced_algebra',
     difficulty: 2,
@@ -1413,6 +1430,23 @@ const MATH_QUESTIONS = [
   },
 
   // ─── FUNCTIONS (10 questions, difficulty 2-4) ─────────────────────────────
+  {
+    id: 'm79',
+    topic: 'functions',
+    difficulty: 1,
+    q: {
+      en: 'If f(x) = 2x + 1, what is f(3)?',
+      uz: 'Agar f(x) = 2x + 1 bo\'lsa, f(3) nechaga teng?',
+      ru: 'Если f(x) = 2x + 1, чему равно f(3)?'
+    },
+    choices: ['5', '6', '7', '8'],
+    correct: 2,
+    explanation: {
+      en: 'f(3) = 2(3) + 1 = 6 + 1 = 7.',
+      uz: 'f(3) = 2(3) + 1 = 6 + 1 = 7.',
+      ru: 'f(3) = 2(3) + 1 = 6 + 1 = 7.'
+    }
+  },
   {
     id: 'm35',
     topic: 'functions',
@@ -1796,6 +1830,23 @@ const MATH_QUESTIONS = [
   },
 
   // ─── STATISTICS (10 questions, difficulty 2-4) ────────────────────────────
+  {
+    id: 'm80',
+    topic: 'statistics',
+    difficulty: 1,
+    q: {
+      en: 'What is the mean (average) of 4, 8, and 12?',
+      uz: '4, 8 va 12 sonlarning o\'rta arifmetigini toping.',
+      ru: 'Найдите среднее арифметическое чисел 4, 8 и 12.'
+    },
+    choices: ['6', '7', '8', '9'],
+    correct: 2,
+    explanation: {
+      en: 'Mean = (4 + 8 + 12) ÷ 3 = 24 ÷ 3 = 8.',
+      uz: 'O\'rta arifmetik = (4 + 8 + 12) ÷ 3 = 24 ÷ 3 = 8.',
+      ru: 'Среднее = (4 + 8 + 12) ÷ 3 = 24 ÷ 3 = 8.'
+    }
+  },
   {
     id: 'm57',
     topic: 'statistics',
@@ -2807,6 +2858,19 @@ const ENGLISH_QUESTIONS = [
     choices: ['definitive', 'expedient', 'categorical', 'conclusive'],
     correct: 1,
     explanation: '"Expedient" means convenient in the short term but not necessarily fair or lasting — exactly what critics would argue.'
+  },
+
+  // ─── READING A1 (difficulty 1) ── e91 ───────────────────────────────────
+  {
+    id: 'e91',
+    topic: 'reading',
+    difficulty: 1,
+    cefr: 'A1',
+    passage: 'Hi! My name is Ali. I am ten years old. I have a dog. His name is Rex. Rex is big and brown. I play with Rex every day. I love my dog.',
+    q: 'What colour is Rex?',
+    choices: ['Black', 'White', 'Brown', 'Grey'],
+    correct: 2,
+    explanation: 'The passage says Rex is "big and brown".'
   },
 
   // ─── READING A2 (difficulty 2) ── e61–e66 ───────────────────────────────
