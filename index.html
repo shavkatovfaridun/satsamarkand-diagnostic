@@ -3515,63 +3515,20 @@ const PASSAGE_1 = 'Every night, millions of people do not get enough sleep. Doct
 const PASSAGE_2 = 'Many cities around the world are banning single-use plastic bags in shops and supermarkets. Supporters of these bans argue that plastic bags cause serious environmental damage — they pollute oceans, harm wildlife, and take hundreds of years to break down. However, critics point out that reusable bags must be used many times before they actually reduce environmental impact. A cotton bag, for example, needs to be used at least 131 times to offset the energy used to produce it. The debate continues, but most environmental scientists agree that reducing plastic waste in any form is a step in the right direction.';
 
 const PLACEMENT_ENG_QUESTIONS = [
-  // PASSAGE 1 — questions pe01–pe05
-  { id:'pe01', topic:'reading', difficulty:2, passage: PASSAGE_1,
-    q:'What is the main idea of this passage?',
-    choices:['Coffee is dangerous for health','Lack of sleep causes serious health problems','Adults should drink less coffee','Doctors need to study sleep more'], correct:1 ,
-    explanation:'The passage focuses throughout on the dangers of insufficient sleep — not coffee, doctors, or adults in general.'},
 
-  { id:'pe02', topic:'reading', difficulty:1, passage: PASSAGE_1,
-    q:'According to the passage, how many hours of sleep do adults need per night?',
-    choices:['At least 10 hours','Exactly 8 hours','Between 7 and 9 hours','At least 6 hours'], correct:2 ,
-    explanation:'The passage states: "adults need between seven and nine hours of sleep per night."'},
+  // GRAMMAR — easy to hard,
 
-  { id:'pe03', topic:'reading', difficulty:2, passage: PASSAGE_1,
-    q:'Which of the following is NOT mentioned as a result of not sleeping enough?',
-    choices:['Difficulty concentrating','Getting sick more often','Losing weight','Difficulty making decisions'], correct:2 ,
-    explanation:'The passage lists concentration, memory, decision-making, and immune function. Weight loss is never mentioned.'},
-
-  { id:'pe04', topic:'reading', difficulty:2, passage: PASSAGE_1,
-    q:'Why does the author say coffee is not a real solution?',
-    choices:['Coffee makes people more tired','It only hides tiredness temporarily','Coffee is very expensive','Doctors do not recommend coffee'], correct:1 ,
-    explanation:'The passage says coffee "only hides the tiredness for a short time" — it is a temporary mask, not a real fix.'},
-
-  { id:'pe05', topic:'vocabulary', difficulty:2, passage: PASSAGE_1,
-    q:'As used in the passage, the word "concentrate" most nearly means:',
-    choices:['Exercise','Focus attention','Stay awake','Work quickly'], correct:1 ,
-    explanation:'"Concentrate" in context means to direct mental effort — i.e., to focus attention.'},
-
-  // PASSAGE 2 — questions pe06–pe10
-  { id:'pe06', topic:'reading', difficulty:3, passage: PASSAGE_2,
-    q:"What is the author's overall position on plastic bag bans?",
-    choices:['They are completely ineffective','They are a positive step despite the debate','Reusable bags are always better than plastic','The debate has no clear answer'], correct:1 ,
-    explanation:'The last sentence says "reducing plastic waste in any form is a step in the right direction" — the author is cautiously supportive.'},
-
-  { id:'pe07', topic:'reading', difficulty:3, passage: PASSAGE_2,
-    q:'What argument do critics of the ban make?',
-    choices:['Plastic bags are useful and convenient','Reusable bags need many uses before being environmentally better','Banning plastic bags is too expensive','Environmental scientists disagree with the bans'], correct:1 ,
-    explanation:'Critics argue reusable bags "must be used many times before they actually reduce environmental impact."'},
-
-  { id:'pe08', topic:'reading', difficulty:3, passage: PASSAGE_2,
-    q:'Which word best describes the tone of this passage?',
-    choices:['Angry','Balanced','Humorous','Pessimistic'], correct:1 ,
-    explanation:'The passage presents both the supporters\' arguments and the critics\' counter-arguments without favouring either side.'},
-
-  { id:'pe09', topic:'vocabulary', difficulty:3, passage: PASSAGE_2,
-    q:'As used in the passage, the word "offset" most nearly means:',
-    choices:['Increase','Measure','Compensate for','Remove'], correct:2 ,
-    explanation:'"Offset" means to balance out or compensate for a cost or disadvantage.'},
-
-  { id:'pe10', topic:'reading', difficulty:3, passage: PASSAGE_2,
-    q:'What can be inferred about cotton bags from the passage?',
-    choices:['They are cheaper than plastic bags','They require significant use before being environmentally better','They last for exactly 131 days','Most scientists do not recommend them'], correct:1 ,
-    explanation:'The passage states a cotton bag "needs to be used at least 131 times" before it has a net environmental benefit.'},
-
-  // GRAMMAR — pe11–pe15
   { id:'pe11', topic:'grammar', difficulty:2,
     q:'Choose the correct word:  "Neither the teacher nor the students ___ ready for the exam."',
     choices:['was','were','is','have been'], correct:1 ,
     explanation:'With "neither…nor", the verb agrees with the subject closest to it ("students" — plural), so "were" is correct.'},
+
+  { id:'pe15', topic:'grammar', difficulty:2,
+    q:'Choose the correct form:  "She enjoys reading, writing, and ___ chess."',
+    choices:['play','to playing','playing','played'], correct:2 ,
+    explanation:'After "enjoy", a gerund (verb + -ing) is required: enjoys reading, writing, and playing.'},
+
+  // VOCABULARY — pe16–pe20,
 
   { id:'pe12', topic:'grammar', difficulty:3,
     q:'Choose the correct form:  "She ___ already ___ the report when her boss called."',
@@ -3588,12 +3545,14 @@ const PLACEMENT_ENG_QUESTIONS = [
     choices:['The book which I bought it yesterday was expensive.','The book that I bought yesterday was expensive.','The book who I bought yesterday was expensive.','The book I bought it yesterday was expensive.'], correct:1 ,
     explanation:'Relative clauses for things use "that" or "which" — never "who". The pronoun "it" must be removed to avoid a double subject.'},
 
-  { id:'pe15', topic:'grammar', difficulty:2,
-    q:'Choose the correct form:  "She enjoys reading, writing, and ___ chess."',
-    choices:['play','to playing','playing','played'], correct:2 ,
-    explanation:'After "enjoy", a gerund (verb + -ing) is required: enjoys reading, writing, and playing.'},
 
-  // VOCABULARY — pe16–pe20
+  // VOCABULARY — easy to hard,
+
+  { id:'pe20', topic:'vocabulary', difficulty:2,
+    q:'Choose the word closest in meaning to "exhausted":',
+    choices:['energetic','relieved','drained','nervous'], correct:2 ,
+    explanation:'"Exhausted" means completely tired out. "Drained" is the closest synonym.'},
+
   { id:'pe16', topic:'vocabulary', difficulty:3,
     q:'"The scientist\'s discovery was so ___ that it changed the entire field of medicine."',
     choices:['ordinary','groundbreaking','predictable','familiar'], correct:1 ,
@@ -3614,10 +3573,65 @@ const PLACEMENT_ENG_QUESTIONS = [
     choices:['hesitant','confused','firm','flexible'], correct:2 ,
     explanation:'"Remained ___ in her decision" with "despite many obstacles" indicates determination — "firm" is correct.'},
 
-  { id:'pe20', topic:'vocabulary', difficulty:2,
-    q:'Choose the word closest in meaning to "exhausted":',
-    choices:['energetic','relieved','drained','nervous'], correct:2 ,
-    explanation:'"Exhausted" means completely tired out. "Drained" is the closest synonym.'}
+
+  // READING — Passage 1 (easy to hard),
+
+  { id:'pe02', topic:'reading', difficulty:1, passage: PASSAGE_1,
+    q:'According to the passage, how many hours of sleep do adults need per night?',
+    choices:['At least 10 hours','Exactly 8 hours','Between 7 and 9 hours','At least 6 hours'], correct:2 ,
+    explanation:'The passage states: "adults need between seven and nine hours of sleep per night."'},
+
+  { id:'pe01', topic:'reading', difficulty:2, passage: PASSAGE_1,
+    q:'What is the main idea of this passage?',
+    choices:['Coffee is dangerous for health','Lack of sleep causes serious health problems','Adults should drink less coffee','Doctors need to study sleep more'], correct:1 ,
+    explanation:'The passage focuses throughout on the dangers of insufficient sleep — not coffee, doctors, or adults in general.'},
+
+  { id:'pe03', topic:'reading', difficulty:2, passage: PASSAGE_1,
+    q:'Which of the following is NOT mentioned as a result of not sleeping enough?',
+    choices:['Difficulty concentrating','Getting sick more often','Losing weight','Difficulty making decisions'], correct:2 ,
+    explanation:'The passage lists concentration, memory, decision-making, and immune function. Weight loss is never mentioned.'},
+
+  { id:'pe04', topic:'reading', difficulty:2, passage: PASSAGE_1,
+    q:'Why does the author say coffee is not a real solution?',
+    choices:['Coffee makes people more tired','It only hides tiredness temporarily','Coffee is very expensive','Doctors do not recommend coffee'], correct:1 ,
+    explanation:'The passage says coffee "only hides the tiredness for a short time" — it is a temporary mask, not a real fix.'},
+
+  { id:'pe05', topic:'reading', difficulty:2, passage: PASSAGE_1,
+    q:'As used in the passage, the word "concentrate" most nearly means:',
+    choices:['Exercise','Focus attention','Stay awake','Work quickly'], correct:1 ,
+    explanation:'"Concentrate" in context means to direct mental effort — i.e., to focus attention.'},
+
+  // PASSAGE 2 — questions pe06–pe10,
+
+
+  // READING — Passage 2,
+
+  { id:'pe06', topic:'reading', difficulty:3, passage: PASSAGE_2,
+    q:"What is the author's overall position on plastic bag bans?",
+    choices:['They are completely ineffective','They are a positive step despite the debate','Reusable bags are always better than plastic','The debate has no clear answer'], correct:1 ,
+    explanation:'The last sentence says "reducing plastic waste in any form is a step in the right direction" — the author is cautiously supportive.'},
+
+  { id:'pe07', topic:'reading', difficulty:3, passage: PASSAGE_2,
+    q:'What argument do critics of the ban make?',
+    choices:['Plastic bags are useful and convenient','Reusable bags need many uses before being environmentally better','Banning plastic bags is too expensive','Environmental scientists disagree with the bans'], correct:1 ,
+    explanation:'Critics argue reusable bags "must be used many times before they actually reduce environmental impact."'},
+
+  { id:'pe08', topic:'reading', difficulty:3, passage: PASSAGE_2,
+    q:'Which word best describes the tone of this passage?',
+    choices:['Angry','Balanced','Humorous','Pessimistic'], correct:1 ,
+    explanation:'The passage presents both the supporters\' arguments and the critics\' counter-arguments without favouring either side.'},
+
+  { id:'pe09', topic:'reading', difficulty:3, passage: PASSAGE_2,
+    q:'As used in the passage, the word "offset" most nearly means:',
+    choices:['Increase','Measure','Compensate for','Remove'], correct:2 ,
+    explanation:'"Offset" means to balance out or compensate for a cost or disadvantage.'},
+
+  { id:'pe10', topic:'reading', difficulty:3, passage: PASSAGE_2,
+    q:'What can be inferred about cotton bags from the passage?',
+    choices:['They are cheaper than plastic bags','They require significant use before being environmentally better','They last for exactly 131 days','Most scientists do not recommend them'], correct:1 ,
+    explanation:'The passage states a cotton bag "needs to be used at least 131 times" before it has a net environmental benefit.'},
+
+  // GRAMMAR — pe11–pe15
 ];
 
 // ── PLACEMENT TEST ─────────────────────────────────────────────────────────
@@ -4312,6 +4326,16 @@ function renderReview(filter) {
     div.innerHTML = html;
     listEl.appendChild(div);
   });
+
+  // Render KaTeX in review list (math questions have $...$ delimiters)
+  if (typeof renderMathInElement !== 'undefined') {
+    try {
+      renderMathInElement(listEl, {
+        delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],
+        throwOnError:false
+      });
+    } catch(e){}
+  }
 }
 
 // SEND DATA
@@ -4484,9 +4508,9 @@ function downloadReport() {
   const mathCorrect = mathAnswers.filter(a => a.isCorrect).length;
   const engCorrect = engAnswers.filter(a => a.isCorrect).length;
   const total = mathCorrect + engCorrect;
-  const mathPct = Math.round((mathCorrect / 30) * 100);
-  const engPct = Math.round((engCorrect / 36) * 100);
-  const totalPct = Math.round((total / 66) * 100);
+  const mathPct = Math.round((mathCorrect / mathTotal) * 100);
+  const engPct = Math.round((engCorrect / engTotal) * 100);
+  const totalPct = Math.round((total / grandTotal) * 100);
   const cefr = determineCEFR(engPct);
   const passed = totalPct >= 60;
   const dateStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
@@ -4506,7 +4530,7 @@ function downloadReport() {
   html += '<div style="font-size:11px;color:#6e6e73;margin-bottom:8px">Personalized skill assessment - Math + English</div>';
 
   html += '<div class="pr-score-block">';
-  html += '<div class="pr-score-num">' + total + '<small>/66</small></div>';
+  html += '<div class="pr-score-num">' + total + '<small>/' + (state.mathQuestions.length + state.engQuestions.length) + '</small></div>';
   html += '<div class="pr-score-pct">' + totalPct + '% Overall</div>';
   html += '<div class="pr-status ' + (passed ? 'pass' : 'fail') + '">' + (passed ? 'STRONG RESULT' : 'FOUNDATION NEEDED') + '</div>';
   html += '</div>';
@@ -4597,15 +4621,15 @@ function downloadCertificate() {
   const mathCorrect = mathAnswers.filter(a => a.isCorrect).length;
   const engCorrect = engAnswers.filter(a => a.isCorrect).length;
   const total = mathCorrect + engCorrect;
-  const totalPct = Math.round((total / 66) * 100);
-  const engPct = Math.round((engCorrect / 36) * 100);
+  const totalPct = Math.round((total / (state.mathQuestions.length + state.engQuestions.length)) * 100);
+  const engPct = Math.round((engCorrect / state.engQuestions.length) * 100);
   const cefr = determineCEFR(engPct);
   const dateStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
 
-  const mathPct = Math.round((mathCorrect / 30) * 100);
+  const mathPct = Math.round((mathCorrect / state.mathQuestions.length) * 100);
   const certNum = 'CERT-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-4);
   document.getElementById('cert-name').textContent = state.info.name;
-  document.getElementById('cert-score').textContent = total + '/66';
+  document.getElementById('cert-score').textContent = total + '/' + (state.mathQuestions.length + state.engQuestions.length);
   document.getElementById('cert-pct').textContent = mathPct + '%';
   document.getElementById('cert-level').textContent = cefr;
   document.getElementById('cert-date').textContent = dateStr;
