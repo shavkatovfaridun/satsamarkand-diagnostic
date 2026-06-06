@@ -393,8 +393,8 @@ body.in-test{padding:0 !important}
       <h1 data-en="Discover your <em>real</em> level." data-uz="<em>Haqiqiy</em> darajangizni biling." data-ru="Узнайте свой <em>настоящий</em> уровень.">Discover your <em>real</em> level.</h1>
       <p data-en="A comprehensive assessment of your Math and English knowledge - calibrated to measure real skill, not just test-taking ability." data-uz="Matematika va ingliz tilidagi haqiqiy bilimingizni o'lchaydigan to'liq baholash." data-ru="Комплексная оценка ваших знаний по математике и английскому.">A comprehensive assessment of your Math and English knowledge - calibrated to measure real skill, not just test-taking ability.</p>
       <div class="intro-meta">
-        <div class="intro-mi"><div class="intro-mn">66</div><div class="intro-ml" data-en="Questions" data-uz="Savol" data-ru="Вопросов">Questions</div></div>
-        <div class="intro-mi"><div class="intro-mn">55 <span style="font-size:.85rem">min</span></div><div class="intro-ml" data-en="Duration" data-uz="Vaqt" data-ru="Время">Duration</div></div>
+        <div class="intro-mi"><div class="intro-mn">40</div><div class="intro-ml" data-en="Questions" data-uz="Savol" data-ru="Вопросов">Questions</div></div>
+        <div class="intro-mi"><div class="intro-mn">40 <span style="font-size:.85rem">min</span></div><div class="intro-ml" data-en="Duration" data-uz="Vaqt" data-ru="Время">Duration</div></div>
         <div class="intro-mi"><div class="intro-mn" data-en="Free" data-uz="Bepul" data-ru="Бесплатно">Free</div><div class="intro-ml" data-en="No cost" data-uz="To'lovsiz" data-ru="Без оплаты">No cost</div></div>
       </div>
       <div style="margin-top:1.6rem;position:relative">
@@ -600,7 +600,7 @@ body.in-test{padding:0 !important}
     <div class="results-hero">
       <div class="level-badge" id="level-badge">Intermediate</div>
       <div class="results-score" id="results-total">0</div>
-      <div class="results-score-out" data-en="out of 66" data-uz="66 dan" data-ru="из 66">out of 66</div>
+      <div class="results-score-out" data-en="out of 40" data-uz="40 dan" data-ru="из 40">out of 40</div>
       <div class="results-percent" id="results-percent">0%</div>
       <div class="results-status" id="results-status">
         <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
@@ -614,7 +614,7 @@ body.in-test{padding:0 !important}
         <h3 data-en="Math Section" data-uz="Math Bo'limi" data-ru="Математика">Math Section</h3>
         <div class="rs-score-row">
           <div class="rs-score" id="final-math-score">0</div>
-          <div class="rs-total">/ 30</div>
+          <div class="rs-total">/ 20</div>
           <div class="rs-pct" id="final-math-pct">0%</div>
         </div>
         <div class="rs-bar-wrap"><div class="rs-bar math" id="final-math-bar" style="width:0%"></div></div>
@@ -625,7 +625,7 @@ body.in-test{padding:0 !important}
         <h3 data-en="English Section" data-uz="Ingliz Bo'limi" data-ru="Английский">English Section</h3>
         <div class="rs-score-row">
           <div class="rs-score" id="final-eng-score">0</div>
-          <div class="rs-total">/ 36</div>
+          <div class="rs-total">/ 20</div>
           <div class="rs-pct" id="final-eng-pct">0%</div>
         </div>
         <div class="rs-bar-wrap"><div class="rs-bar english" id="final-eng-bar" style="width:0%"></div></div>
@@ -3411,83 +3411,103 @@ function isValidPhone(phone) {
 const PLACEMENT_MATH_QUESTIONS = [
   { id:'pm01', topic:'linear_algebra', difficulty:1,
     q:{ en:'Solve for $x$:  $2x + 7 = 19$', uz:'$x$ ni toping:  $2x + 7 = 19$', ru:'Найдите $x$:  $2x + 7 = 19$' },
-    choices:['$4$','$6$','$5$','$7$'], correct:1 },
+    choices:['$4$','$6$','$5$','$7$'], correct:1 ,
+    explanation:{ en:'Subtract 7 from both sides: 2x = 12, then divide by 2: x = 6.', uz:'Subtract 7 from both sides: 2x = 12, then divide by 2: x = 6.', ru:'Subtract 7 from both sides: 2x = 12, then divide by 2: x = 6.' }},
 
   { id:'pm02', topic:'arithmetic', difficulty:1,
     q:{ en:'What is $30\\%$ of $250$?', uz:'$250$ ning $30\\%$ i nechaga teng?', ru:'Чему равно $30\\%$ от $250$?' },
-    choices:['$75$','$65$','$80$','$70$'], correct:0 },
+    choices:['$75$','$65$','$80$','$70$'], correct:0 ,
+    explanation:{ en:'0.30 × 250 = 75.', uz:'0.30 × 250 = 75.', ru:'0.30 × 250 = 75.' }},
 
   { id:'pm03', topic:'arithmetic', difficulty:1,
     q:{ en:'4 pens cost 8,000 UZS. How much do 7 pens cost?', uz:'4 ta qalam 8 000 soʻm turadi. 7 ta qalam necha soʻm turadi?', ru:'4 ручки стоят 8 000 сум. Сколько стоят 7 ручек?' },
-    choices:['14,000 UZS','12,000 UZS','16,000 UZS','10,000 UZS'], correct:0 },
+    choices:['14,000 UZS','12,000 UZS','16,000 UZS','10,000 UZS'], correct:0 ,
+    explanation:{ en:'Unit price: 8,000 ÷ 4 = 2,000 UZS. Seven pens: 7 × 2,000 = 14,000 UZS.', uz:'Unit price: 8,000 ÷ 4 = 2,000 UZS. Seven pens: 7 × 2,000 = 14,000 UZS.', ru:'Unit price: 8,000 ÷ 4 = 2,000 UZS. Seven pens: 7 × 2,000 = 14,000 UZS.' }},
 
   { id:'pm04', topic:'arithmetic', difficulty:2,
     q:{ en:'Calculate:  $\\dfrac{1}{3} - \\dfrac{3}{4}$', uz:'Hisoblang:  $\\dfrac{1}{3} - \\dfrac{3}{4}$', ru:'Вычислите:  $\\dfrac{1}{3} - \\dfrac{3}{4}$' },
-    choices:['$-\\dfrac{7}{12}$','$-\\dfrac{5}{12}$','$\\dfrac{5}{12}$','$-\\dfrac{1}{6}$'], correct:1 },
+    choices:['$-\\dfrac{7}{12}$','$-\\dfrac{5}{12}$','$\\dfrac{5}{12}$','$-\\dfrac{1}{6}$'], correct:1 ,
+    explanation:{ en:'Common denominator 12: 4/12 − 9/12 = −5/12.', uz:'Common denominator 12: 4/12 − 9/12 = −5/12.', ru:'Common denominator 12: 4/12 − 9/12 = −5/12.' }},
 
   { id:'pm05', topic:'linear_algebra', difficulty:1,
     q:{ en:'Simplify:  $4a - 13a + 5a$', uz:'Soddalashtiring:  $4a - 13a + 5a$', ru:'Упростите:  $4a - 13a + 5a$' },
-    choices:['$-6a$','$4a$','$-4a$','$6a$'], correct:2 },
+    choices:['$-6a$','$4a$','$-4a$','$6a$'], correct:2 ,
+    explanation:{ en:'Collect like terms: (4 − 13 + 5)a = −4a.', uz:'Collect like terms: (4 − 13 + 5)a = −4a.', ru:'Collect like terms: (4 − 13 + 5)a = −4a.' }},
 
   { id:'pm06', topic:'arithmetic', difficulty:2,
     q:{ en:'Order from smallest to largest:  $a = \\dfrac{5}{11}$,  $b = \\dfrac{6}{13}$,  $c = \\dfrac{7}{15}$', uz:'Kichikdan kattaga joylashtiring:  $a = \\dfrac{5}{11}$,  $b = \\dfrac{6}{13}$,  $c = \\dfrac{7}{15}$', ru:'От меньшего к большему:  $a = \\dfrac{5}{11}$,  $b = \\dfrac{6}{13}$,  $c = \\dfrac{7}{15}$' },
-    choices:['$a < b < c$','$b < a < c$','$c < b < a$','$b < c < a$'], correct:0 },
+    choices:['$a < b < c$','$b < a < c$','$c < b < a$','$b < c < a$'], correct:0 ,
+    explanation:{ en:'Convert to decimals: 5/11 ≈ 0.4545, 6/13 ≈ 0.4615, 7/15 ≈ 0.4667. So a < b < c.', uz:'Convert to decimals: 5/11 ≈ 0.4545, 6/13 ≈ 0.4615, 7/15 ≈ 0.4667. So a < b < c.', ru:'Convert to decimals: 5/11 ≈ 0.4545, 6/13 ≈ 0.4615, 7/15 ≈ 0.4667. So a < b < c.' }},
 
   { id:'pm07', topic:'geometry', difficulty:1,
     q:{ en:'A rectangle has perimeter $28$ and length $8$. What is its width?', uz:"To'g'ri to'rtburchakning perimetri $28$, uzunligi $8$. Kengligi necha?", ru:'Периметр прямоугольника $28$, длина $8$. Найдите ширину.' },
-    choices:['$5$','$7$','$6$','$4$'], correct:2 },
+    choices:['$5$','$7$','$6$','$4$'], correct:2 ,
+    explanation:{ en:'Perimeter formula: 2(l + w) = 28 → l + w = 14 → w = 14 − 8 = 6.', uz:'Perimeter formula: 2(l + w) = 28 → l + w = 14 → w = 14 − 8 = 6.', ru:'Perimeter formula: 2(l + w) = 28 → l + w = 14 → w = 14 − 8 = 6.' }},
 
   { id:'pm08', topic:'arithmetic', difficulty:2,
     q:{ en:'Find the least common multiple (LCM) of $10$ and $8$.', uz:'$10$ va $8$ ning eng kichik umumiy karralisini (EKUK) toping.', ru:'Найдите наименьшее общее кратное (НОК) чисел $10$ и $8$.' },
-    choices:['$80$','$40$','$20$','$18$'], correct:1 },
+    choices:['$80$','$40$','$20$','$18$'], correct:1 ,
+    explanation:{ en:'10 = 2 × 5, 8 = 2³. LCM = 2³ × 5 = 40.', uz:'10 = 2 × 5, 8 = 2³. LCM = 2³ × 5 = 40.', ru:'10 = 2 × 5, 8 = 2³. LCM = 2³ × 5 = 40.' }},
 
   { id:'pm09', topic:'linear_algebra', difficulty:2,
     q:{ en:'Solve the inequality:  $3x - 4 > 11$', uz:'Tengsizlikni yeching:  $3x - 4 > 11$', ru:'Решите неравенство:  $3x - 4 > 11$' },
-    choices:['$x > 3$','$x < 5$','$x > 5$','$x > 7$'], correct:2 },
+    choices:['$x > 3$','$x < 5$','$x > 5$','$x > 7$'], correct:2 ,
+    explanation:{ en:'Add 4 to both sides: 3x > 15. Divide by 3: x > 5.', uz:'Add 4 to both sides: 3x > 15. Divide by 3: x > 5.', ru:'Add 4 to both sides: 3x > 15. Divide by 3: x > 5.' }},
 
   { id:'pm10', topic:'linear_algebra', difficulty:2,
     q:{ en:'Simplify:  $-6 - 2(2 - y) - 2y + 2$', uz:'Soddalashtiring:  $-6 - 2(2 - y) - 2y + 2$', ru:'Упростите:  $-6 - 2(2 - y) - 2y + 2$' },
-    choices:['$-8$','$8$','$-8 + 4y$','$8 - 4y$'], correct:0 },
+    choices:['$-8$','$8$','$-8 + 4y$','$8 - 4y$'], correct:0 ,
+    explanation:{ en:'Expand: −6 − 4 + 2y − 2y + 2. The y terms cancel: −6 − 4 + 2 = −8.', uz:'Expand: −6 − 4 + 2y − 2y + 2. The y terms cancel: −6 − 4 + 2 = −8.', ru:'Expand: −6 − 4 + 2y − 2y + 2. The y terms cancel: −6 − 4 + 2 = −8.' }},
 
   { id:'pm11', topic:'arithmetic', difficulty:2,
     q:{ en:'A train travels at $60$ km/h for $2.5$ hours, then $80$ km/h for $1.5$ hours. Total distance?', uz:'Poyezd $2.5$ soat $60$ km/soat, soʻng $1.5$ soat $80$ km/soat tezlikda yuradi. Umumiy masofa?', ru:'Поезд едет $2{,}5$ ч со скоростью $60$ км/ч, затем $1{,}5$ ч — $80$ км/ч. Общий путь?' },
-    choices:['250 km','280 km','270 km','260 km'], correct:2 },
+    choices:['250 km','280 km','270 km','260 km'], correct:2 ,
+    explanation:{ en:'60 × 2.5 = 150 km, 80 × 1.5 = 120 km. Total: 270 km.', uz:'60 × 2.5 = 150 km, 80 × 1.5 = 120 km. Total: 270 km.', ru:'60 × 2.5 = 150 km, 80 × 1.5 = 120 km. Total: 270 km.' }},
 
   { id:'pm12', topic:'advanced_algebra', difficulty:3,
     q:{ en:'Calculate:  $\\dfrac{10^9 \\times 3^5}{3^3 \\times 10^{11}}$', uz:'Hisoblang:  $\\dfrac{10^9 \\times 3^5}{3^3 \\times 10^{11}}$', ru:'Вычислите:  $\\dfrac{10^9 \\times 3^5}{3^3 \\times 10^{11}}$' },
-    choices:['$0.9$','$9$','$0.09$','$0.03$'], correct:2 },
+    choices:['$0.9$','$9$','$0.09$','$0.03$'], correct:2 ,
+    explanation:{ en:'Subtract exponents: 10^(9−11) × 3^(5−3) = 10⁻² × 9 = 9/100 = 0.09.', uz:'Subtract exponents: 10^(9−11) × 3^(5−3) = 10⁻² × 9 = 9/100 = 0.09.', ru:'Subtract exponents: 10^(9−11) × 3^(5−3) = 10⁻² × 9 = 9/100 = 0.09.' }},
 
   { id:'pm13', topic:'advanced_algebra', difficulty:3,
     q:{ en:'Expand and simplify:  $2x(x - 1) - (2x - 1)(x + 1)$', uz:'Koʻpaytiring va soddalashtiring:  $2x(x - 1) - (2x - 1)(x + 1)$', ru:'Раскройте и упростите:  $2x(x - 1) - (2x - 1)(x + 1)$' },
-    choices:['$2x^2 - 3x$','$-3x + 1$','$4x^2 - 1$','$4x^2 - 5x + 1$'], correct:1 },
+    choices:['$2x^2 - 3x$','$-3x + 1$','$4x^2 - 1$','$4x^2 - 5x + 1$'], correct:1 ,
+    explanation:{ en:'Expand: 2x²−2x − (2x²+2x−x−1) = 2x²−2x − 2x²−x+1 = −3x+1.', uz:'Expand: 2x²−2x − (2x²+2x−x−1) = 2x²−2x − 2x²−x+1 = −3x+1.', ru:'Expand: 2x²−2x − (2x²+2x−x−1) = 2x²−2x − 2x²−x+1 = −3x+1.' }},
 
   { id:'pm14', topic:'linear_algebra', difficulty:3,
     q:{ en:'If  $a + b + 3 = 10$,  find:  $3.8a + 7.7 + 1.7b + 2.5a + 11.2 + 4.6b$', uz:'Agar  $a + b + 3 = 10$  boʻlsa:  $3.8a + 7.7 + 1.7b + 2.5a + 11.2 + 4.6b$  ni hisoblang', ru:'Если  $a + b + 3 = 10$,  вычислите:  $3.8a + 7.7 + 1.7b + 2.5a + 11.2 + 4.6b$' },
-    choices:['$58$','$70$','$53$','$63$'], correct:3 },
+    choices:['$58$','$70$','$53$','$63$'], correct:3 ,
+    explanation:{ en:'Group: (3.8+2.5)a + (1.7+4.6)b + 18.9 = 6.3(a+b)+18.9. Since a+b=7: 6.3×7+18.9 = 44.1+18.9 = 63.', uz:'Group: (3.8+2.5)a + (1.7+4.6)b + 18.9 = 6.3(a+b)+18.9. Since a+b=7: 6.3×7+18.9 = 44.1+18.9 = 63.', ru:'Group: (3.8+2.5)a + (1.7+4.6)b + 18.9 = 6.3(a+b)+18.9. Since a+b=7: 6.3×7+18.9 = 44.1+18.9 = 63.' }},
 
   { id:'pm15', topic:'advanced_algebra', difficulty:3,
     q:{ en:'Simplify:  $a(b - c) + b(c - a) - c(b - a)$', uz:'Soddalashtiring:  $a(b - c) + b(c - a) - c(b - a)$', ru:'Упростите:  $a(b - c) + b(c - a) - c(b - a)$' },
-    choices:['$-2ac$','$2ab$','$2ac$','$0$'], correct:3 },
+    choices:['$-2ac$','$2ab$','$2ac$','$0$'], correct:3 ,
+    explanation:{ en:'Expand: ab−ac+bc−ab−bc+ac = 0. All terms cancel.', uz:'Expand: ab−ac+bc−ab−bc+ac = 0. All terms cancel.', ru:'Expand: ab−ac+bc−ab−bc+ac = 0. All terms cancel.' }},
 
   { id:'pm16', topic:'advanced_algebra', difficulty:4,
     q:{ en:'Simplify:  $(a+b)(a-b+1) - (a-b)(a+b-1)$', uz:'Soddalashtiring:  $(a+b)(a-b+1) - (a-b)(a+b-1)$', ru:'Упростите:  $(a+b)(a-b+1) - (a-b)(a+b-1)$' },
-    choices:['$2b$','$2a - 2b$','$2a$','$2b^2 - 2a^2$'], correct:2 },
+    choices:['$2b$','$2a - 2b$','$2a$','$2b^2 - 2a^2$'], correct:2 ,
+    explanation:{ en:'Let u=a+b, v=a−b. u(v+1)−v(u+1) = uv+u−vu−v = u−v = (a+b)−(a−b) = 2a.', uz:'Let u=a+b, v=a−b. u(v+1)−v(u+1) = uv+u−vu−v = u−v = (a+b)−(a−b) = 2a.', ru:'Let u=a+b, v=a−b. u(v+1)−v(u+1) = uv+u−vu−v = u−v = (a+b)−(a−b) = 2a.' }},
 
   { id:'pm17', topic:'advanced_algebra', difficulty:3,
     q:{ en:'Which of the following equals $-1$?', uz:'Quyidagilardan qaysi biri $-1$ ga teng?', ru:'Что из следующего равно $-1$?' },
-    choices:['$((-1)^2)^3$','$(-(-1)^2)^3$','$((-1)^3)^2$','$(-(-1)^3)^3$'], correct:1 },
+    choices:['$((-1)^2)^3$','$(-(-1)^2)^3$','$((-1)^3)^2$','$(-(-1)^3)^3$'], correct:1 ,
+    explanation:{ en:'Only option B: (−(−1)²)³ = (−1)³ = −1. All others equal +1.', uz:'Only option B: (−(−1)²)³ = (−1)³ = −1. All others equal +1.', ru:'Only option B: (−(−1)²)³ = (−1)³ = −1. All others equal +1.' }},
 
   { id:'pm18', topic:'arithmetic', difficulty:4,
     q:{ en:'Calculate:  $26{\\cdot}25 - 25{\\cdot}24 + 24{\\cdot}23 - 23{\\cdot}22 - 12{\\cdot}8$', uz:'Hisoblang:  $26{\\cdot}25 - 25{\\cdot}24 + 24{\\cdot}23 - 23{\\cdot}22 - 12{\\cdot}8$', ru:'Вычислите:  $26{\\cdot}25 - 25{\\cdot}24 + 24{\\cdot}23 - 23{\\cdot}22 - 12{\\cdot}8$' },
-    choices:['$54$','$1$','$0$','$8$'], correct:2 },
+    choices:['$54$','$1$','$0$','$8$'], correct:2 ,
+    explanation:{ en:'Group pairs: 25(26−24)+23(24−22)−96 = 25×2+23×2−96 = 50+46−96 = 0.', uz:'Group pairs: 25(26−24)+23(24−22)−96 = 25×2+23×2−96 = 50+46−96 = 0.', ru:'Group pairs: 25(26−24)+23(24−22)−96 = 25×2+23×2−96 = 50+46−96 = 0.' }},
 
   { id:'pm19', topic:'advanced_algebra', difficulty:4,
     q:{ en:'$P = \\left(\\dfrac{x}{3} - \\dfrac{y}{3}\\right) - (x + 2y)$ and $Q = \\dfrac{x}{3} + \\dfrac{y}{3} - (x - y)$.  Find $P - Q$.', uz:'$P = \\left(\\dfrac{x}{3} - \\dfrac{y}{3}\\right) - (x + 2y)$ va $Q = \\dfrac{x}{3} + \\dfrac{y}{3} - (x - y)$.  $P - Q$ ni toping.', ru:'$P = \\left(\\dfrac{x}{3} - \\dfrac{y}{3}\\right) - (x + 2y)$ и $Q = \\dfrac{x}{3} + \\dfrac{y}{3} - (x - y)$.  Найдите $P - Q$.' },
-    choices:['$-\\dfrac{11y}{3}$','$4y$','$-4y$','$\\dfrac{13y}{3}$'], correct:0 },
+    choices:['$-\\dfrac{11y}{3}$','$4y$','$-4y$','$\\dfrac{13y}{3}$'], correct:0 ,
+    explanation:{ en:'P = −2x/3−7y/3, Q = −2x/3+4y/3. P−Q = −7y/3−4y/3 = −11y/3.', uz:'P = −2x/3−7y/3, Q = −2x/3+4y/3. P−Q = −7y/3−4y/3 = −11y/3.', ru:'P = −2x/3−7y/3, Q = −2x/3+4y/3. P−Q = −7y/3−4y/3 = −11y/3.' }},
 
   { id:'pm20', topic:'arithmetic', difficulty:4,
     q:{ en:'When $n$ is divided by $7$, remainder is $5$. When $m$ is divided by $7$, remainder is $6$. What is the remainder when $mn$ is divided by $7$?', uz:'$n$ soni $7$ ga boʻlinganda qoldiq $5$, $m$ soni $7$ ga boʻlinganda qoldiq $6$. $mn$ ni $7$ ga boʻlganda qoldiq?', ru:'При делении $n$ на $7$ остаток $5$, $m$ на $7$ — остаток $6$. Каков остаток от деления $mn$ на $7$?' },
-    choices:['$1$','$4$','$3$','$2$'], correct:3 }
+    choices:['$1$','$4$','$3$','$2$'], correct:3 ,
+    explanation:{ en:'n ≡ 5 (mod 7), m ≡ 6 (mod 7). mn ≡ 5×6 = 30 ≡ 30−28 = 2 (mod 7).', uz:'n ≡ 5 (mod 7), m ≡ 6 (mod 7). mn ≡ 5×6 = 30 ≡ 30−28 = 2 (mod 7).', ru:'n ≡ 5 (mod 7), m ≡ 6 (mod 7). mn ≡ 5×6 = 30 ≡ 30−28 = 2 (mod 7).' }}
 ];
 
 const PASSAGE_1 = 'Every night, millions of people do not get enough sleep. Doctors say that adults need between seven and nine hours of sleep per night, but many people sleep less than six hours. This causes serious problems. People who do not sleep enough find it harder to concentrate, remember information, and make decisions. They also get sick more often because their immune system becomes weaker. Some people think that drinking coffee solves the problem, but it only hides the tiredness for a short time. The only real solution is to sleep more.';
@@ -3498,86 +3518,106 @@ const PLACEMENT_ENG_QUESTIONS = [
   // PASSAGE 1 — questions pe01–pe05
   { id:'pe01', topic:'reading', difficulty:2, passage: PASSAGE_1,
     q:'What is the main idea of this passage?',
-    choices:['Coffee is dangerous for health','Lack of sleep causes serious health problems','Adults should drink less coffee','Doctors need to study sleep more'], correct:1 },
+    choices:['Coffee is dangerous for health','Lack of sleep causes serious health problems','Adults should drink less coffee','Doctors need to study sleep more'], correct:1 ,
+    explanation:'The passage focuses throughout on the dangers of insufficient sleep — not coffee, doctors, or adults in general.'},
 
   { id:'pe02', topic:'reading', difficulty:1, passage: PASSAGE_1,
     q:'According to the passage, how many hours of sleep do adults need per night?',
-    choices:['At least 10 hours','Exactly 8 hours','Between 7 and 9 hours','At least 6 hours'], correct:2 },
+    choices:['At least 10 hours','Exactly 8 hours','Between 7 and 9 hours','At least 6 hours'], correct:2 ,
+    explanation:'The passage states: "adults need between seven and nine hours of sleep per night."'},
 
   { id:'pe03', topic:'reading', difficulty:2, passage: PASSAGE_1,
     q:'Which of the following is NOT mentioned as a result of not sleeping enough?',
-    choices:['Difficulty concentrating','Getting sick more often','Losing weight','Difficulty making decisions'], correct:2 },
+    choices:['Difficulty concentrating','Getting sick more often','Losing weight','Difficulty making decisions'], correct:2 ,
+    explanation:'The passage lists concentration, memory, decision-making, and immune function. Weight loss is never mentioned.'},
 
   { id:'pe04', topic:'reading', difficulty:2, passage: PASSAGE_1,
     q:'Why does the author say coffee is not a real solution?',
-    choices:['Coffee makes people more tired','It only hides tiredness temporarily','Coffee is very expensive','Doctors do not recommend coffee'], correct:1 },
+    choices:['Coffee makes people more tired','It only hides tiredness temporarily','Coffee is very expensive','Doctors do not recommend coffee'], correct:1 ,
+    explanation:'The passage says coffee "only hides the tiredness for a short time" — it is a temporary mask, not a real fix.'},
 
   { id:'pe05', topic:'vocabulary', difficulty:2, passage: PASSAGE_1,
     q:'As used in the passage, the word "concentrate" most nearly means:',
-    choices:['Exercise','Focus attention','Stay awake','Work quickly'], correct:1 },
+    choices:['Exercise','Focus attention','Stay awake','Work quickly'], correct:1 ,
+    explanation:'"Concentrate" in context means to direct mental effort — i.e., to focus attention.'},
 
   // PASSAGE 2 — questions pe06–pe10
   { id:'pe06', topic:'reading', difficulty:3, passage: PASSAGE_2,
     q:"What is the author's overall position on plastic bag bans?",
-    choices:['They are completely ineffective','They are a positive step despite the debate','Reusable bags are always better than plastic','The debate has no clear answer'], correct:1 },
+    choices:['They are completely ineffective','They are a positive step despite the debate','Reusable bags are always better than plastic','The debate has no clear answer'], correct:1 ,
+    explanation:'The last sentence says "reducing plastic waste in any form is a step in the right direction" — the author is cautiously supportive.'},
 
   { id:'pe07', topic:'reading', difficulty:3, passage: PASSAGE_2,
     q:'What argument do critics of the ban make?',
-    choices:['Plastic bags are useful and convenient','Reusable bags need many uses before being environmentally better','Banning plastic bags is too expensive','Environmental scientists disagree with the bans'], correct:1 },
+    choices:['Plastic bags are useful and convenient','Reusable bags need many uses before being environmentally better','Banning plastic bags is too expensive','Environmental scientists disagree with the bans'], correct:1 ,
+    explanation:'Critics argue reusable bags "must be used many times before they actually reduce environmental impact."'},
 
   { id:'pe08', topic:'reading', difficulty:3, passage: PASSAGE_2,
     q:'Which word best describes the tone of this passage?',
-    choices:['Angry','Balanced','Humorous','Pessimistic'], correct:1 },
+    choices:['Angry','Balanced','Humorous','Pessimistic'], correct:1 ,
+    explanation:'The passage presents both the supporters\' arguments and the critics\' counter-arguments without favouring either side.'},
 
   { id:'pe09', topic:'vocabulary', difficulty:3, passage: PASSAGE_2,
     q:'As used in the passage, the word "offset" most nearly means:',
-    choices:['Increase','Measure','Compensate for','Remove'], correct:2 },
+    choices:['Increase','Measure','Compensate for','Remove'], correct:2 ,
+    explanation:'"Offset" means to balance out or compensate for a cost or disadvantage.'},
 
   { id:'pe10', topic:'reading', difficulty:3, passage: PASSAGE_2,
     q:'What can be inferred about cotton bags from the passage?',
-    choices:['They are cheaper than plastic bags','They require significant use before being environmentally better','They last for exactly 131 days','Most scientists do not recommend them'], correct:1 },
+    choices:['They are cheaper than plastic bags','They require significant use before being environmentally better','They last for exactly 131 days','Most scientists do not recommend them'], correct:1 ,
+    explanation:'The passage states a cotton bag "needs to be used at least 131 times" before it has a net environmental benefit.'},
 
   // GRAMMAR — pe11–pe15
   { id:'pe11', topic:'grammar', difficulty:2,
     q:'Choose the correct word:  "Neither the teacher nor the students ___ ready for the exam."',
-    choices:['was','were','is','have been'], correct:1 },
+    choices:['was','were','is','have been'], correct:1 ,
+    explanation:'With "neither…nor", the verb agrees with the subject closest to it ("students" — plural), so "were" is correct.'},
 
   { id:'pe12', topic:'grammar', difficulty:3,
     q:'Choose the correct form:  "She ___ already ___ the report when her boss called."',
-    choices:['has / finished','had / finished','was / finishing','have / finished'], correct:1 },
+    choices:['has / finished','had / finished','was / finishing','have / finished'], correct:1 ,
+    explanation:'The action (finishing the report) was completed before the boss called — past perfect "had finished" is required.'},
 
   { id:'pe13', topic:'grammar', difficulty:3,
     q:'Choose the correct word:  "If I ___ more time, I would travel around the world."',
-    choices:['have','will have','had','would have'], correct:2 },
+    choices:['have','will have','had','would have'], correct:2 ,
+    explanation:'Second conditional (hypothetical present/future): If + past simple ("had"), would + infinitive.'},
 
   { id:'pe14', topic:'grammar', difficulty:3,
     q:'Choose the correct sentence:',
-    choices:['The book which I bought it yesterday was expensive.','The book that I bought yesterday was expensive.','The book who I bought yesterday was expensive.','The book I bought it yesterday was expensive.'], correct:1 },
+    choices:['The book which I bought it yesterday was expensive.','The book that I bought yesterday was expensive.','The book who I bought yesterday was expensive.','The book I bought it yesterday was expensive.'], correct:1 ,
+    explanation:'Relative clauses for things use "that" or "which" — never "who". The pronoun "it" must be removed to avoid a double subject.'},
 
   { id:'pe15', topic:'grammar', difficulty:2,
     q:'Choose the correct form:  "She enjoys reading, writing, and ___ chess."',
-    choices:['play','to playing','playing','played'], correct:2 },
+    choices:['play','to playing','playing','played'], correct:2 ,
+    explanation:'After "enjoy", a gerund (verb + -ing) is required: enjoys reading, writing, and playing.'},
 
   // VOCABULARY — pe16–pe20
   { id:'pe16', topic:'vocabulary', difficulty:3,
     q:'"The scientist\'s discovery was so ___ that it changed the entire field of medicine."',
-    choices:['ordinary','groundbreaking','predictable','familiar'], correct:1 },
+    choices:['ordinary','groundbreaking','predictable','familiar'], correct:1 ,
+    explanation:'"Changed the entire field of medicine" signals a major impact — "groundbreaking" fits perfectly.'},
 
   { id:'pe17', topic:'vocabulary', difficulty:3,
     q:'"The government introduced measures to ___ the spread of misinformation online."',
-    choices:['encourage','ignore','curb','celebrate'], correct:2 },
+    choices:['encourage','ignore','curb','celebrate'], correct:2 ,
+    explanation:'"Curb" means to limit or restrain — the government wants to reduce misinformation, not encourage it.'},
 
   { id:'pe18', topic:'vocabulary', difficulty:3,
     q:'"Her answer was ___; no one understood what she was trying to say."',
-    choices:['precise','confident','vague','articulate'], correct:2 },
+    choices:['precise','confident','vague','articulate'], correct:2 ,
+    explanation:'"No one understood" indicates the answer was unclear — "vague" (lacking clarity) is the match.'},
 
   { id:'pe19', topic:'vocabulary', difficulty:4,
     q:'"Despite many obstacles, she remained ___ in her decision to study abroad."',
-    choices:['hesitant','confused','firm','flexible'], correct:2 },
+    choices:['hesitant','confused','firm','flexible'], correct:2 ,
+    explanation:'"Remained ___ in her decision" with "despite many obstacles" indicates determination — "firm" is correct.'},
 
   { id:'pe20', topic:'vocabulary', difficulty:2,
     q:'Choose the word closest in meaning to "exhausted":',
-    choices:['energetic','relieved','drained','nervous'], correct:2 }
+    choices:['energetic','relieved','drained','nervous'], correct:2 ,
+    explanation:'"Exhausted" means completely tired out. "Drained" is the closest synonym.'}
 ];
 
 // ── PLACEMENT TEST ─────────────────────────────────────────────────────────
@@ -3963,8 +4003,8 @@ function endSection() {
     document.body.classList.remove('in-test');
     const engAnswers = state.answers.filter(a => a.section === 'english');
     const correct = engAnswers.filter(a => a.isCorrect).length;
-    const pct = Math.round((correct / 36) * 100);
-    document.getElementById('break-math-score').textContent = correct + '/36';
+    const pct = Math.round((correct / state.engQuestions.length) * 100);
+    document.getElementById('break-math-score').textContent = correct + '/' + state.engQuestions.length;
     document.getElementById('break-math-pct').textContent = pct + '%';
     showScreen('break');
     let secs = 120;
@@ -4012,7 +4052,7 @@ function showResults() {
 
   document.getElementById('results-total').textContent = total;
   document.getElementById('results-percent').textContent = totalPct + '%';
-  const outOfEl = document.querySelector('[data-en="out of 50"]');
+  const outOfEl = document.querySelector('[data-en="out of 40"]');
   if (outOfEl) outOfEl.textContent = 'out of ' + grandTotal;
 
   const statusEl = document.getElementById('results-status');
@@ -4240,7 +4280,7 @@ function renderReview(filter) {
   filtered.forEach((a) => {
     const q = a.question;
     const qText = a.section === 'math' ? (q.q[currentLang] || q.q.en) : q.q;
-    const explanation = a.section === 'math' ? (q.explanation[currentLang] || q.explanation.en) : q.explanation;
+    const explanation = a.section === 'math' ? ((q.explanation && (q.explanation[currentLang] || q.explanation.en)) || '') : (q.explanation || '');
 
     const div = document.createElement('div');
     div.className = 'review-item ' + (a.isCorrect ? 'correct' : 'incorrect');
