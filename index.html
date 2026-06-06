@@ -546,9 +546,16 @@ body.in-test{padding:0 !important}
     </div>
 
     <div class="q-card no-select">
-      <div class="q-passage" id="q-passage" style="display:none"></div>
-      <div class="q-text" id="q-text">Loading...</div>
-      <div class="q-choices" id="q-choices"></div>
+      <div class="q-left">
+        <div id="q-passage-wrap" style="display:none">
+          <div class="q-passage-label">Passage</div>
+          <div class="q-passage" id="q-passage"></div>
+        </div>
+        <div class="q-text" id="q-text">Loading...</div>
+      </div>
+      <div class="q-right">
+        <div class="q-choices" id="q-choices"></div>
+      </div>
     </div>
 
     <div class="test-actions">
@@ -3395,7 +3402,233 @@ function isValidPhone(phone) {
   return /^\+998-\d{2}-\d{3}-\d{2}-\d{2}$/.test(phone);
 }
 
-// QUESTION SHUFFLE
+
+// ── PLACEMENT TEST QUESTIONS ─────────────────────────────────────────────────
+const PLACEMENT_MATH_QUESTIONS = [
+  { id:'pm01', topic:'linear_algebra', difficulty:1,
+    q:{ en:'Solve for x:  2x + 7 = 19', uz:'x ni toping:  2x + 7 = 19', ru:'Найдите x:  2x + 7 = 19' },
+    choices:['4','6','5','7'], correct:1 },
+
+  { id:'pm02', topic:'arithmetic', difficulty:1,
+    q:{ en:'What is 30% of 250?', uz:'250 ning 30% i nechaga teng?', ru:'Чему равно 30% от 250?' },
+    choices:['75','65','80','70'], correct:0 },
+
+  { id:'pm03', topic:'arithmetic', difficulty:1,
+    q:{ en:'4 pens cost 8,000 UZS. How much do 7 pens cost?', uz:'4 ta qalam 8 000 soʻm turadi. 7 ta qalam necha soʻm turadi?', ru:'4 ручки стоят 8 000 сум. Сколько стоят 7 ручек?' },
+    choices:['14,000 UZS','12,000 UZS','16,000 UZS','10,000 UZS'], correct:0 },
+
+  { id:'pm04', topic:'arithmetic', difficulty:2,
+    q:{ en:'Calculate:  1/3 − 3/4', uz:'Hisoblang:  1/3 − 3/4', ru:'Вычислите:  1/3 − 3/4' },
+    choices:['−7/12','−5/12','5/12','−1/6'], correct:1 },
+
+  { id:'pm05', topic:'linear_algebra', difficulty:1,
+    q:{ en:'Simplify:  4a − 13a + 5a', uz:'Soddalashtiring:  4a − 13a + 5a', ru:'Упростите:  4a − 13a + 5a' },
+    choices:['−6a','4a','−4a','6a'], correct:2 },
+
+  { id:'pm06', topic:'arithmetic', difficulty:2,
+    q:{ en:'Order from smallest to largest:  a = 5/11,  b = 6/13,  c = 7/15', uz:'Kichikdan kattaga joylashtiring:  a = 5/11,  b = 6/13,  c = 7/15', ru:'От меньшего к большему:  a = 5/11,  b = 6/13,  c = 7/15' },
+    choices:['a < b < c','b < a < c','c < b < a','b < c < a'], correct:0 },
+
+  { id:'pm07', topic:'geometry', difficulty:1,
+    q:{ en:'A rectangle has perimeter 28 and length 8. What is its width?', uz:"To'g'ri to'rtburchakning perimetri 28, uzunligi 8. Kengligi necha?", ru:'Периметр прямоугольника 28, длина 8. Найдите ширину.' },
+    choices:['5','7','6','4'], correct:2 },
+
+  { id:'pm08', topic:'arithmetic', difficulty:2,
+    q:{ en:'Find the least common multiple (LCM) of 10 and 8.', uz:'10 va 8 ning eng kichik umumiy karralisini (EKUK) toping.', ru:'Найдите наименьшее общее кратное (НОК) чисел 10 и 8.' },
+    choices:['80','40','20','18'], correct:1 },
+
+  { id:'pm09', topic:'linear_algebra', difficulty:2,
+    q:{ en:'Solve the inequality:  3x − 4 > 11', uz:'Tengsizlikni yeching:  3x − 4 > 11', ru:'Решите неравенство:  3x − 4 > 11' },
+    choices:['x > 3','x < 5','x > 5','x > 7'], correct:2 },
+
+  { id:'pm10', topic:'linear_algebra', difficulty:2,
+    q:{ en:'Simplify:  −6 − 2(2 − y) − 2y + 2', uz:'Soddalashtiring:  −6 − 2(2 − y) − 2y + 2', ru:'Упростите:  −6 − 2(2 − y) − 2y + 2' },
+    choices:['−8','8','−8 + 4y','8 − 4y'], correct:0 },
+
+  { id:'pm11', topic:'arithmetic', difficulty:2,
+    q:{ en:'A train travels at 60 km/h for 2.5 hours, then 80 km/h for 1.5 hours. What is the total distance?', uz:'Poyezd 2.5 soat 60 km/soat, soʻng 1.5 soat 80 km/soat tezlikda yuradi. Umumiy masofa necha km?', ru:'Поезд едет 2,5 ч со скоростью 60 км/ч, затем 1,5 ч — 80 км/ч. Общий путь?' },
+    choices:['250 km','280 km','270 km','260 km'], correct:2 },
+
+  { id:'pm12', topic:'advanced_algebra', difficulty:3,
+    q:{ en:'Calculate:  (10⁹ × 3⁵) ÷ (3³ × 10¹¹)', uz:'Hisoblang:  (10⁹ × 3⁵) ÷ (3³ × 10¹¹)', ru:'Вычислите:  (10⁹ × 3⁵) ÷ (3³ × 10¹¹)' },
+    choices:['0.9','9','0.09','0.03'], correct:2 },
+
+  { id:'pm13', topic:'advanced_algebra', difficulty:3,
+    q:{ en:'Expand and simplify:  2x(x − 1) − (2x − 1)(x + 1)', uz:'Koʻpaytiring va soddalashtiring:  2x(x − 1) − (2x − 1)(x + 1)', ru:'Раскройте и упростите:  2x(x − 1) − (2x − 1)(x + 1)' },
+    choices:['2x² − 3x','−3x + 1','4x² − 1','4x² − 5x + 1'], correct:1 },
+
+  { id:'pm14', topic:'linear_algebra', difficulty:3,
+    q:{ en:'If  a + b + 3 = 10,  find the value of:  3.8a + 7.7 + 1.7b + 2.5a + 11.2 + 4.6b', uz:'Agar  a + b + 3 = 10  boʻlsa, quyidagini hisoblang:  3.8a + 7.7 + 1.7b + 2.5a + 11.2 + 4.6b', ru:'Если  a + b + 3 = 10,  вычислите:  3.8a + 7.7 + 1.7b + 2.5a + 11.2 + 4.6b' },
+    choices:['58','70','53','63'], correct:3 },
+
+  { id:'pm15', topic:'advanced_algebra', difficulty:3,
+    q:{ en:'Simplify:  a(b − c) + b(c − a) − c(b − a)', uz:'Soddalashtiring:  a(b − c) + b(c − a) − c(b − a)', ru:'Упростите:  a(b − c) + b(c − a) − c(b − a)' },
+    choices:['−2ac','2ab','2ac','0'], correct:3 },
+
+  { id:'pm16', topic:'advanced_algebra', difficulty:4,
+    q:{ en:'Simplify:  (a + b)(a − b + 1) − (a − b)(a + b − 1)', uz:'Soddalashtiring:  (a + b)(a − b + 1) − (a − b)(a + b − 1)', ru:'Упростите:  (a + b)(a − b + 1) − (a − b)(a + b − 1)' },
+    choices:['2b','2a − 2b','2a','2b² − 2a²'], correct:2 },
+
+  { id:'pm17', topic:'advanced_algebra', difficulty:3,
+    q:{ en:'Which of the following equals −1?', uz:'Quyidagilardan qaysi biri −1 ga teng?', ru:'Что из следующего равно −1?' },
+    choices:['((-1)²)³','(-(-1)²)³','((-1)³)²','(-(-1)³)³'], correct:1 },
+
+  { id:'pm18', topic:'arithmetic', difficulty:4,
+    q:{ en:'Calculate:  26·25 − 25·24 + 24·23 − 23·22 − 12·8', uz:'Hisoblang:  26·25 − 25·24 + 24·23 − 23·22 − 12·8', ru:'Вычислите:  26·25 − 25·24 + 24·23 − 23·22 − 12·8' },
+    choices:['54','1','0','8'], correct:2 },
+
+  { id:'pm19', topic:'advanced_algebra', difficulty:4,
+    q:{ en:'P = (x/3 − y/3) − (x + 2y)  and  Q = x/3 + y/3 − (x − y).  Find P − Q.', uz:'P = (x/3 − y/3) − (x + 2y)  va  Q = x/3 + y/3 − (x − y).  P − Q ni toping.', ru:'P = (x/3 − y/3) − (x + 2y)  и  Q = x/3 + y/3 − (x − y).  Найдите P − Q.' },
+    choices:['−11y/3','4y','−4y','13y/3'], correct:0 },
+
+  { id:'pm20', topic:'arithmetic', difficulty:4,
+    q:{ en:'When n is divided by 7, the remainder is 5. When m is divided by 7, the remainder is 6. What is the remainder when mn is divided by 7?', uz:'n soni 7 ga boʻlinganda qoldiq 5, m soni 7 ga boʻlinganda qoldiq 6. mn ni 7 ga boʻlganda qoldiq nechaga teng?', ru:'При делении n на 7 остаток 5, m на 7 — остаток 6. Каков остаток от деления mn на 7?' },
+    choices:['1','4','3','2'], correct:3 }
+];
+
+const PASSAGE_1 = 'Every night, millions of people do not get enough sleep. Doctors say that adults need between seven and nine hours of sleep per night, but many people sleep less than six hours. This causes serious problems. People who do not sleep enough find it harder to concentrate, remember information, and make decisions. They also get sick more often because their immune system becomes weaker. Some people think that drinking coffee solves the problem, but it only hides the tiredness for a short time. The only real solution is to sleep more.';
+
+const PASSAGE_2 = 'Many cities around the world are banning single-use plastic bags in shops and supermarkets. Supporters of these bans argue that plastic bags cause serious environmental damage — they pollute oceans, harm wildlife, and take hundreds of years to break down. However, critics point out that reusable bags must be used many times before they actually reduce environmental impact. A cotton bag, for example, needs to be used at least 131 times to offset the energy used to produce it. The debate continues, but most environmental scientists agree that reducing plastic waste in any form is a step in the right direction.';
+
+const PLACEMENT_ENG_QUESTIONS = [
+  // PASSAGE 1 — questions pe01–pe05
+  { id:'pe01', topic:'reading', difficulty:2, passage: PASSAGE_1,
+    q:'What is the main idea of this passage?',
+    choices:['Coffee is dangerous for health','Lack of sleep causes serious health problems','Adults should drink less coffee','Doctors need to study sleep more'], correct:1 },
+
+  { id:'pe02', topic:'reading', difficulty:1, passage: PASSAGE_1,
+    q:'According to the passage, how many hours of sleep do adults need per night?',
+    choices:['At least 10 hours','Exactly 8 hours','Between 7 and 9 hours','At least 6 hours'], correct:2 },
+
+  { id:'pe03', topic:'reading', difficulty:2, passage: PASSAGE_1,
+    q:'Which of the following is NOT mentioned as a result of not sleeping enough?',
+    choices:['Difficulty concentrating','Getting sick more often','Losing weight','Difficulty making decisions'], correct:2 },
+
+  { id:'pe04', topic:'reading', difficulty:2, passage: PASSAGE_1,
+    q:'Why does the author say coffee is not a real solution?',
+    choices:['Coffee makes people more tired','It only hides tiredness temporarily','Coffee is very expensive','Doctors do not recommend coffee'], correct:1 },
+
+  { id:'pe05', topic:'vocabulary', difficulty:2, passage: PASSAGE_1,
+    q:'As used in the passage, the word "concentrate" most nearly means:',
+    choices:['Exercise','Focus attention','Stay awake','Work quickly'], correct:1 },
+
+  // PASSAGE 2 — questions pe06–pe10
+  { id:'pe06', topic:'reading', difficulty:3, passage: PASSAGE_2,
+    q:"What is the author's overall position on plastic bag bans?",
+    choices:['They are completely ineffective','They are a positive step despite the debate','Reusable bags are always better than plastic','The debate has no clear answer'], correct:1 },
+
+  { id:'pe07', topic:'reading', difficulty:3, passage: PASSAGE_2,
+    q:'What argument do critics of the ban make?',
+    choices:['Plastic bags are useful and convenient','Reusable bags need many uses before being environmentally better','Banning plastic bags is too expensive','Environmental scientists disagree with the bans'], correct:1 },
+
+  { id:'pe08', topic:'reading', difficulty:3, passage: PASSAGE_2,
+    q:'Which word best describes the tone of this passage?',
+    choices:['Angry','Balanced','Humorous','Pessimistic'], correct:1 },
+
+  { id:'pe09', topic:'vocabulary', difficulty:3, passage: PASSAGE_2,
+    q:'As used in the passage, the word "offset" most nearly means:',
+    choices:['Increase','Measure','Compensate for','Remove'], correct:2 },
+
+  { id:'pe10', topic:'reading', difficulty:3, passage: PASSAGE_2,
+    q:'What can be inferred about cotton bags from the passage?',
+    choices:['They are cheaper than plastic bags','They require significant use before being environmentally better','They last for exactly 131 days','Most scientists do not recommend them'], correct:1 },
+
+  // GRAMMAR — pe11–pe15
+  { id:'pe11', topic:'grammar', difficulty:2,
+    q:'Choose the correct word:  "Neither the teacher nor the students ___ ready for the exam."',
+    choices:['was','were','is','have been'], correct:1 },
+
+  { id:'pe12', topic:'grammar', difficulty:3,
+    q:'Choose the correct form:  "She ___ already ___ the report when her boss called."',
+    choices:['has / finished','had / finished','was / finishing','have / finished'], correct:1 },
+
+  { id:'pe13', topic:'grammar', difficulty:3,
+    q:'Choose the correct word:  "If I ___ more time, I would travel around the world."',
+    choices:['have','will have','had','would have'], correct:2 },
+
+  { id:'pe14', topic:'grammar', difficulty:3,
+    q:'Choose the correct sentence:',
+    choices:['The book which I bought it yesterday was expensive.','The book that I bought yesterday was expensive.','The book who I bought yesterday was expensive.','The book I bought it yesterday was expensive.'], correct:1 },
+
+  { id:'pe15', topic:'grammar', difficulty:2,
+    q:'Choose the correct form:  "She enjoys reading, writing, and ___ chess."',
+    choices:['play','to playing','playing','played'], correct:2 },
+
+  // VOCABULARY — pe16–pe20
+  { id:'pe16', topic:'vocabulary', difficulty:3,
+    q:'"The scientist\'s discovery was so ___ that it changed the entire field of medicine."',
+    choices:['ordinary','groundbreaking','predictable','familiar'], correct:1 },
+
+  { id:'pe17', topic:'vocabulary', difficulty:3,
+    q:'"The government introduced measures to ___ the spread of misinformation online."',
+    choices:['encourage','ignore','curb','celebrate'], correct:2 },
+
+  { id:'pe18', topic:'vocabulary', difficulty:3,
+    q:'"Her answer was ___; no one understood what she was trying to say."',
+    choices:['precise','confident','vague','articulate'], correct:2 },
+
+  { id:'pe19', topic:'vocabulary', difficulty:4,
+    q:'"Despite many obstacles, she remained ___ in her decision to study abroad."',
+    choices:['hesitant','confused','firm','flexible'], correct:2 },
+
+  { id:'pe20', topic:'vocabulary', difficulty:2,
+    q:'Choose the word closest in meaning to "exhausted":',
+    choices:['energetic','relieved','drained','nervous'], correct:2 }
+];
+
+// ── PLACEMENT TEST ─────────────────────────────────────────────────────────
+// Fixed 20 math + 10 English questions in a standardized order.
+// Math: d1×5 → d2×6 → d3×6 → d4×3 (covers every major SAT topic)
+// English: d1×2 → d2×3 → d3×2 → d4×1 → d5×2 (CEFR A1→C1)
+const PLACEMENT_MATH_IDS = [
+  'm01','m11','m78','m79','m76',          // d1 (SAT 350-450)
+  'm03','m13','m23','m35','m47','m57',    // d2 (SAT 450-550)
+  'm05','m16','m25','m37','m49','m59',    // d3 (SAT 550-660)
+  'm20','m30','m67'                        // d4 (SAT 660-750)
+];
+const PLACEMENT_ENG_IDS = [
+  'e01','e31',          // d1 — A1/A2
+  'e07','e37','e61',    // d2 — A2/B1
+  'e13','e43',          // d3 — B1/B2
+  'e19',                // d4 — B2
+  'e84','e85'           // d5 — C1
+];
+
+function buildPlacementTest(pool, ids) {
+  // Look up each question by ID, preserve fixed order, NO answer shuffling
+  const byId = {};
+  pool.forEach(q => { byId[q.id] = q; });
+  return ids.map(id => byId[id]).filter(Boolean);
+}
+
+function satEstimateFromScore(correct, total) {
+  // Maps raw math score (out of 20) to SAT math estimate
+  const ratio = correct / total;
+  if (ratio >= 1.00) return 800;
+  if (ratio >= 0.95) return 780;
+  if (ratio >= 0.88) return 750;
+  if (ratio >= 0.80) return 720;
+  if (ratio >= 0.72) return 690;
+  if (ratio >= 0.62) return 650;
+  if (ratio >= 0.52) return 610;
+  if (ratio >= 0.42) return 570;
+  if (ratio >= 0.32) return 520;
+  if (ratio >= 0.22) return 470;
+  if (ratio >= 0.14) return 430;
+  return 390;
+}
+
+function cefrFromScore(correct, total) {
+  // Maps raw English score (out of 10) to CEFR level
+  const ratio = correct / total;
+  if (ratio >= 0.90) return 'C1';
+  if (ratio >= 0.75) return 'B2';
+  if (ratio >= 0.55) return 'B1';
+  if (ratio >= 0.30) return 'A2';
+  return 'A1';
+}
+
+// QUESTION SHUFFLE (kept for any legacy use)
 function selectQuestions(pool, count) {
   // Group by difficulty level
   const byLevel = {};
@@ -3531,8 +3764,8 @@ function startTest() {
     uni: document.getElementById('info-uni').value.trim()
   };
 
-  state.mathQuestions = selectQuestions(MATH_QUESTIONS, 30);
-  state.engQuestions = selectQuestions(ENGLISH_QUESTIONS, 36);
+  state.mathQuestions = PLACEMENT_MATH_QUESTIONS;
+  state.engQuestions = PLACEMENT_ENG_QUESTIONS;
   state.testStarted = true;
 
   enableAntiCheating();
@@ -3557,7 +3790,7 @@ function startEnglishSection() {
   if (state.breakInterval) { clearInterval(state.breakInterval); state.breakInterval = null; }
   state.section = 'english';
   state.questionIndex = 0;
-  state.sectionTimeRemaining = 30 * 60;
+  state.sectionTimeRemaining = 15 * 60;
   state.selectedAnswer = null;
   document.body.classList.add('in-test');
   showScreen('test');
@@ -3627,11 +3860,13 @@ function renderQuestion() {
   document.getElementById('q-text').textContent = qText;
 
   const passageEl = document.getElementById('q-passage');
+  const passageWrap = document.getElementById('q-passage-wrap');
+  const prevQ = state.questionIndex > 0 ? (state.section === 'math' ? state.mathQuestions : state.engQuestions)[state.questionIndex - 1] : null;
   if (q.passage) {
     passageEl.textContent = q.passage;
-    passageEl.style.display = 'block';
+    passageWrap.style.display = 'block';
   } else {
-    passageEl.style.display = 'none';
+    passageWrap.style.display = 'none';
   }
 
   const choicesEl = document.getElementById('q-choices');
@@ -3741,10 +3976,14 @@ function showResults() {
   const mathCorrect = mathAnswers.filter(a => a.isCorrect).length;
   const engCorrect = engAnswers.filter(a => a.isCorrect).length;
   const total = mathCorrect + engCorrect;
-  const mathPct = Math.round((mathCorrect / 30) * 100);
-  const engPct = Math.round((engCorrect / 36) * 100);
-  const totalPct = Math.round((total / 66) * 100);
-  const cefr = determineCEFR(engPct);
+  const mathTotal = state.mathQuestions.length;
+  const engTotal = state.engQuestions.length;
+  const grandTotal = mathTotal + engTotal;
+  const mathPct = Math.round((mathCorrect / mathTotal) * 100);
+  const engPct = Math.round((engCorrect / engTotal) * 100);
+  const totalPct = Math.round((total / grandTotal) * 100);
+  const satEstimate = satEstimateFromScore(mathCorrect, mathTotal);
+  const cefr = cefrFromScore(engCorrect, engTotal);
   const level = determineLevel(totalPct);
   const passed = totalPct >= 60;
 
@@ -3756,7 +3995,7 @@ function showResults() {
   document.getElementById('results-total').textContent = total;
   document.getElementById('results-percent').textContent = totalPct + '%';
   const outOfEl = document.querySelector('[data-en="out of 50"]');
-  if (outOfEl) outOfEl.textContent = 'out of 66';
+  if (outOfEl) outOfEl.textContent = 'out of ' + grandTotal;
 
   const statusEl = document.getElementById('results-status');
   const statusText = document.getElementById('results-status-text');
@@ -3770,30 +4009,31 @@ function showResults() {
 
   // Sections
   document.getElementById('final-math-score').textContent = mathCorrect;
-  document.getElementById('final-math-pct').textContent = mathPct + '%';
+  document.getElementById('final-math-pct').textContent = mathCorrect + '/' + mathTotal;
   setTimeout(() => { document.getElementById('final-math-bar').style.width = mathPct + '%'; }, 100);
-  document.getElementById('final-math-status').textContent = getStatusText(mathPct);
+  document.getElementById('final-math-status').textContent = 'SAT Math estimate: ~' + satEstimate;
 
   document.getElementById('final-eng-score').textContent = engCorrect;
-  document.getElementById('final-eng-pct').textContent = engPct + '%';
+  document.getElementById('final-eng-pct').textContent = engCorrect + '/' + engTotal;
   setTimeout(() => { document.getElementById('final-eng-bar').style.width = engPct + '%'; }, 100);
   document.getElementById('final-eng-status').textContent = getStatusText(engPct);
   document.getElementById('cefr-badge').textContent = 'CEFR Level: ' + cefr;
 
-  // Level summary card
+  // Level summary card — show SAT estimate prominently
   const levelCard = document.getElementById('sat-estimate');
-  if (levelCard) levelCard.textContent = cefr;
+  if (levelCard) levelCard.textContent = '~' + satEstimate;
   const rangeEl = document.getElementById('sat-range');
-  if (rangeEl) rangeEl.textContent = 'Math: ' + mathPct + '%  ·  English: ' + engPct + '%';
+  if (rangeEl) rangeEl.textContent = 'SAT Math Estimate  ·  English: ' + cefr;
   const gapEl = document.getElementById('sat-gap-info');
   if (gapEl) {
-    const engDesc = engPct >= 88 ? 'C1 — Advanced proficiency' : engPct >= 70 ? 'B2 — Upper intermediate' : engPct >= 50 ? 'B1 — Intermediate' : engPct >= 30 ? 'A2 — Elementary' : 'A1 — Beginner';
-    gapEl.innerHTML = '<strong>English:</strong> ' + cefr + ' — ' + engDesc + '<br><strong>Math:</strong> ' + mathPct + '% overall (' + mathCorrect + '/30 correct)';
+    const engDesc = cefr === 'C1' ? 'C1 — Advanced' : cefr === 'B2' ? 'B2 — Upper-Intermediate (IELTS 6.5+)' : cefr === 'B1' ? 'B1 — Intermediate (IELTS 5.0–6.0)' : cefr === 'A2' ? 'A2 — Elementary' : 'A1 — Beginner';
+    const satDesc = satEstimate >= 750 ? 'Top 5% — highly competitive' : satEstimate >= 700 ? 'Strong — target 750+ with 2 months prep' : satEstimate >= 650 ? 'Good — SAT 700 reachable in 3 months' : satEstimate >= 600 ? 'Solid foundation — 650+ in 3 months' : satEstimate >= 550 ? 'Building — 3-4 months of focused prep needed' : 'Foundation gaps — start with core concepts';
+    gapEl.innerHTML = '<strong>Math:</strong> SAT ~' + satEstimate + ' — ' + satDesc + '<br><strong>English:</strong> ' + cefr + ' — ' + engDesc;
   }
 
   renderTopicBreakdown(state.answers);
   renderStrengthsAndGaps(state.answers);
-  renderRecommendation(totalPct, mathPct, engPct);
+  renderRecommendation(totalPct, mathPct, engPct, satEstimate, cefr);
   // Update "All" tab label with actual total question count
   const allTabCount = state.answers.length;
   const allTab = document.querySelector('.review-tab[onclick="showReview(\'all\', this)"]');
@@ -3806,8 +4046,10 @@ function showResults() {
   saveDiagnosticResult({
     info: state.info,
     mathCorrect, engCorrect, total,
+    mathTotal, engTotal, grandTotal,
     mathPct, engPct, totalPct,
-    level: level.label.en, cefr,
+    satEstimate, cefr,
+    level: level.label.en,
     passed,
     answers: state.answers,
     tabSwitches: state.tabSwitches,
@@ -3817,16 +4059,9 @@ function showResults() {
   showScreen('results');
 }
 
-// SCORING HELPERS
+// SCORING HELPERS (legacy stub kept for compatibility)
 function estimateSATScore(mathCorrect, engCorrect, answers) { return null; }
-
-function determineCEFR(engPct) {
-  if (engPct >= 88) return 'C1';
-  if (engPct >= 70) return 'B2';
-  if (engPct >= 50) return 'B1';
-  if (engPct >= 30) return 'A2';
-  return 'A1';
-}
+function determineCEFR(engPct) { return engPct >= 88 ? 'C1' : engPct >= 70 ? 'B2' : engPct >= 50 ? 'B1' : engPct >= 30 ? 'A2' : 'A1'; }
 
 function determineLevel(pct) {
   if (pct >= 95) return { cls: 'excellent', label: { en: 'Excellent', uz: "A'lo", ru: 'Otlichno' } };
@@ -3931,34 +4166,32 @@ function renderStrengthsAndGaps(answers) {
   }
 }
 
-function renderRecommendation(totalPct, mathPct, engPct) {
+function renderRecommendation(totalPct, mathPct, engPct, satEstimate, cefr) {
   const titleEl = document.getElementById('recommend-title');
   const descEl = document.getElementById('recommend-desc');
 
   let title, desc;
-  if (totalPct >= 90) {
-    title = 'Advanced Level';
-    desc = "Outstanding results across both Math and English. You are performing at an advanced high school level with strong command of all key topics.";
-  } else if (totalPct >= 75) {
-    title = 'Upper Intermediate Level';
-    desc = "Strong overall performance. You have solid command of most topics. Focus on the gaps identified above to reach an advanced level.";
-  } else if (totalPct >= 55) {
-    if (mathPct < engPct - 15) {
-      title = 'Intermediate Level — Math Focus Needed';
-      desc = 'Your English is solid but Math needs more work. Prioritize the weaker Math topics identified in your breakdown above.';
-    } else if (engPct < mathPct - 15) {
-      title = 'Intermediate Level — English Focus Needed';
-      desc = 'Your Math is strong, but English needs attention. Work on the English topics flagged as gaps in your breakdown.';
-    } else {
-      title = 'Intermediate Level';
-      desc = 'You have a solid foundation in both subjects. Consistent practice on the topics in your gap list will move you to the upper level.';
-    }
-  } else if (totalPct >= 35) {
-    title = 'Developing Level';
-    desc = 'You have foundational knowledge but need to strengthen core concepts. Focus on one subject at a time — start with ' + (mathPct < engPct ? 'Math' : 'English') + '.';
+  const cefrHigh = (cefr === 'B2' || cefr === 'C1');
+  const cefrMid  = (cefr === 'B1');
+
+  if (satEstimate >= 750 && cefrHigh) {
+    title = 'SAT-Ready — Target Your Exam Date';
+    desc = 'Your math and English are both at a strong level. With your current foundation, a 750+ SAT score in 2 months of focused test prep is realistic. Book your exam and start timed practice.';
+  } else if (satEstimate >= 700 && cefrHigh) {
+    title = 'On Track for SAT 700+';
+    desc = 'Solid scores in both areas. SAT 730–760 is reachable in 2–3 months. Work through your weak math topics (see breakdown above) and add SAT-format timed practice weekly.';
+  } else if (satEstimate >= 650 && (cefrHigh || cefrMid)) {
+    title = 'SAT 650–700 in 3 Months';
+    desc = 'Good foundation. Close the math gaps in the breakdown above and push your English to B2. Consistent daily practice for 3 months puts SAT 700 in range.';
+  } else if (satEstimate >= 600) {
+    title = 'Solid Foundation — 3-4 Months to SAT 600+';
+    desc = 'You have the core concepts down. Strengthen the topics flagged as gaps, add 30 min of daily math practice, and work on academic reading to push your English level to B2.';
+  } else if (satEstimate >= 520) {
+    title = 'Building — Start With Core Concepts';
+    desc = 'Focus on arithmetic, linear algebra, and grammar first before moving to SAT-format problems. At this pace, 4–5 months of consistent work can bring you to a competitive SAT score.';
   } else {
-    title = 'Foundation Level';
-    desc = "Your results show you need to build core skills in both subjects. Start with the fundamentals of Math (arithmetic, algebra) and English grammar before moving to advanced topics.";
+    title = 'Foundation Work Needed First';
+    desc = 'Your results show gaps in core math and English. Before SAT prep, spend 2–3 months rebuilding fundamentals: number sense, basic algebra, and English grammar. This groundwork is what makes the difference later.';
   }
 
   titleEl.textContent = title;
