@@ -169,12 +169,12 @@ body.in-test{padding:0 !important}
 .rs-status{font-size:.8rem;color:var(--tm);line-height:1.5}
 .cefr-badge{display:inline-block;background:var(--bxpale);border:1px solid rgba(6,97,222,.2);color:var(--blue);font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:.4rem}
 @media(max-width:640px){.results-sections{grid-template-columns:1fr}}
-.sat-estimate-card{background:linear-gradient(135deg,#fff,var(--bxpale));border:2px solid var(--blue);border-radius:var(--rlg);padding:28px;text-align:center;margin-bottom:1.5rem;box-shadow:var(--sm)}
-.sat-est-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:.4rem}
-.sat-est-score{font-family:var(--f);font-size:3rem;font-weight:700;color:var(--navy);line-height:1;margin-bottom:.3rem}
-.sat-est-range{font-size:.88rem;color:var(--tm);margin-bottom:1rem}
-.sat-gap-info{background:var(--bg2);border-radius:var(--r);padding:14px 18px;font-size:.84rem;color:var(--t2);line-height:1.6}
-.sat-gap-info strong{color:var(--navy)}
+
+
+
+
+
+
 .topic-breakdown{background:#fff;border:1px solid var(--bd);border-radius:var(--rlg);padding:28px;box-shadow:var(--ss);margin-bottom:1.5rem}
 .topic-breakdown h3{font-family:var(--f);font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:1rem}
 .topic-list{display:flex;flex-direction:column;gap:10px}
@@ -633,9 +633,6 @@ body.in-test{padding:0 !important}
         <div class="cefr-badge" id="cefr-badge">CEFR Level: A1</div>
       </div>
     </div>
-
-    <div class="sat-estimate-card">
-      <div class="sat-est-label">English Level</div>
       <div class="sat-est-score" id="sat-estimate">-</div>
       <div class="sat-est-range" id="sat-range">Math · English</div>
       <div class="sat-gap-info" id="sat-gap-info"></div>
@@ -3659,22 +3656,6 @@ function buildPlacementTest(pool, ids) {
   return ids.map(id => byId[id]).filter(Boolean);
 }
 
-function satEstimateFromScore(correct, total) {
-  // Maps raw math score (out of 20) to SAT math estimate
-  const ratio = correct / total;
-  if (ratio >= 1.00) return 800;
-  if (ratio >= 0.95) return 780;
-  if (ratio >= 0.88) return 750;
-  if (ratio >= 0.80) return 720;
-  if (ratio >= 0.72) return 690;
-  if (ratio >= 0.62) return 650;
-  if (ratio >= 0.52) return 610;
-  if (ratio >= 0.42) return 570;
-  if (ratio >= 0.32) return 520;
-  if (ratio >= 0.22) return 470;
-  if (ratio >= 0.14) return 430;
-  return 390;
-}
 
 function cefrFromScore(correct, total) {
   // Maps raw English score (out of 10) to CEFR level
@@ -4054,10 +4035,11 @@ function showResults() {
   const mathPct = Math.round((mathCorrect / mathTotal) * 100);
   const engPct = Math.round((engCorrect / engTotal) * 100);
   const totalPct = Math.round((total / grandTotal) * 100);
-  const satEstimate = satEstimateFromScore(mathCorrect, mathTotal);
   const cefr = cefrFromScore(engCorrect, engTotal);
   const level = determineLevel(totalPct);
-  const passed = totalPct >= 60;
+  const mathPassed = mathPct >= 75;
+  const engPassed = engPct >= 75;
+  const passed = mathPassed && engPassed;
 
   // Hero
   const lvBadge = document.getElementById('level-badge');
@@ -4073,39 +4055,35 @@ function showResults() {
   const statusText = document.getElementById('results-status-text');
   if (passed) {
     statusEl.className = 'results-status';
-    statusText.textContent = currentLang === 'uz' ? "YAXSHI NATIJA" : currentLang === 'ru' ? 'KHOROSHY REZULTAT' : 'STRONG RESULT';
+    statusText.textContent = currentLang === 'uz' ? 'QABUL QILINDI' : currentLang === 'ru' ? 'PRINYAT' : 'ACCEPTED';
+  } else if (mathPassed || engPassed) {
+    statusEl.className = 'results-status fail';
+    const weakSec = !mathPassed ? (currentLang === 'uz' ? 'Matematika' : currentLang === 'ru' ? 'Математика' : 'Math') : (currentLang === 'uz' ? 'Ingliz tili' : currentLang === 'ru' ? 'Английский' : 'English');
+    statusText.textContent = currentLang === 'uz' ? weakSec + ' yetarli emas' : currentLang === 'ru' ? weakSec + ' недостаточно' : weakSec + ' below 75%';
   } else {
     statusEl.className = 'results-status fail';
-    statusText.textContent = currentLang === 'uz' ? 'ASOS KERAK' : currentLang === 'ru' ? 'NUZHNA BAZA' : 'FOUNDATION NEEDED';
+    statusText.textContent = currentLang === 'uz' ? 'QABUL QILINMADI' : currentLang === 'ru' ? 'NE PRINYAT' : 'NOT ACCEPTED';
   }
 
   // Sections
   document.getElementById('final-math-score').textContent = mathCorrect;
   document.getElementById('final-math-pct').textContent = mathCorrect + '/' + mathTotal;
   setTimeout(() => { document.getElementById('final-math-bar').style.width = mathPct + '%'; }, 100);
-  document.getElementById('final-math-status').textContent = 'SAT Math estimate: ~' + satEstimate;
+  document.getElementById('final-math-status').style.color = mathPassed ? '#0661de' : '#dc2626';
+  document.getElementById('final-math-status').textContent = mathPassed ? '✓ Accepted (≥75%)' : '✗ Below threshold (75%)';
 
   document.getElementById('final-eng-score').textContent = engCorrect;
   document.getElementById('final-eng-pct').textContent = engCorrect + '/' + engTotal;
   setTimeout(() => { document.getElementById('final-eng-bar').style.width = engPct + '%'; }, 100);
   document.getElementById('final-eng-status').textContent = getStatusText(engPct);
+  document.getElementById('final-eng-status').style.color = engPassed ? '#0661de' : '#dc2626';
+  document.getElementById('final-eng-status').textContent = (engPassed ? '✓ Accepted (≥75%)' : '✗ Below threshold (75%)') + '  ·  ' + cefr;
   document.getElementById('cefr-badge').textContent = 'CEFR Level: ' + cefr;
 
-  // Level summary card — show SAT estimate prominently
-  const levelCard = document.getElementById('sat-estimate');
-  if (levelCard) levelCard.textContent = '~' + satEstimate;
-  const rangeEl = document.getElementById('sat-range');
-  if (rangeEl) rangeEl.textContent = 'SAT Math Estimate  ·  English: ' + cefr;
-  const gapEl = document.getElementById('sat-gap-info');
-  if (gapEl) {
-    const engDesc = cefr === 'C1' ? 'C1 — Advanced' : cefr === 'B2' ? 'B2 — Upper-Intermediate (IELTS 6.5+)' : cefr === 'B1' ? 'B1 — Intermediate (IELTS 5.0–6.0)' : cefr === 'A2' ? 'A2 — Elementary' : 'A1 — Beginner';
-    const satDesc = satEstimate >= 750 ? 'Top 5% — highly competitive' : satEstimate >= 700 ? 'Strong — target 750+ with 2 months prep' : satEstimate >= 650 ? 'Good — SAT 700 reachable in 3 months' : satEstimate >= 600 ? 'Solid foundation — 650+ in 3 months' : satEstimate >= 550 ? 'Building — 3-4 months of focused prep needed' : 'Foundation gaps — start with core concepts';
-    gapEl.innerHTML = '<strong>Math:</strong> SAT ~' + satEstimate + ' — ' + satDesc + '<br><strong>English:</strong> ' + cefr + ' — ' + engDesc;
-  }
 
   renderTopicBreakdown(state.answers);
   renderStrengthsAndGaps(state.answers);
-  renderRecommendation(totalPct, mathPct, engPct, satEstimate, cefr);
+  renderRecommendation(totalPct, mathPct, engPct, cefr);
   // Update "All" tab label with actual total question count
   const allTabCount = state.answers.length;
   const allTab = document.querySelector('.review-tab[onclick="showReview(\'all\', this)"]');
@@ -4120,7 +4098,6 @@ function showResults() {
     mathCorrect, engCorrect, total,
     mathTotal, engTotal, grandTotal,
     mathPct, engPct, totalPct,
-    satEstimate, cefr,
     level: level.label.en,
     passed,
     answers: state.answers,
@@ -4138,7 +4115,7 @@ function determineCEFR(engPct) { return engPct >= 88 ? 'C1' : engPct >= 70 ? 'B2
 function determineLevel(pct) {
   if (pct >= 95) return { cls: 'excellent', label: { en: 'Excellent', uz: "A'lo", ru: 'Otlichno' } };
   if (pct >= 80) return { cls: 'advanced', label: { en: 'Advanced', uz: "Yuqori daraja", ru: 'Prodvinutyy' } };
-  if (pct >= 60) return { cls: 'passed', label: { en: 'Proficient', uz: "Yetarli daraja", ru: 'Dostatochnyy' } };
+  if (pct >= 75) return { cls: 'passed', label: { en: 'Proficient', uz: "Yetarli daraja", ru: 'Dostatochnyy' } };
   if (pct >= 40) return { cls: 'building', label: { en: 'Building', uz: 'Shakllanmoqda', ru: 'Razvivayushchiysya' } };
   return { cls: 'foundation', label: { en: 'Foundation', uz: 'Asos', ru: 'Osnovy' } };
 }
@@ -4238,36 +4215,35 @@ function renderStrengthsAndGaps(answers) {
   }
 }
 
-function renderRecommendation(totalPct, mathPct, engPct, satEstimate, cefr) {
+function renderRecommendation(totalPct, mathPct, engPct, cefr) {
   const titleEl = document.getElementById('recommend-title');
-  const descEl = document.getElementById('recommend-desc');
+  const descEl  = document.getElementById('recommend-desc');
+  if (!titleEl || !descEl) return;
 
   let title, desc;
+  const bothPassed = mathPct >= 75 && engPct >= 75;
   const cefrHigh = (cefr === 'B2' || cefr === 'C1');
   const cefrMid  = (cefr === 'B1');
 
-  if (satEstimate >= 750 && cefrHigh) {
-    title = 'SAT-Ready — Target Your Exam Date';
-    desc = 'Your math and English are both at a strong level. With your current foundation, a 750+ SAT score in 2 months of focused test prep is realistic. Book your exam and start timed practice.';
-  } else if (satEstimate >= 700 && cefrHigh) {
-    title = 'On Track for SAT 700+';
-    desc = 'Solid scores in both areas. SAT 730–760 is reachable in 2–3 months. Work through your weak math topics (see breakdown above) and add SAT-format timed practice weekly.';
-  } else if (satEstimate >= 650 && (cefrHigh || cefrMid)) {
-    title = 'SAT 650–700 in 3 Months';
-    desc = 'Good foundation. Close the math gaps in the breakdown above and push your English to B2. Consistent daily practice for 3 months puts SAT 700 in range.';
-  } else if (satEstimate >= 600) {
-    title = 'Solid Foundation — 3-4 Months to SAT 600+';
-    desc = 'You have the core concepts down. Strengthen the topics flagged as gaps, add 30 min of daily math practice, and work on academic reading to push your English level to B2.';
-  } else if (satEstimate >= 520) {
-    title = 'Building — Start With Core Concepts';
-    desc = 'Focus on arithmetic, linear algebra, and grammar first before moving to SAT-format problems. At this pace, 4–5 months of consistent work can bring you to a competitive SAT score.';
+  if (bothPassed && cefrHigh) {
+    title = 'SAT-Ready — Enroll in Full Program';
+    desc  = 'You have the foundation to succeed in the SAT program. Enroll now and start your prep.';
+  } else if (bothPassed) {
+    title = 'Accepted — Full SAT Program';
+    desc  = 'You passed both sections. Join the SAT prep group and strengthen your English alongside math.';
+  } else if (mathPct >= 75) {
+    title = 'Strengthen Your English First';
+    desc  = 'Your math is solid. Work on English to B1+ level, then re-take the placement test.';
+  } else if (engPct >= 75) {
+    title = 'Strengthen Your Math First';
+    desc  = 'Your English is solid. Review core algebra and arithmetic before re-testing.';
   } else {
-    title = 'Foundation Work Needed First';
-    desc = 'Your results show gaps in core math and English. Before SAT prep, spend 2–3 months rebuilding fundamentals: number sense, basic algebra, and English grammar. This groundwork is what makes the difference later.';
+    title = 'Foundation Building Needed';
+    desc  = 'Focus on core math and English concepts. We recommend our foundation course before re-testing.';
   }
 
   titleEl.textContent = title;
-  descEl.textContent = desc;
+  descEl.textContent  = desc;
 }
 
 function showReview(filter, btn) {
@@ -4512,7 +4488,9 @@ function downloadReport() {
   const engPct = Math.round((engCorrect / engTotal) * 100);
   const totalPct = Math.round((total / grandTotal) * 100);
   const cefr = determineCEFR(engPct);
-  const passed = totalPct >= 60;
+  const mathPassedR = mathCorrect / state.mathQuestions.length >= 0.75;
+  const engPassedR = engCorrect / state.engQuestions.length >= 0.75;
+  const passed = mathPassedR && engPassedR;
   const dateStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
   const letters = ['A', 'B', 'C', 'D'];
 
