@@ -29,11 +29,13 @@ function doPost(e) {
       try { data = JSON.parse(e.postData.contents); } catch (_) { data = {}; }
     }
 
-    const type = (data.type || 'registration').toLowerCase();
+    const action = (data.action || data.type || 'register').toLowerCase();
 
-    if (type === 'diagnostic') handleDiagnostic(data);
-    else if (type === 'mock_score') handleMockScore(data);
-    else handleRegistration(data);
+    if      (action === 'diagnostic') handleDiagnostic(data);
+    else if (action === 'start')      handleStarted(data);
+    else if (action === 'abandon')    handleAbandoned(data);
+    else if (action === 'mock_score') handleMockScore(data);
+    else                              handleRegistration(data);
 
     return json({ success: true });
   } catch (err) {
@@ -199,16 +201,50 @@ function handleRegistration(data) {
   const msg =
     '🔔 *New Lead — SAT Samarkand*\n\n' +
     '👤 *Name:* ' + (data.name  || '—') + '\n' +
-    '📞 *Phone:* `' + (data.phone || '—') + '`\n' +
-    (data.age     ? '🎂 *Age:* ' + data.age + '\n' : '') +
-    (data.grade   ? '🎓 *Grade:* ' + data.grade + '\n' : '') +
-    (data.school  ? '🏫 *School:* ' + data.school + '\n' : '') +
-    (data.program ? '📚 *Program:* ' + data.program + '\n' : '') +
-    (data.heard   ? '📡 *Source:* ' + data.heard + '\n' : '') +
-    (data.message ? '\n💬 *Message:* ' + data.message + '\n' : '') +
+    '📞 *Phone:* ' + (data.phone || '—') + '\n' +
+    (data.grade ? '🎓 *Grade:* ' + data.grade + '\n' : '') +
+    (data.level ? '🎯 *Target:* ' + data.level + '\n' : '') +
     '\n📅 ' + Utilities.formatDate(ts, 'Asia/Tashkent', 'dd MMM yyyy HH:mm') +
     '\n\n⚡ _Contact within 24 hours_';
 
+  sendTelegram(msg);
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+// STARTED HANDLER — fires when student clicks "Start Test"
+// ═══════════════════════════════════════════════════════════════
+
+function handleStarted(data) {
+  const ts = new Date();
+  const msg =
+    '▶️ *Started Diagnostic — SAT Samarkand*\n\n' +
+    '👤 *Name:* ' + (data.name  || '—') + '\n' +
+    '📞 *Phone:* ' + (data.phone || '—') + '\n' +
+    (data.grade ? '🎓 *Grade:* ' + data.grade + '\n' : '') +
+    (data.level ? '🎯 *Goal:* '  + data.level + '\n' : '') +
+    '\n📅 ' + Utilities.formatDate(ts, 'Asia/Tashkent', 'dd MMM yyyy HH:mm') +
+    '\n\n⏳ _Test in progress…_';
+  sendTelegram(msg);
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+// ABANDONED HANDLER — fires on page close / navigation away
+// ═══════════════════════════════════════════════════════════════
+
+function handleAbandoned(data) {
+  const ts = new Date();
+  const msg =
+    '🚪 *Left Mid-Test — SAT Samarkand*\n\n' +
+    '👤 *Name:* ' + (data.name  || '—') + '\n' +
+    '📞 *Phone:* ' + (data.phone || '—') + '\n' +
+    '\n📍 *Left at:* ' + (data.stage    || '—') + '\n' +
+    (data.duration ? '⏱ *Time spent:* ' + data.duration + '\n' : '') +
+    (data.tabSwitches > 0 || data.fullscreenExits > 0
+      ? '⚠️ *Anti-cheat:* ' + (data.tabSwitches||0) + ' tab switches · ' + (data.fullscreenExits||0) + ' fullscreen exits\n'
+      : '') +
+    '\n📅 ' + Utilities.formatDate(ts, 'Asia/Tashkent', 'dd MMM yyyy HH:mm');
   sendTelegram(msg);
 }
 

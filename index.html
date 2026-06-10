@@ -349,13 +349,11 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
         <label class="form-label" id="lbl-target">Target SAT Score</label>
         <select class="form-select" id="inp-level">
           <option value="">Select</option>
-          <option value="900-1000">900 – 1000</option>
-          <option value="1000-1100">1000 – 1100</option>
-          <option value="1100-1200">1100 – 1200</option>
-          <option value="1200-1300">1200 – 1300</option>
-          <option value="1300-1400">1300 – 1400</option>
-          <option value="1400-1500">1400 – 1500</option>
+          <option value="1200+">1200+</option>
+          <option value="1300+">1300+</option>
+          <option value="1400+">1400+</option>
           <option value="1500+">1500+</option>
+          <option value="1600">1600</option>
         </select>
       </div>
       <p class="form-err" id="form2-err"></p>
@@ -1004,6 +1002,13 @@ function startTest(){
   session.grade = grade; session.level = level;
   buildQuestions();
   showScreen(`test`);
+  // Request fullscreen
+  const el = document.documentElement;
+  try {
+    if(el.requestFullscreen) el.requestFullscreen();
+    else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    else if(el.mozRequestFullScreen) el.mozRequestFullScreen();
+  } catch(e){ /* silently ignore if blocked */ }
   startSectionTimer(`eng`);
   setupAntiCheat();
   renderQuestion(0);
@@ -1274,6 +1279,11 @@ function finishTest(){
   // cert-cefr removed from new layout
   document.getElementById(`cert-date`).textContent = now.toLocaleDateString(`en-GB`,{year:`numeric`,month:`long`,day:`numeric`});
 
+  // Exit fullscreen when test ends
+  try {
+    if(document.exitFullscreen) document.exitFullscreen();
+    else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+  } catch(e){}
   showScreen(`results`);
   fireAndForget({
     action:`diagnostic`, name:session.name, phone:session.phone,
@@ -1411,7 +1421,9 @@ function showReview(){
       let cls = `neutral`;
       if(oi === correct) cls = `correct`;
       else if(oi === userAns) cls = `wrong`;
-      html += `<div class="review-opt ${cls}"><span class="review-opt-letter">${letters[oi]}</span><span>${opt}</span></div>`;
+      const optDisplay = isMath && !opt.includes(`\\(`) && !opt.includes(`\\[`)
+        ? `\\(${opt}\\)` : opt;
+      html += `<div class="review-opt ${cls}"><span class="review-opt-letter">${letters[oi]}</span><span>${optDisplay}</span></div>`;
     });
 
     html += `</div>`;
@@ -1419,7 +1431,7 @@ function showReview(){
     list.appendChild(item);
 
     // render KaTeX for this item
-    if(isMath && window.renderMathInElement){
+    if(window.renderMathInElement){
       setTimeout(() => {
         renderMathInElement(item, {
           delimiters:[{left:`\\(`,right:`\\)`,display:false},{left:`\\[`,right:`\\]`,display:true}],
