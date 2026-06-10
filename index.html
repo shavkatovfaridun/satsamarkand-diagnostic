@@ -1002,13 +1002,16 @@ function startTest(){
   session.grade = grade; session.level = level;
   buildQuestions();
   showScreen(`test`);
+  session.startTime = Date.now();
   // Request fullscreen
   const el = document.documentElement;
   try {
     if(el.requestFullscreen) el.requestFullscreen();
     else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
     else if(el.mozRequestFullScreen) el.mozRequestFullScreen();
-  } catch(e){ /* silently ignore if blocked */ }
+  } catch(e){}
+  // Notify: test started
+  fireAndForget({action:`start`, name:session.name, phone:session.phone, grade:session.grade, level:session.level});
   startSectionTimer(`eng`);
   setupAntiCheat();
   renderQuestion(0);
@@ -1287,11 +1290,13 @@ function finishTest(){
   showScreen(`results`);
   fireAndForget({
     action:`diagnostic`, name:session.name, phone:session.phone,
-    grade:session.grade, selfLevel:session.level,
+    grade:session.grade, goal:session.level,
     mathScore, engScore, totalScore:total,
     mathTotal:20, engTotal:20, totalMax,
-    totalPct, engPct, cefr,
-    tabSwitches:session.tabSwitches, duration,
+    mathPct, totalPct, engPct, cefr,
+    tabSwitches:session.tabSwitches,
+    fullscreenExits:session.fullscreenExits || 0,
+    duration,
     timestamp:now.toISOString()
   });
 }
@@ -1337,11 +1342,44 @@ function setupAntiCheat(){
     }
   });
 
-  // Refresh / close prevention
+  // Fullscreen exit tracking
+  document.addEventListener(`fullscreenchange`, () => {
+    if(!document.fullscreenElement && document.getElementById(`screen-test`).classList.contains(`active`)){
+      session.fullscreenExits = (session.fullscreenExits || 0) + 1;
+    }
+  });
+  document.addEventListener(`webkitfullscreenchange`, () => {
+    if(!document.webkitFullscreenElement && document.getElementById(`screen-test`).classList.contains(`active`)){
+      session.fullscreenExits = (session.fullscreenExits || 0) + 1;
+    }
+  });
+
+  // Abandon beacon — fires on page close/refresh
   window.addEventListener(`beforeunload`, e => {
-    if(document.getElementById(`screen-test`).classList.contains(`active`)){
+    const testActive = document.getElementById(`screen-test`).classList.contains(`active`);
+    if(testActive){
       e.preventDefault();
       e.returnValue = ``;
+      // Determine stage
+      const cur = session.current || 0;
+      const sec = cur < 20 ? `English Section` : `Math Section`;
+      const qNum = cur < 20 ? cur + 1 : cur - 19;
+      const qOf  = cur < 20 ? 20 : 20;
+      const stage = `${sec} — Question ${qNum}/${qOf}`;
+      const elapsed = session.startTime ? Math.round((Date.now() - session.startTime) / 1000) : 0;
+      const mins = Math.floor(elapsed / 60);
+      const secs = elapsed % 60;
+      const duration = elapsed > 0 ? `${mins}m ${secs}s` : ``;
+      const payload = new URLSearchParams({
+        action:`abandon`,
+        name: session.name || ``,
+        phone: session.phone || ``,
+        stage,
+        duration,
+        tabSwitches: session.tabSwitches || 0,
+        fullscreenExits: session.fullscreenExits || 0
+      });
+      navigator.sendBeacon(SCRIPT_URL, payload);
     }
   });
 

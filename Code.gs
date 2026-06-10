@@ -320,17 +320,19 @@ function handleDiagnostic(data) {
   const msg =
     '🎯 *New Diagnostic — SAT Samarkand*\n\n' +
     '👤 *Name:* ' + (data.name  || '—') + '\n' +
-    '📞 *Phone:* `' + (data.phone || '—') + '`\n' +
-    '🎂 *Age:* ' + (data.age || '—') + ' · *Grade:* ' + (data.grade || '—') + '\n' +
-    (data.goal       ? '🎯 *Goal SAT:* ' + data.goal + '+\n'        : '') +
-    (data.university ? '🏛 *University:* ' + data.university + '\n' : '') +
+    '📞 *Phone:* ' + (data.phone || '—') + '\n' +
+    (data.grade ? '🎓 *Grade:* ' + data.grade + '\n' : '') +
+    (data.goal  ? '🎯 *Goal:* '  + data.goal  + '\n' : '') +
     '\n📊 *Score:* ' + totalScore + '/' + totalMax + ' (' + totalPct + '%)\n' +
-    '   📐 Math:    ' + mathScore + '/' + mathTotal + ' (' + mathPct + '%)\n' +
-    '   📖 English: ' + engScore  + '/' + engTotal  + ' (' + engPct  + '%) — ' + cefr + '\n\n' +
+    '   Math: ' + mathScore + '/' + mathTotal + ' (' + mathPct + '%)\n' +
+    '   English: ' + engScore + '/' + engTotal + ' (' + engPct + '%) — ' + cefr + '\n\n' +
     passEmoji + ' *STATUS:* ' + statusText + '\n' +
-    '🎓 *RECOMMENDED:* ' + recommendation +
-    cheatNote + durationNote + '\n\n' +
-    '📅 ' + Utilities.formatDate(ts, 'Asia/Tashkent', 'dd MMM yyyy HH:mm') + '\n\n' +
+    '🎓 *RECOMMENDED:* ' + recommendation + '\n' +
+    (tabSwitches > 0 || fullscreenExits > 0
+      ? '⚠️ *Anti-cheat:* ' + tabSwitches + ' tab switches, ' + fullscreenExits + ' fullscreen exits\n'
+      : '') +
+    durationNote +
+    '\n📅 ' + Utilities.formatDate(ts, 'Asia/Tashkent', 'dd MMM yyyy HH:mm') + '\n\n' +
     (passed ? '🔥 *Hot lead — call within 24h!*' : '💼 Lead needs nurturing.');
 
   sendTelegram(msg);
