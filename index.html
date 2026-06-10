@@ -170,23 +170,56 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
 .btn-secondary:hover{background:var(--navy);color:#fff}
 
 /* ══ CERTIFICATE ══ */
-#screen-cert{padding:48px 24px}
-.cert-wrap{max-width:780px;margin:0 auto;text-align:center}
-#cert-card{background:#fff;border-radius:24px;padding:54px 52px;max-width:700px;margin:0 auto;position:relative;box-shadow:var(--shadow-lg);border:2px solid var(--blue)}
-.cert-lines{position:absolute;top:0;left:0;right:0;bottom:0;border-radius:24px;border:8px solid transparent;background:linear-gradient(#fff,#fff) padding-box, linear-gradient(135deg,var(--blue),transparent 60%) border-box;pointer-events:none}
-.cert-eyebrow{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--blue);margin-bottom:8px}
-.cert-org{font-size:1.8rem;font-weight:900;color:var(--navy);letter-spacing:-.5px;margin-bottom:24px}
-.cert-presents{font-size:.88rem;color:var(--muted);margin-bottom:10px}
-.cert-name{font-size:2.2rem;font-weight:900;color:var(--navy);letter-spacing:-.5px;margin-bottom:6px}
-.cert-name-line{width:200px;height:2px;background:var(--blue);margin:0 auto 20px}
-.cert-statement{font-size:.92rem;color:#4a5a7a;margin-bottom:28px}
-.cert-stats{display:flex;justify-content:center;gap:36px;flex-wrap:wrap;padding:24px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:20px}
-.cert-stat-val{font-size:1.6rem;font-weight:900;color:var(--navy)}
-.cert-stat-lbl{font-size:.7rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
-.cert-footer{display:flex;justify-content:space-between;align-items:flex-end;margin-top:8px}
-.cert-date{font-size:.8rem;color:var(--muted)}
-.cert-stamp{font-size:.72rem;color:#b0bec5}
+#screen-cert{padding:40px 24px;background:var(--bg)}
+.cert-wrap{max-width:960px;margin:0 auto;text-align:center}
+#cert-card{
+  background:#fff;
+  border-radius:20px;
+  max-width:920px;
+  margin:0 auto;
+  position:relative;
+  box-shadow:0 12px 48px rgba(6,97,222,.18);
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:200px 1fr 160px;
+}
+/* top blue bar */
+#cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--navy2),var(--blue),var(--blue2));border-radius:20px 20px 0 0}
+/* left panel */
+.cert-left{background:linear-gradient(180deg,var(--navy2) 0%,var(--navy) 100%);padding:36px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.cert-left-logo svg{width:64px;height:64px}
+.cert-left-org{color:#fff;font-size:.95rem;font-weight:800;letter-spacing:.2px;text-align:center;line-height:1.2}
+.cert-left-sub{color:rgba(255,255,255,.4);font-size:.65rem;letter-spacing:.5px;text-align:center;margin-top:2px}
+.cert-left-divider{width:40px;height:1px;background:rgba(255,255,255,.15);margin:4px 0}
+.cert-left-date{color:rgba(255,255,255,.45);font-size:.68rem;text-align:center;line-height:1.5}
+/* center panel */
+.cert-center{padding:44px 36px;display:flex;flex-direction:column;justify-content:center;text-align:center;border-right:1px solid var(--border)}
+.cert-eyebrow{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--blue);margin-bottom:12px}
+.cert-presents{font-size:.88rem;color:var(--muted);margin-bottom:8px}
+.cert-name{font-size:2rem;font-weight:900;color:var(--navy);letter-spacing:-.5px;margin-bottom:4px;line-height:1.1}
+.cert-name-line{width:160px;height:2.5px;background:linear-gradient(90deg,var(--blue),var(--blue2));margin:0 auto 14px;border-radius:2px}
+.cert-statement{font-size:.82rem;color:var(--muted);margin-bottom:24px;line-height:1.5}
+.cert-scores{display:flex;justify-content:center;gap:0;margin-bottom:0}
+.cert-score-item{padding:14px 24px;text-align:center;border-right:1px solid var(--border)}
+.cert-score-item:last-child{border-right:none}
+.cert-score-val{font-size:1.5rem;font-weight:900;color:var(--navy);line-height:1}
+.cert-score-lbl{font-size:.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.cert-scores-wrap{border:1px solid var(--border);border-radius:12px;overflow:hidden;display:inline-flex}
+/* right panel — QR codes */
+.cert-right{padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
+.cert-qr-item{display:flex;flex-direction:column;align-items:center;gap:5px}
+.cert-qr-item img{width:64px;height:64px;border-radius:6px;border:1px solid var(--border)}
+.cert-qr-label{font-size:.6rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:4px}
 .cert-actions{margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+/* mobile */
+@media(max-width:700px){
+  #cert-card{grid-template-columns:1fr;grid-template-rows:auto auto auto}
+  .cert-left{flex-direction:row;flex-wrap:wrap;padding:20px 24px;gap:10px;justify-content:center}
+  .cert-left-divider{display:none}
+  .cert-center{border-right:none;border-bottom:1px solid var(--border);padding:28px 20px}
+  .cert-right{flex-direction:row;justify-content:center;padding:20px}
+  .cert-score-item{padding:10px 16px}
+}
 
 /* ══ REVIEW ══ */
 .review-item{background:var(--card);border-radius:14px;padding:22px 24px;margin-bottom:16px;border:1.5px solid var(--border);box-shadow:var(--shadow)}
@@ -209,8 +242,6 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
   .score-grid{grid-template-columns:1fr}
   .form-card{padding:24px 20px}
   .test-body{padding:20px 16px 64px}
-  #cert-card{padding:36px 22px}
-  .cert-stats{gap:20px}
   .break-score-card{gap:24px;padding:20px}
   .intro-title{letter-spacing:-.5px}
   .test-progress-dots{max-width:60%}
@@ -441,23 +472,64 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
 <section class="screen" id="screen-cert">
   <div class="cert-wrap">
     <div id="cert-card">
-      <div class="cert-lines"></div>
-      <div class="cert-eyebrow">Certificate of Achievement</div>
-      <div class="cert-org">SAT Samarkand</div>
-      <div class="cert-presents" id="cert-presents">This certifies that</div>
-      <div class="cert-name" id="cert-name">—</div>
-      <div class="cert-name-line"></div>
-      <div class="cert-statement" id="cert-statement">has successfully completed the SAT Samarkand Diagnostic Assessment</div>
-      <div class="cert-stats">
-        <div><div class="cert-stat-val" id="cert-total">—</div><div class="cert-stat-lbl">Total Score</div></div>
-        <div><div class="cert-stat-val" id="cert-eng">—</div><div class="cert-stat-lbl">English</div></div>
-        <div><div class="cert-stat-val" id="cert-math">—</div><div class="cert-stat-lbl">Math</div></div>
-        <div><div class="cert-stat-val" id="cert-cefr">—</div><div class="cert-stat-lbl">CEFR Level</div></div>
+
+      <!-- LEFT: Logo + date -->
+      <div class="cert-left">
+        <div class="cert-left-logo">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M30 110 L30 155 L100 196 L170 155 L170 105 L130 105 L130 145 L100 162 L70 145 L70 110 Z" fill="#022049"/>
+            <path d="M30 45 L100 4 L170 45 L170 95 L130 95 L130 55 L100 38 L70 55 L70 75 L130 75 L130 110 L30 110 Z" fill="#0661de"/>
+          </svg>
+        </div>
+        <div>
+          <div class="cert-left-org">SAT<br>Samarkand</div>
+          <div class="cert-left-sub">diagnostic.satsamarkand.uz</div>
+        </div>
+        <div class="cert-left-divider"></div>
+        <div class="cert-left-date" id="cert-date">—</div>
       </div>
-      <div class="cert-footer">
-        <div class="cert-date" id="cert-date"></div>
-        <div class="cert-stamp">diagnostic.satsamarkand.uz</div>
+
+      <!-- CENTER: Main content -->
+      <div class="cert-center">
+        <div class="cert-eyebrow">Certificate of Achievement</div>
+        <div class="cert-presents" id="cert-presents">This certifies that</div>
+        <div class="cert-name" id="cert-name">—</div>
+        <div class="cert-name-line"></div>
+        <div class="cert-statement" id="cert-statement">has successfully completed the SAT Samarkand Diagnostic Assessment</div>
+        <div style="display:flex;justify-content:center">
+          <div class="cert-scores-wrap">
+            <div class="cert-score-item">
+              <div class="cert-score-val" id="cert-total">—</div>
+              <div class="cert-score-lbl">Total</div>
+            </div>
+            <div class="cert-score-item">
+              <div class="cert-score-val" id="cert-eng">—</div>
+              <div class="cert-score-lbl">English</div>
+            </div>
+            <div class="cert-score-item">
+              <div class="cert-score-val" id="cert-math">—</div>
+              <div class="cert-score-lbl">Math</div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- RIGHT: QR codes -->
+      <div class="cert-right">
+        <div class="cert-qr-item">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fwww.instagram.com%2Fsat_samarkand&size=128x128&margin=4" alt="Instagram QR">
+          <div class="cert-qr-label">📸 Instagram</div>
+        </div>
+        <div class="cert-qr-item">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Ft.me%2Fsat_samarkand&size=128x128&margin=4" alt="Telegram QR">
+          <div class="cert-qr-label">✈️ Telegram</div>
+        </div>
+        <div class="cert-qr-item">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fsatsamarkand.uz&size=128x128&margin=4" alt="Website QR">
+          <div class="cert-qr-label">🌐 Website</div>
+        </div>
+      </div>
+
     </div>
     <div class="cert-actions">
       <button class="btn-cta" onclick="downloadCert()" id="btn-download">⬇ Download Certificate</button>
@@ -1199,7 +1271,7 @@ function finishTest(){
   document.getElementById(`cert-total`).textContent = `${total}/${totalMax}`;
   document.getElementById(`cert-eng`).textContent = `${engScore}/20`;
   document.getElementById(`cert-math`).textContent = `${mathScore}/20`;
-  document.getElementById(`cert-cefr`).textContent = cefr;
+  // cert-cefr removed from new layout
   document.getElementById(`cert-date`).textContent = now.toLocaleDateString(`en-GB`,{year:`numeric`,month:`long`,day:`numeric`});
 
   showScreen(`results`);
