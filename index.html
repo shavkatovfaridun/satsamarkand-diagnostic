@@ -307,6 +307,19 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
 </div>
 
 <!-- QUIT CONFIRM MODAL -->
+<div class="cheat-overlay" id="save-overlay">
+  <div class="cheat-modal">
+    <div class="cheat-icon"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="#fff7ed"/><path d="M24 14v12M24 30v4" stroke="#c45c00" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <div class="cheat-title" style="color:#c45c00">Don't leave yet!</div>
+    <div class="cheat-msg">Save your certificate before leaving — your result will not be recoverable after you close this page.</div>
+    <div class="cheat-count" style="color:#c45c00">Save it now or lose it forever</div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:4px">
+      <button class="cheat-btn" style="background:var(--blue);flex:1" onclick="closeSaveOverlay()">Save Certificate</button>
+      <button class="cheat-btn" style="background:#f0f4ff;color:var(--navy);flex:1" onclick="leaveAfterResult()">Leave Anyway</button>
+    </div>
+  </div>
+</div>
+
 <div class="cheat-overlay" id="quit-overlay">
   <div class="cheat-modal">
     <div class="cheat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#c62828" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
@@ -1037,11 +1050,16 @@ function showScreen(id){
   history.pushState({screen:id}, ``);
 }
 window.addEventListener(`popstate`, () => {
-  const testActive = document.getElementById(`screen-test`).classList.contains(`active`);
-  const breakActive = document.getElementById(`screen-break`).classList.contains(`active`);
+  const testActive    = document.getElementById(`screen-test`).classList.contains(`active`);
+  const breakActive   = document.getElementById(`screen-break`).classList.contains(`active`);
+  const resultsActive = document.getElementById(`screen-results`).classList.contains(`active`);
+  const certActive    = document.getElementById(`screen-cert`).classList.contains(`active`);
   if(testActive || breakActive){
     history.pushState({screen: testActive ? `test` : `break`}, ``);
     showQuitConfirm();
+  } else if(resultsActive || certActive){
+    history.pushState({screen: resultsActive ? `results` : `cert`}, ``);
+    document.getElementById(`save-overlay`).classList.add(`show`);
   }
 });
 
@@ -1495,8 +1513,15 @@ function setupAntiCheat(){
 
   // Abandon beacon — fires on page close/refresh (shows browser "Leave site?" dialog)
   window.addEventListener(`beforeunload`, e => {
-    const testActive = document.getElementById(`screen-test`).classList.contains(`active`);
-    const breakActive = document.getElementById(`screen-break`).classList.contains(`active`);
+    const testActive    = document.getElementById(`screen-test`).classList.contains(`active`);
+    const breakActive   = document.getElementById(`screen-break`).classList.contains(`active`);
+    const resultsActive = document.getElementById(`screen-results`).classList.contains(`active`);
+    const certActive    = document.getElementById(`screen-cert`).classList.contains(`active`);
+    if(resultsActive || certActive){
+      e.preventDefault();
+      e.returnValue = `Save your certificate before leaving — your result will not be recoverable.`;
+      return;
+    }
     if(testActive || breakActive){
       e.preventDefault();
       e.returnValue = `Your test is in progress. If you leave, your result will be lost.`;
@@ -1533,6 +1558,17 @@ function setupAntiCheat(){
     const isRefresh = e.key === `F5` || ((e.ctrlKey || e.metaKey) && e.key === `r`);
     if(isRefresh){ e.preventDefault(); showCheatModal(`refresh`); }
   });
+}
+
+function closeSaveOverlay(){
+  document.getElementById(`save-overlay`).classList.remove(`show`);
+  showScreen(`cert`);
+}
+function leaveAfterResult(){
+  document.getElementById(`save-overlay`).classList.remove(`show`);
+  window.removeEventListener(`beforeunload`, () => {});
+  session = {};
+  showScreen(`intro`);
 }
 
 function showQuitConfirm(){
