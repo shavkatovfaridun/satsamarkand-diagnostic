@@ -4,127 +4,218 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAT Samarkand — Diagnostic Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
+:root{
+  --navy:#0d1b35;
+  --navy2:#1a2f5a;
+  --gold:#f0a500;
+  --gold2:#ffc840;
+  --bg:#f4f6fb;
+  --card:#ffffff;
+  --text:#0d1b35;
+  --muted:#6b7a99;
+  --border:#dde3f0;
+  --radius:14px;
+  --shadow:0 4px 24px rgba(13,27,53,.10);
+  --shadow-lg:0 8px 40px rgba(13,27,53,.16);
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f7;color:#1a2a4a;min-height:100vh}
-/* NAV */
-.nav{background:#1a2a4a;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25)}
-.nav-logo{color:#fff;font-size:1.15rem;font-weight:700;letter-spacing:.5px}
-.nav-logo span{color:#f0a500}
-.lang-btns{display:flex;gap:6px}
-.lang-btn{background:transparent;border:1.5px solid rgba(255,255,255,.35);color:#fff;padding:4px 12px;border-radius:20px;cursor:pointer;font-size:.82rem;font-weight:600;transition:all .2s}
-.lang-btn.active,.lang-btn:hover{background:#f0a500;border-color:#f0a500;color:#1a2a4a}
-/* SCREENS */
+body{font-family:'Inter',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* ══ NAV ══ */
+.nav{background:var(--navy);padding:0 28px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:0 2px 20px rgba(0,0,0,.3)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-icon{width:34px;height:34px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.95rem;color:var(--navy);letter-spacing:-.5px}
+.nav-logo-text{color:#fff;font-size:1.05rem;font-weight:700;letter-spacing:.2px}
+.nav-logo-text span{color:var(--gold)}
+.lang-btns{display:flex;gap:4px}
+.lang-btn{background:transparent;border:1.5px solid rgba(255,255,255,.22);color:rgba(255,255,255,.75);padding:5px 13px;border-radius:20px;cursor:pointer;font-size:.78rem;font-weight:600;font-family:inherit;transition:all .2s;letter-spacing:.3px}
+.lang-btn.active,.lang-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+
+/* ══ SCREENS ══ */
 .screen{display:none}
 .screen.active{display:block}
-/* INTRO */
-#screen-intro{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;text-align:center;min-height:calc(100vh - 54px)}
+
+/* ══ INTRO ══ */
+#screen-intro{min-height:calc(100vh - 58px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;text-align:center;background:var(--bg)}
 #screen-intro.active{display:flex}
-.intro-badge{background:#f0a500;color:#1a2a4a;font-size:.78rem;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
-.intro-title{font-size:clamp(1.8rem,5vw,3rem);font-weight:800;color:#1a2a4a;line-height:1.2;margin-bottom:14px}
-.intro-title span{color:#f0a500}
-.intro-sub{font-size:1.05rem;color:#4a5a7a;max-width:520px;line-height:1.6;margin-bottom:36px}
-.intro-stats{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
-.stat-card{background:#fff;border-radius:12px;padding:18px 28px;box-shadow:0 2px 10px rgba(0,0,0,.08);text-align:center;min-width:110px}
-.stat-num{font-size:1.6rem;font-weight:800;color:#f0a500}
-.stat-label{font-size:.78rem;color:#6a7a9a;margin-top:4px;font-weight:500}
-.btn-primary{background:#f0a500;color:#1a2a4a;border:none;padding:16px 44px;border-radius:30px;font-size:1.1rem;font-weight:800;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(240,165,0,.35)}
-.btn-primary:hover{background:#d99200;transform:translateY(-2px);box-shadow:0 6px 20px rgba(240,165,0,.45)}
-/* FORM */
-#screen-form{padding:40px 20px}
-.form-wrap{max-width:560px;margin:0 auto}
-.form-card{background:#fff;border-radius:16px;padding:36px 32px;box-shadow:0 4px 20px rgba(0,0,0,.1)}
-.form-title{font-size:1.5rem;font-weight:800;color:#1a2a4a;margin-bottom:6px}
-.form-sub{font-size:.9rem;color:#6a7a9a;margin-bottom:28px}
+.intro-eyebrow{font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.intro-title{font-size:clamp(2.2rem,5.5vw,3.6rem);font-weight:900;color:var(--navy);line-height:1.1;margin-bottom:18px;letter-spacing:-1.5px}
+.intro-title span{color:var(--gold)}
+.intro-desc{font-size:1.05rem;color:var(--muted);max-width:500px;line-height:1.7;margin-bottom:44px;font-weight:400}
+.intro-stats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:44px}
+.stat-pill{background:var(--card);border:1.5px solid var(--border);border-radius:50px;padding:14px 28px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow)}
+.stat-pill-num{font-size:1.4rem;font-weight:900;color:var(--gold);line-height:1}
+.stat-pill-label{font-size:.82rem;color:var(--muted);font-weight:500;text-align:left;line-height:1.2}
+.btn-cta{background:var(--gold);color:var(--navy);border:none;padding:17px 52px;border-radius:50px;font-size:1.05rem;font-weight:800;cursor:pointer;transition:all .22s;font-family:inherit;letter-spacing:.2px;box-shadow:0 6px 24px rgba(240,165,0,.38)}
+.btn-cta:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 10px 32px rgba(240,165,0,.45)}
+.intro-trust{margin-top:32px;font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:8px}
+.intro-trust-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);display:inline-block}
+
+/* ══ FORM ══ */
+#screen-form{padding:48px 24px}
+.form-wrap{max-width:540px;margin:0 auto}
+.section-label{font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.section-title{font-size:1.7rem;font-weight:800;color:var(--navy);margin-bottom:6px;letter-spacing:-.5px}
+.section-sub{font-size:.93rem;color:var(--muted);margin-bottom:30px}
+.form-card{background:var(--card);border-radius:20px;padding:36px;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
 .form-group{margin-bottom:20px}
-.form-label{display:block;font-size:.88rem;font-weight:600;color:#3a4a6a;margin-bottom:7px}
-.form-input,.form-select{width:100%;padding:12px 16px;border:1.5px solid #d0d8e8;border-radius:10px;font-size:.95rem;color:#1a2a4a;background:#fff;transition:border-color .2s;outline:none;font-family:inherit}
-.form-input:focus,.form-select:focus{border-color:#f0a500}
+.form-label{display:block;font-size:.82rem;font-weight:600;color:var(--navy);margin-bottom:8px;letter-spacing:.2px}
+.form-input,.form-select{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:.95rem;color:var(--text);background:var(--bg);transition:border-color .2s,background .2s;outline:none;font-family:inherit}
+.form-input:focus,.form-select:focus{border-color:var(--gold);background:#fff}
+.form-select{cursor:pointer}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.btn-start{width:100%;margin-top:10px;padding:15px;font-size:1.05rem}
-/* TEST */
-#screen-test{padding:0}
-.test-header{background:#1a2a4a;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.test-section-label{color:#f0a500;font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px}
-.test-timer{background:rgba(255,255,255,.12);color:#fff;padding:6px 16px;border-radius:20px;font-size:.95rem;font-weight:700;font-variant-numeric:tabular-nums;min-width:80px;text-align:center}
-.test-timer.warn{background:#e53935;animation:blink .8s infinite alternate}
-@keyframes blink{from{opacity:1}to{opacity:.6}}
-.progress-wrap{background:#d0d8e8;height:5px}
-.progress-bar{background:#f0a500;height:5px;transition:width .4s}
-.test-body{max-width:700px;margin:0 auto;padding:32px 20px 60px}
-.q-counter{font-size:.82rem;color:#6a7a9a;font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px}
-.q-section-tag{display:inline-block;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:10px;margin-bottom:14px}
-.tag-math{background:#e8f0ff;color:#2a5abf}
+.btn-start{width:100%;margin-top:6px;padding:15px;font-size:1rem;border-radius:12px}
+.form-err{color:#d32f2f;font-size:.84rem;margin-bottom:10px;display:none;padding:10px 14px;background:#fff5f5;border-radius:8px;border:1px solid #ffcdd2}
+
+/* ══ SECTION BREAK ══ */
+#screen-break{min-height:calc(100vh - 58px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;text-align:center}
+#screen-break.active{display:flex}
+.break-icon{font-size:3rem;margin-bottom:20px;animation:pop .4s ease}
+@keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.break-chip{background:rgba(240,165,0,.12);color:var(--gold);font-size:.75rem;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;display:inline-block}
+.break-title{font-size:2rem;font-weight:900;color:var(--navy);letter-spacing:-.5px;margin-bottom:8px}
+.break-sub{font-size:.97rem;color:var(--muted);margin-bottom:32px;max-width:420px}
+.break-score-card{background:var(--card);border-radius:18px;padding:24px 40px;box-shadow:var(--shadow-lg);border:1px solid var(--border);margin-bottom:32px;display:flex;gap:40px;align-items:center}
+.break-score-item{text-align:center}
+.break-score-val{font-size:2rem;font-weight:900;color:var(--navy)}
+.break-score-lbl{font-size:.75rem;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-top:2px}
+.break-next-info{font-size:.85rem;color:var(--muted);margin-bottom:24px;background:var(--bg);padding:12px 20px;border-radius:10px;border:1px solid var(--border)}
+
+/* ══ TEST ══ */
+#screen-test{padding:0;background:var(--bg)}
+.test-topbar{background:var(--navy);padding:0 28px;height:56px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.test-section-info{display:flex;flex-direction:column;gap:1px}
+.test-section-main{color:#fff;font-size:.9rem;font-weight:700;line-height:1}
+.test-section-sub{color:rgba(255,255,255,.5);font-size:.72rem;font-weight:500}
+.test-timer-wrap{display:flex;flex-direction:column;align-items:center;gap:0}
+.test-timer{background:rgba(255,255,255,.10);color:#fff;padding:6px 18px;border-radius:20px;font-size:1rem;font-weight:700;font-variant-numeric:tabular-nums;min-width:84px;text-align:center;transition:background .3s}
+.test-timer.warn{background:#d32f2f;animation:blink .7s infinite alternate}
+.test-timer-lbl{color:rgba(255,255,255,.4);font-size:.64rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:1px;text-align:center}
+@keyframes blink{from{opacity:1}to{opacity:.55}}
+.test-progress-row{background:var(--navy2);padding:8px 28px;display:flex;align-items:center;justify-content:space-between}
+.test-progress-dots{display:flex;gap:3px;flex-wrap:wrap;max-width:80%}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.15);transition:background .2s;flex-shrink:0}
+.dot.answered{background:var(--gold)}
+.dot.current{background:#fff}
+.test-progress-pct{color:rgba(255,255,255,.5);font-size:.75rem;font-weight:600;white-space:nowrap}
+.test-body{max-width:740px;margin:0 auto;padding:32px 24px 80px}
+.q-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.q-counter{font-size:.78rem;color:var(--muted);font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+.q-tag{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:8px;letter-spacing:.3px}
 .tag-eng{background:#e8f5e9;color:#2e7d32}
-.q-passage{background:#f5f7fc;border-left:3px solid #f0a500;padding:14px 18px;border-radius:0 8px 8px 0;font-size:.93rem;line-height:1.75;color:#2a3a5a;margin-bottom:20px}
-.q-text{font-size:1.08rem;line-height:1.7;color:#1a2a4a;margin-bottom:4px}
-.options{display:flex;flex-direction:column;gap:11px;margin-top:20px}
-.option-btn{background:#fff;border:2px solid #d0d8e8;border-radius:12px;padding:14px 18px;text-align:left;cursor:pointer;font-size:.97rem;color:#1a2a4a;transition:all .18s;display:flex;align-items:flex-start;gap:12px;line-height:1.45;width:100%}
-.option-btn:hover{border-color:#f0a500;background:#fffbf0}
-.option-btn.selected{border-color:#f0a500;background:#fff8e6;font-weight:600}
-.option-letter{font-weight:800;color:#f0a500;min-width:20px;flex-shrink:0}
-.option-btn.selected .option-letter{color:#1a2a4a}
-.test-nav{display:flex;justify-content:flex-end;margin-top:28px;gap:12px}
-.btn-next{background:#1a2a4a;color:#fff;border:none;padding:13px 34px;border-radius:25px;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s}
-.btn-next:hover{background:#253c6a}
-.btn-next:disabled{background:#9aa5b8;cursor:not-allowed;transform:none}
-/* ANTI-CHEAT */
-.anti-cheat-warn{display:none;position:fixed;top:0;left:0;right:0;background:#c62828;color:#fff;text-align:center;padding:10px;font-weight:700;z-index:9999;font-size:.9rem}
-/* RESULTS */
-#screen-results{padding:40px 20px}
-.results-wrap{max-width:680px;margin:0 auto}
-.results-title{font-size:1.8rem;font-weight:800;color:#1a2a4a;margin-bottom:6px}
-.results-sub{font-size:.95rem;color:#6a7a9a;margin-bottom:28px}
-.score-hero{background:linear-gradient(135deg,#1a2a4a,#2a4a7a);border-radius:18px;padding:30px;color:#fff;text-align:center;margin-bottom:24px}
-.score-pct{font-size:3.5rem;font-weight:900;color:#f0a500;line-height:1}
-.score-raw{font-size:1rem;opacity:.75;margin-top:4px}
-.score-hero-label{font-size:.85rem;text-transform:uppercase;letter-spacing:1px;margin-top:8px;opacity:.7}
+.tag-math{background:#e8eaf6;color:#3949ab}
+.tag-grammar{background:#fff3e0;color:#e65100}
+.tag-vocab{background:#fce4ec;color:#c2185b}
+.tag-reading{background:#e0f7fa;color:#00838f}
+.q-passage{background:#fff;border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:16px 20px;font-size:.91rem;line-height:1.8;color:#2a3a5a;margin-bottom:22px;box-shadow:inset 0 0 0 1px var(--border)}
+.q-text{font-size:1.07rem;line-height:1.7;color:var(--navy);margin-bottom:4px;font-weight:500}
+.options{display:flex;flex-direction:column;gap:10px;margin-top:22px}
+.option-btn{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px 18px;text-align:left;cursor:pointer;font-size:.95rem;color:var(--text);transition:all .18s;display:flex;align-items:flex-start;gap:14px;line-height:1.5;width:100%;font-family:inherit}
+.option-btn:hover{border-color:var(--gold);background:#fffbf0;transform:translateX(2px)}
+.option-btn.selected{border-color:var(--gold);background:#fff8e1;font-weight:600}
+.option-letter{width:26px;height:26px;border-radius:6px;background:var(--bg);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;color:var(--muted);flex-shrink:0;transition:all .18s}
+.option-btn.selected .option-letter{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.test-footer{display:flex;align-items:center;justify-content:space-between;margin-top:32px}
+.test-footer-left{font-size:.82rem;color:var(--muted);font-weight:500}
+.btn-next{background:var(--navy);color:#fff;border:none;padding:13px 36px;border-radius:50px;font-size:.97rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit}
+.btn-next:hover{background:var(--navy2);transform:translateY(-1px)}
+.btn-next:disabled{background:#b0bec5;cursor:not-allowed;transform:none}
+.btn-next.finish{background:var(--gold);color:var(--navy)}
+.btn-next.finish:hover{background:var(--gold2)}
+
+/* ══ ANTI-CHEAT ══ */
+.warn-bar{display:none;position:fixed;top:0;left:0;right:0;background:#d32f2f;color:#fff;text-align:center;padding:10px 16px;font-weight:700;z-index:9999;font-size:.88rem;letter-spacing:.2px}
+
+/* ══ RESULTS ══ */
+#screen-results{padding:48px 24px}
+.results-wrap{max-width:700px;margin:0 auto}
+.hero-score{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);border-radius:22px;padding:36px 32px;color:#fff;text-align:center;margin-bottom:24px;box-shadow:var(--shadow-lg)}
+.hero-score-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;opacity:.5;margin-bottom:12px}
+.hero-score-pct{font-size:4rem;font-weight:900;color:var(--gold);line-height:1;letter-spacing:-2px}
+.hero-score-raw{font-size:.97rem;opacity:.6;margin-top:6px}
+.hero-score-bar{background:rgba(255,255,255,.1);border-radius:50px;height:8px;margin:20px auto 0;max-width:300px;overflow:hidden}
+.hero-score-fill{height:8px;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:50px;transition:width 1s ease}
 .score-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
-.score-card{background:#fff;border-radius:14px;padding:22px;box-shadow:0 2px 10px rgba(0,0,0,.08);text-align:center}
-.score-card-icon{font-size:1.6rem;margin-bottom:8px}
-.score-card-label{font-size:.82rem;color:#6a7a9a;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
-.score-card-val{font-size:1.7rem;font-weight:800;color:#1a2a4a}
-.cefr-badge{display:inline-block;background:#f0a500;color:#1a2a4a;padding:5px 18px;border-radius:16px;font-size:.95rem;font-weight:800;margin-top:6px}
-.result-btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
-.btn-secondary{background:#fff;border:2px solid #1a2a4a;color:#1a2a4a;padding:13px 28px;border-radius:25px;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s}
-.btn-secondary:hover{background:#1a2a4a;color:#fff}
-/* CERTIFICATE */
-#screen-cert{padding:40px 20px}
-.cert-wrap{max-width:760px;margin:0 auto;text-align:center}
-#cert-card{background:linear-gradient(160deg,#fff 60%,#fffbf0);border:3px solid #f0a500;border-radius:20px;padding:48px 44px;max-width:680px;margin:0 auto;position:relative;box-shadow:0 8px 32px rgba(0,0,0,.12)}
-.cert-header-text{font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#f0a500;margin-bottom:6px}
-.cert-org{font-size:1.6rem;font-weight:900;color:#1a2a4a;margin-bottom:20px}
-.cert-body-label{font-size:.9rem;color:#6a7a9a;margin-bottom:8px}
-.cert-name{font-size:2rem;font-weight:800;color:#1a2a4a;border-bottom:2px solid #f0a500;display:inline-block;padding-bottom:4px;margin-bottom:18px}
-.cert-desc{font-size:.92rem;color:#4a5a7a;margin-top:6px}
-.cert-row{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-top:20px}
-.cert-stat{text-align:center}
-.cert-stat-val{font-size:1.5rem;font-weight:800;color:#1a2a4a}
-.cert-stat-label{font-size:.75rem;color:#6a7a9a;text-transform:uppercase;letter-spacing:.5px}
-.cert-watermark{position:absolute;bottom:16px;right:20px;font-size:.7rem;color:#c0c8d8}
-.cert-date{font-size:.85rem;color:#8a95a8;margin-top:18px}
-.cert-actions{text-align:center;margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-@media(max-width:540px){
+.score-card{background:var(--card);border-radius:16px;padding:24px;box-shadow:var(--shadow);border:1px solid var(--border)}
+.score-card-top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.score-card-icon{font-size:1.5rem}
+.score-card-name{font-size:.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.score-card-val{font-size:2rem;font-weight:900;color:var(--navy);line-height:1;margin-bottom:6px}
+.score-card-bar{background:var(--bg);border-radius:50px;height:6px;overflow:hidden}
+.score-card-fill{height:6px;border-radius:50px;transition:width 1s ease}
+.fill-eng{background:#43a047}
+.fill-math{background:#3949ab}
+.score-card-sub{font-size:.78rem;color:var(--muted);margin-top:8px}
+.cefr-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:var(--navy);padding:5px 14px;border-radius:20px;font-size:.9rem;font-weight:800;margin-top:6px}
+.results-cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn-secondary{background:var(--card);border:2px solid var(--navy);color:var(--navy);padding:13px 28px;border-radius:50px;font-size:.93rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit}
+.btn-secondary:hover{background:var(--navy);color:#fff}
+
+/* ══ CERTIFICATE ══ */
+#screen-cert{padding:48px 24px}
+.cert-wrap{max-width:780px;margin:0 auto;text-align:center}
+#cert-card{background:#fff;border-radius:24px;padding:54px 52px;max-width:700px;margin:0 auto;position:relative;box-shadow:var(--shadow-lg);border:2px solid var(--gold)}
+.cert-lines{position:absolute;top:0;left:0;right:0;bottom:0;border-radius:24px;border:8px solid transparent;background:linear-gradient(#fff,#fff) padding-box, linear-gradient(135deg,var(--gold),transparent 60%) border-box;pointer-events:none}
+.cert-eyebrow{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--gold);margin-bottom:8px}
+.cert-org{font-size:1.8rem;font-weight:900;color:var(--navy);letter-spacing:-.5px;margin-bottom:24px}
+.cert-presents{font-size:.88rem;color:var(--muted);margin-bottom:10px}
+.cert-name{font-size:2.2rem;font-weight:900;color:var(--navy);letter-spacing:-.5px;margin-bottom:6px}
+.cert-name-line{width:200px;height:2px;background:var(--gold);margin:0 auto 20px}
+.cert-statement{font-size:.92rem;color:#4a5a7a;margin-bottom:28px}
+.cert-stats{display:flex;justify-content:center;gap:36px;flex-wrap:wrap;padding:24px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:20px}
+.cert-stat-val{font-size:1.6rem;font-weight:900;color:var(--navy)}
+.cert-stat-lbl{font-size:.7rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.cert-footer{display:flex;justify-content:space-between;align-items:flex-end;margin-top:8px}
+.cert-date{font-size:.8rem;color:var(--muted)}
+.cert-stamp{font-size:.72rem;color:#b0bec5}
+.cert-actions{margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ══ REVIEW ══ */
+.review-item{background:var(--card);border-radius:14px;padding:22px 24px;margin-bottom:16px;border:1.5px solid var(--border);box-shadow:var(--shadow)}
+.review-q-num{font-size:.73rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.review-status{width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0}
+.status-correct{background:#e8f5e9;color:#2e7d32}
+.status-wrong{background:#ffebee;color:#c62828}
+.status-skip{background:#f5f5f5;color:#9e9e9e}
+.review-q-text{font-size:.97rem;font-weight:500;color:var(--navy);margin-bottom:14px;line-height:1.6}
+.review-passage{background:#f5f7fc;border-left:3px solid var(--gold);padding:10px 14px;border-radius:0 8px 8px 0;font-size:.85rem;line-height:1.7;color:#2a3a5a;margin-bottom:12px;font-style:italic}
+.review-options{display:flex;flex-direction:column;gap:7px}
+.review-opt{display:flex;align-items:flex-start;gap:10px;padding:9px 13px;border-radius:9px;font-size:.88rem;line-height:1.4;border:1.5px solid transparent}
+.review-opt.correct{background:#e8f5e9;border-color:#81c784;color:#1b5e20;font-weight:600}
+.review-opt.wrong{background:#ffebee;border-color:#ef9a9a;color:#7f0000}
+.review-opt.neutral{color:var(--muted)}
+.review-opt-letter{font-weight:700;min-width:18px;flex-shrink:0}
+/* ══ UTILS ══ */
+@media(max-width:580px){
   .form-row{grid-template-columns:1fr}
   .score-grid{grid-template-columns:1fr}
-  .form-card{padding:24px 18px}
-  .test-body{padding:20px 14px 48px}
-  #cert-card{padding:32px 20px}
-  .cert-row{gap:20px}
+  .form-card{padding:24px 20px}
+  .test-body{padding:20px 16px 64px}
+  #cert-card{padding:36px 22px}
+  .cert-stats{gap:20px}
+  .break-score-card{gap:24px;padding:20px}
+  .intro-title{letter-spacing:-.5px}
+  .test-progress-dots{max-width:60%}
 }
 </style>
 </head>
 <body>
 
-<div class="anti-cheat-warn" id="warn-banner"></div>
+<div class="warn-bar" id="warn-bar"></div>
 
 <!-- NAV -->
 <nav class="nav">
-  <div class="nav-logo">SAT <span>Samarkand</span></div>
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-icon">SS</div>
+    <span class="nav-logo-text">SAT <span>Samarkand</span></span>
+  </a>
   <div class="lang-btns" id="nav-lang">
     <button class="lang-btn active" onclick="setLang('en')">EN</button>
     <button class="lang-btn" onclick="setLang('uz')">UZ</button>
@@ -134,549 +225,602 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f7;color:#1a2a4a;mi
 
 <!-- SCREEN 0: INTRO -->
 <section class="screen active" id="screen-intro">
-  <div class="intro-badge" id="intro-badge">Free Diagnostic</div>
+  <p class="intro-eyebrow" id="intro-eyebrow">Diagnostic Test</p>
   <h1 class="intro-title" id="intro-title">Know Your SAT Level <span>Today</span></h1>
-  <p class="intro-sub" id="intro-sub">Take our 40-question diagnostic — 20 Math + 20 English — and get your score, CEFR level, and a certificate in 45 minutes.</p>
+  <p class="intro-desc" id="intro-desc">40 questions — 20 English + 20 Math — scored instantly with your CEFR level and a downloadable certificate.</p>
   <div class="intro-stats">
-    <div class="stat-card"><div class="stat-num">40</div><div class="stat-label" id="stat1">Questions</div></div>
-    <div class="stat-card"><div class="stat-num">45</div><div class="stat-label" id="stat2">Minutes</div></div>
-    <div class="stat-card"><div class="stat-num" id="stat3-num">Free</div><div class="stat-label" id="stat3">Certificate</div></div>
+    <div class="stat-pill">
+      <div class="stat-pill-num">40</div>
+      <div class="stat-pill-label" id="stat1">Questions<br><span style="color:var(--navy);font-weight:700">20 Eng + 20 Math</span></div>
+    </div>
+    <div class="stat-pill">
+      <div class="stat-pill-num">40</div>
+      <div class="stat-pill-label" id="stat2">Minutes<br><span style="color:var(--navy);font-weight:700" id="stat2b">20 + 20 min</span></div>
+    </div>
+    <div class="stat-pill">
+      <div class="stat-pill-num" id="stat3a">Free</div>
+      <div class="stat-pill-label" id="stat3">Certificate<br><span style="color:var(--navy);font-weight:700">Instant result</span></div>
+    </div>
   </div>
-  <button class="btn-primary" onclick="showScreen('form')" id="btn-begin">Begin Test →</button>
+  <button class="btn-cta" onclick="showScreen('form')" id="btn-begin">Begin Test →</button>
+  <p class="intro-trust"><span class="intro-trust-dot"></span><span id="intro-trust">No registration required · Results in seconds</span></p>
 </section>
 
-<!-- SCREEN 1: FORM -->
+<!-- SCREEN 1: FORM STEP 1 — Name + Phone -->
 <section class="screen" id="screen-form">
   <div class="form-wrap">
+    <p class="section-label">Step 1 of 2</p>
+    <h2 class="section-title" id="form-title">Your Information</h2>
+    <p class="section-sub" id="form-sub">Fill in your details — it takes 30 seconds.</p>
     <div class="form-card">
-      <div class="form-title" id="form-title">Your Information</div>
-      <p class="form-sub" id="form-sub">Please fill in your details before starting the test.</p>
       <div class="form-group">
         <label class="form-label" id="lbl-name">Full Name</label>
-        <input class="form-input" id="inp-name" type="text" placeholder="John Smith" autocomplete="name">
+        <input class="form-input" id="inp-name" type="text" placeholder="e.g. Faridun Shavkatov" autocomplete="name">
       </div>
       <div class="form-group">
         <label class="form-label" id="lbl-phone">Phone Number</label>
-        <input class="form-input" id="inp-phone" type="tel" placeholder="+998 90 000 00 00" autocomplete="tel">
+        <input class="form-input" id="inp-phone" type="tel" placeholder="+998 90-123-45-67" autocomplete="tel" oninput="formatPhone(this)" maxlength="17">
+        <div style="font-size:.76rem;color:var(--muted);margin-top:5px" id="phone-hint">Format: +998 XX-XXX-XX-XX</div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label" id="lbl-class">Current Class</label>
-          <select class="form-select" id="inp-class">
-            <option value="">—</option>
-            <option value="8">Class 8</option>
-            <option value="9">Class 9</option>
-            <option value="10">Class 10</option>
-            <option value="11">Class 11</option>
-            <option value="graduate">Graduate</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label" id="lbl-level">Self-assessed Level</label>
-          <select class="form-select" id="inp-level">
-            <option value="">—</option>
-            <option value="A1">A1 — Beginner</option>
-            <option value="A2">A2 — Elementary</option>
-            <option value="B1">B1 — Intermediate</option>
-            <option value="B2">B2 — Upper-Int.</option>
-            <option value="C1">C1 — Advanced</option>
-          </select>
-        </div>
+      <p class="form-err" id="form-err"></p>
+      <button class="btn-cta btn-start" onclick="goStep2()" id="btn-step2">Next →</button>
+    </div>
+  </div>
+</section>
+
+<!-- SCREEN 1b: FORM STEP 2 — Class + Target Score -->
+<section class="screen" id="screen-form2">
+  <div class="form-wrap">
+    <p class="section-label">Step 2 of 2</p>
+    <h2 class="section-title" id="form2-title">Your Goals</h2>
+    <p class="section-sub" id="form2-sub">Almost there — two quick questions.</p>
+    <div class="form-card">
+      <div class="form-group">
+        <label class="form-label" id="lbl-class">Current Class</label>
+        <select class="form-select" id="inp-class">
+          <option value="">Select</option>
+          <option value="8">Class 8</option>
+          <option value="9">Class 9</option>
+          <option value="10">Class 10</option>
+          <option value="11">Class 11</option>
+          <option value="graduate">Graduate</option>
+        </select>
       </div>
-      <p id="form-err" style="color:#c62828;font-size:.87rem;margin-bottom:10px;display:none"></p>
-      <button class="btn-primary btn-start" onclick="startTest()" id="btn-start">Start Test →</button>
+      <div class="form-group">
+        <label class="form-label" id="lbl-target">Target SAT Score</label>
+        <select class="form-select" id="inp-level">
+          <option value="">Select</option>
+          <option value="900-1000">900 – 1000</option>
+          <option value="1000-1100">1000 – 1100</option>
+          <option value="1100-1200">1100 – 1200</option>
+          <option value="1200-1300">1200 – 1300</option>
+          <option value="1300-1400">1300 – 1400</option>
+          <option value="1400-1500">1400 – 1500</option>
+          <option value="1500+">1500+</option>
+        </select>
+      </div>
+      <p class="form-err" id="form2-err"></p>
+      <div style="display:flex;gap:12px">
+        <button class="btn-secondary" onclick="showScreen('form')" style="flex:1;padding:13px" id="btn-back-form">← Back</button>
+        <button class="btn-cta" onclick="startTest()" id="btn-start" style="flex:2;padding:13px;border-radius:12px">Start Test →</button>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- SCREEN 2: TEST -->
 <section class="screen" id="screen-test">
-  <div class="test-header">
-    <span class="test-section-label" id="test-section-label">Math</span>
-    <span class="test-timer" id="timer">45:00</span>
-    <div class="lang-btns" id="test-lang-btns">
+  <div class="test-topbar">
+    <div class="test-section-info">
+      <div class="test-section-main" id="test-section-main">Section 1 of 2 — English</div>
+      <div class="test-section-sub" id="test-section-sub">Grammar · Vocabulary · Reading</div>
+    </div>
+    <div>
+      <div class="test-timer" id="timer">20:00</div>
+      <div class="test-timer-lbl" id="timer-lbl">Section Time</div>
+    </div>
+    <div class="lang-btns" id="test-lang-btns" style="display:none">
       <button class="lang-btn active" onclick="setLang('en')">EN</button>
       <button class="lang-btn" onclick="setLang('uz')">UZ</button>
       <button class="lang-btn" onclick="setLang('ru')">RU</button>
     </div>
   </div>
-  <div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+  <div class="test-progress-row">
+    <div class="test-progress-dots" id="progress-dots"></div>
+    <div class="test-progress-pct" id="progress-pct">0 / 40</div>
+  </div>
   <div class="test-body">
-    <div class="q-counter" id="q-counter">Question 1 of 40</div>
-    <span class="q-section-tag tag-math" id="q-tag">Math</span>
+    <div class="q-meta">
+      <span class="q-counter" id="q-counter">Question 1 of 40</span>
+      <span class="q-tag tag-eng" id="q-tag">English</span>
+    </div>
     <div class="q-passage" id="q-passage" style="display:none"></div>
     <div class="q-text" id="q-text"></div>
     <div class="options" id="options"></div>
-    <div class="test-nav">
+    <div class="test-footer">
+      <span class="test-footer-left" id="footer-hint"></span>
       <button class="btn-next" id="btn-next" onclick="nextQuestion()" disabled>Next →</button>
     </div>
   </div>
 </section>
 
-<!-- SCREEN 3: RESULTS -->
+<!-- SCREEN 3: SECTION BREAK -->
+<section class="screen" id="screen-break">
+  <div class="break-icon">✅</div>
+  <div class="break-chip" id="break-chip">Section 1 Complete</div>
+  <h2 class="break-title" id="break-title">English Section Done!</h2>
+  <p class="break-sub" id="break-sub">Take a breath — the Math section starts when you're ready.</p>
+  <div class="break-score-card">
+    <div class="break-score-item">
+      <div class="break-score-val" id="break-eng-val">—/20</div>
+      <div class="break-score-lbl">English Score</div>
+    </div>
+    <div style="width:1px;background:var(--border);height:40px"></div>
+    <div class="break-score-item">
+      <div class="break-score-val" id="break-cefr">B1</div>
+      <div class="break-score-lbl">CEFR Level</div>
+    </div>
+  </div>
+  <p class="break-next-info" id="break-next-info">📐 Next: Math Section — 20 questions · 20 minutes</p>
+  <button class="btn-cta" onclick="startMathSection()" id="btn-continue-math">Continue to Math →</button>
+</section>
+
+<!-- SCREEN 4: RESULTS -->
 <section class="screen" id="screen-results">
   <div class="results-wrap">
-    <div class="results-title" id="res-title">Your Results</div>
-    <p class="results-sub" id="res-sub">Here is your diagnostic score breakdown.</p>
-    <div class="score-hero">
-      <div class="score-hero-label" id="res-total-label">Total Score</div>
-      <div class="score-pct" id="res-pct">—</div>
-      <div class="score-raw" id="res-raw">— / 40</div>
+    <p class="section-label" id="res-eyebrow">Your Results</p>
+    <h2 class="section-title" id="res-title">Diagnostic Complete</h2>
+    <p class="section-sub" id="res-sub">Here is your full score breakdown.</p>
+    <div class="hero-score">
+      <div class="hero-score-label" id="res-total-label">Total Score</div>
+      <div class="hero-score-pct" id="res-pct">—</div>
+      <div class="hero-score-raw" id="res-raw">— / 40</div>
+      <div class="hero-score-bar"><div class="hero-score-fill" id="hero-fill" style="width:0%"></div></div>
     </div>
     <div class="score-grid">
       <div class="score-card">
-        <div class="score-card-icon">📐</div>
-        <div class="score-card-label" id="res-math-label">Math</div>
-        <div class="score-card-val" id="res-math-val">—</div>
-        <div style="font-size:.8rem;color:#9aa5b8;margin-top:2px" id="res-math-sub">out of 20</div>
+        <div class="score-card-top"><span class="score-card-icon">📖</span><span class="score-card-name" id="res-eng-label">English</span></div>
+        <div class="score-card-val" id="res-eng-val">—</div>
+        <div class="score-card-bar"><div class="score-card-fill fill-eng" id="eng-fill" style="width:0%"></div></div>
+        <div class="score-card-sub"><span class="cefr-badge" id="res-cefr">B1</span></div>
       </div>
       <div class="score-card">
-        <div class="score-card-icon">📖</div>
-        <div class="score-card-label" id="res-eng-label">English</div>
-        <div class="score-card-val" id="res-eng-val">—</div>
-        <div><span class="cefr-badge" id="res-cefr">B1</span></div>
+        <div class="score-card-top"><span class="score-card-icon">📐</span><span class="score-card-name" id="res-math-label">Math</span></div>
+        <div class="score-card-val" id="res-math-val">—</div>
+        <div class="score-card-bar"><div class="score-card-fill fill-math" id="math-fill" style="width:0%"></div></div>
+        <div class="score-card-sub" id="res-math-sub">out of 20</div>
       </div>
     </div>
-    <div class="result-btns">
-      <button class="btn-primary" onclick="showScreen('cert')" id="btn-see-cert">View Certificate</button>
+    <div class="results-cta">
+      <button class="btn-cta" onclick="showScreen('cert')" id="btn-see-cert">View Certificate</button>
+      <button class="btn-secondary" onclick="showReview()" id="btn-review">Review Answers</button>
       <button class="btn-secondary" onclick="retake()" id="btn-retake">Retake Test</button>
     </div>
   </div>
 </section>
 
-<!-- SCREEN 4: CERTIFICATE -->
+<!-- SCREEN 5: REVIEW ANSWERS -->
+<section class="screen" id="screen-review">
+  <div style="max-width:740px;margin:0 auto;padding:40px 24px 80px">
+    <p class="section-label">Answer Review</p>
+    <h2 class="section-title">Full Question Review</h2>
+    <p class="section-sub" style="margin-bottom:28px">Correct answers are highlighted in green. Your wrong answers in red.</p>
+    <div id="review-list"></div>
+    <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn-cta" onclick="showScreen('results')">← Back to Results</button>
+    </div>
+  </div>
+</section>
+
+<!-- SCREEN 6: CERTIFICATE -->
 <section class="screen" id="screen-cert">
   <div class="cert-wrap">
     <div id="cert-card">
-      <div class="cert-header-text">Certificate of Completion</div>
+      <div class="cert-lines"></div>
+      <div class="cert-eyebrow">Certificate of Achievement</div>
       <div class="cert-org">SAT Samarkand</div>
-      <div class="cert-body-label" id="cert-lbl">This certifies that</div>
+      <div class="cert-presents" id="cert-presents">This certifies that</div>
       <div class="cert-name" id="cert-name">—</div>
-      <div class="cert-desc" id="cert-desc">has successfully completed the SAT Samarkand Diagnostic Test</div>
-      <div class="cert-row">
-        <div class="cert-stat"><div class="cert-stat-val" id="cert-total">—</div><div class="cert-stat-label">Total Score</div></div>
-        <div class="cert-stat"><div class="cert-stat-val" id="cert-math">—</div><div class="cert-stat-label">Math</div></div>
-        <div class="cert-stat"><div class="cert-stat-val" id="cert-eng">—</div><div class="cert-stat-label">English</div></div>
-        <div class="cert-stat"><div class="cert-stat-val" id="cert-cefr">—</div><div class="cert-stat-label">CEFR Level</div></div>
+      <div class="cert-name-line"></div>
+      <div class="cert-statement" id="cert-statement">has successfully completed the SAT Samarkand Diagnostic Assessment</div>
+      <div class="cert-stats">
+        <div><div class="cert-stat-val" id="cert-total">—</div><div class="cert-stat-lbl">Total Score</div></div>
+        <div><div class="cert-stat-val" id="cert-eng">—</div><div class="cert-stat-lbl">English</div></div>
+        <div><div class="cert-stat-val" id="cert-math">—</div><div class="cert-stat-lbl">Math</div></div>
+        <div><div class="cert-stat-val" id="cert-cefr">—</div><div class="cert-stat-lbl">CEFR Level</div></div>
       </div>
-      <div class="cert-date" id="cert-date"></div>
-      <div class="cert-watermark">diagnostic.satsamarkand.uz</div>
+      <div class="cert-footer">
+        <div class="cert-date" id="cert-date"></div>
+        <div class="cert-stamp">diagnostic.satsamarkand.uz</div>
+      </div>
     </div>
     <div class="cert-actions">
-      <button class="btn-primary" onclick="downloadCert()">⬇ Download Certificate</button>
-      <button class="btn-secondary" onclick="showScreen('results')" id="btn-back-results">← Results</button>
+      <button class="btn-cta" onclick="downloadCert()" id="btn-download">⬇ Download Certificate</button>
+      <button class="btn-secondary" onclick="showScreen('results')" id="btn-back-results">← Back to Results</button>
     </div>
   </div>
 </section>
 
 <script>
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════
 // CONFIG
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════
 const SCRIPT_URL = `https://script.google.com/macros/s/AKfycbyNitdVRShR3L-kY12rfqK_ggxR1LIaVVxQcwCxfEGpFC3WgF6fDttR5m2FP06WhKX1/exec`;
+const ENG_SECONDS  = 20 * 60;  // 20 min for English
+const MATH_SECONDS = 20 * 60;  // 20 min for Math  (total = 40 min)
 
-// ═══════════════════════════════════════════════
-// UI STRINGS (EN / UZ / RU)
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════
+// UI STRINGS
+// ═══════════════════════════════════
 const STRINGS = {
-  en: {
-    badge: `Free Diagnostic`,
-    title: `Know Your SAT Level <span>Today</span>`,
-    sub: `Take our 40-question diagnostic — 20 Math + 20 English — and get your score, CEFR level, and a certificate in 45 minutes.`,
-    stat1: `Questions`, stat2: `Minutes`, stat3: `Certificate`,
-    btnBegin: `Begin Test →`,
-    formTitle: `Your Information`,
-    formSub: `Please fill in your details before starting the test.`,
-    lblName: `Full Name`, lblPhone: `Phone Number`, lblClass: `Current Class`, lblLevel: `Self-assessed Level`,
-    btnStart: `Start Test →`,
-    errName: `Please enter your full name.`,
-    errPhone: `Please enter your phone number.`,
-    errClass: `Please select your class.`,
-    errLevel: `Please select your English level.`,
-    sectionMath: `Math`, sectionEng: `English`,
-    tagMath: `Math`, tagEng: `English`,
-    qCounter: (n, t) => `Question ${n} of ${t}`,
-    btnNext: `Next →`, btnFinish: `Finish Test`,
-    warnTab: `⚠ Tab switching detected — stay on this page during the test`,
-    resTitle: `Your Results`, resSub: `Here is your diagnostic score breakdown.`,
-    resTotalLabel: `Total Score`, resMathLabel: `Math`, resEngLabel: `English`,
-    resMathSub: `out of 20`, resEngSub: `out of 20`,
-    btnCert: `View Certificate`, btnRetake: `Retake Test`,
-    certLbl: `This certifies that`,
-    certDesc: `has successfully completed the SAT Samarkand Diagnostic Test`,
-    btnDownload: `⬇ Download Certificate`,
-    btnBackResults: `← Results`,
+  en:{
+    eyebrow:`Diagnostic Test`,
+    title:`Know Your SAT Level <span>Today</span>`,
+    desc:`40 questions — 20 English + 20 Math — scored instantly with your CEFR level and a downloadable certificate.`,
+    stat1:`Questions`,stat2:`Minutes`,stat3:`Certificate`,
+    trust:`No registration required · Takes 40 minutes`,
+    btnBegin:`Begin Test →`,
+    formTitle:`Your Information`,formSub:`Fill in your details — it takes 30 seconds.`,
+    lblName:`Full Name`,lblPhone:`Phone Number`,lblClass:`Current Class`,lblLevel:`English Level`,
+    btnStart:`Start Test →`,
+    errName:`Please enter your full name.`,errPhone:`Please enter your phone number.`,
+    errClass:`Please select your class.`,errLevel:`Please select your English level.`,
+    secEng:`Section 1 of 2 — English`,secEngSub:`Grammar · Vocabulary · Reading`,
+    secMath:`Section 2 of 2 — Math`,secMathSub:`Algebra · Geometry · Statistics`,
+    tagEng:`English`,tagMath:`Math`,tagGrammar:`Grammar`,tagVocab:`Vocabulary`,tagReading:`Reading`,
+    qOf:(n,t) => `Question ${n} of ${t}`,
+    btnNext:`Next →`,btnFinish:`Finish Test`,
+    warnTab:`⚠ Tab switching detected — please stay on this page during the test`,
+    breakChip:`Section 1 Complete`,
+    breakTitle:`English Section Done!`,
+    breakSub:`Take a breath — the Math section starts when you are ready.`,
+    breakNextInfo:`📐 Next: Math Section — 20 questions · 20 minutes`,
+    btnContinue:`Continue to Math →`,
+    resEyebrow:`Your Results`,resTitle:`Diagnostic Complete`,resSub:`Here is your full score breakdown.`,
+    resTotalLabel:`Total Score`,resEngLabel:`English`,resMathLabel:`Math`,
+    resMathSub:`out of 20`,
+    btnCert:`View Certificate`,btnRetake:`Retake Test`,
+    certPresents:`This certifies that`,
+    certStatement:`has successfully completed the SAT Samarkand Diagnostic Assessment`,
+    btnDownload:`⬇ Download Certificate`,btnBack:`← Back to Results`,
   },
-  uz: {
-    badge: `Bepul Diagnostika`,
-    title: `SAT Darajangizni <span>Bilib Oling</span>`,
-    sub: `20 ta matematika va 20 ta ingliz tili savolidan iborat diagnostik testni 45 daqiqada bajaring va natijangizni, CEFR darajangizni hamda sertifikat oling.`,
-    stat1: `Savol`, stat2: `Daqiqa`, stat3: `Sertifikat`,
-    btnBegin: `Testni Boshlash →`,
-    formTitle: `Shaxsiy Ma\'lumotlar`,
-    formSub: `Testni boshlashdan oldin ma\'lumotlaringizni kiriting.`,
-    lblName: `To\'liq Ism`, lblPhone: `Telefon Raqami`, lblClass: `Hozirgi Sinf`, lblLevel: `O\'z-o\'zini Baholash`,
-    btnStart: `Testni Boshlash →`,
-    errName: `Iltimos, to\'liq ismingizni kiriting.`,
-    errPhone: `Iltimos, telefon raqamingizni kiriting.`,
-    errClass: `Iltimos, sinfingizni tanlang.`,
-    errLevel: `Iltimos, ingliz tili darajangizni tanlang.`,
-    sectionMath: `Matematika`, sectionEng: `Ingliz tili`,
-    tagMath: `Matematika`, tagEng: `Ingliz tili`,
-    qCounter: (n, t) => `${t} ta savoldan ${n}-si`,
-    btnNext: `Keyingisi →`, btnFinish: `Testni Yakunlash`,
-    warnTab: `⚠ Tab almashtirish aniqlandi — test davomida ushbu sahifada qoling`,
-    resTitle: `Sizning Natijangiz`, resSub: `Diagnostika natijalaringiz quyida keltirilgan.`,
-    resTotalLabel: `Umumiy Ball`, resMathLabel: `Matematika`, resEngLabel: `Ingliz tili`,
-    resMathSub: `20 tadan`, resEngSub: `20 tadan`,
-    btnCert: `Sertifikatni Ko\'rish`, btnRetake: `Qayta Topshirish`,
-    certLbl: `Mazkur sertifikat`,
-    certDesc: `SAT Samarkand Diagnostika Testini muvaffaqiyatli yakunlaganligini tasdiqlaydigan berildi`,
-    btnDownload: `⬇ Sertifikatni Yuklab Olish`,
-    btnBackResults: `← Natijalar`,
+  uz:{
+    eyebrow:`Diagnostika Testi`,
+    title:`SAT Darajangizni <span>Bilib Oling</span>`,
+    desc:`40 ta savol — 20 ingliz tili + 20 matematika — natija, CEFR darajasi va sertifikat darhol beriladi.`,
+    stat1:`Savol`,stat2:`Daqiqa`,stat3:`Sertifikat`,
+    trust:`Ro\'yxatdan o\'tish shart emas · Natija bir zumda`,
+    btnBegin:`Testni Boshlash →`,
+    formTitle:`Ma\'lumotlaringiz`,formSub:`Ma\'lumotlarni to\'ldiring — 30 soniya vaqt ketadi.`,
+    lblName:`To\'liq Ism`,lblPhone:`Telefon Raqami`,lblClass:`Sinf`,lblLevel:`Ingliz Tili Darajasi`,
+    btnStart:`Testni Boshlash →`,
+    errName:`Iltimos, to\'liq ismingizni kiriting.`,errPhone:`Iltimos, telefon raqamingizni kiriting.`,
+    errClass:`Iltimos, sinfingizni tanlang.`,errLevel:`Iltimos, ingliz tili darajangizni tanlang.`,
+    secEng:`1-bo\'lim — Ingliz tili`,secEngSub:`Grammatika · Lug\'at · O\'qish`,
+    secMath:`2-bo\'lim — Matematika`,secMathSub:`Algebra · Geometriya · Statistika`,
+    tagEng:`Ingliz tili`,tagMath:`Matematika`,tagGrammar:`Grammatika`,tagVocab:`Lug\'at`,tagReading:`O\'qish`,
+    qOf:(n,t) => `${t} ta savoldan ${n}-si`,
+    btnNext:`Keyingisi →`,btnFinish:`Testni Yakunlash`,
+    warnTab:`⚠ Tab almashtirish aniqlandi — test davomida ushbu sahifada qoling`,
+    breakChip:`1-bo\'lim Tugadi`,
+    breakTitle:`Ingliz Tili Bo\'limi Tugadi!`,
+    breakSub:`Dam oling — matematika bo\'limi tayyor bo\'lganingizda boshlanadi.`,
+    breakNextInfo:`📐 Keyingisi: Matematika — 20 ta savol · 20 daqiqa`,
+    btnContinue:`Matematikaga O\'tish →`,
+    resEyebrow:`Natijalaringiz`,resTitle:`Diagnostika Tugadi`,resSub:`To\'liq ball taqsimoti.`,
+    resTotalLabel:`Umumiy Ball`,resEngLabel:`Ingliz tili`,resMathLabel:`Matematika`,
+    resMathSub:`20 tadan`,
+    btnCert:`Sertifikatni Ko\'rish`,btnRetake:`Qayta Topshirish`,
+    certPresents:`Mazkur sertifikat`,
+    certStatement:`SAT Samarkand Diagnostika Testini muvaffaqiyatli yakunlaganligini tasdiqlaydi`,
+    btnDownload:`⬇ Sertifikatni Yuklab Olish`,btnBack:`← Natijalarga Qaytish`,
   },
-  ru: {
-    badge: `Бесплатная Диагностика`,
-    title: `Узнайте Свой Уровень <span>SAT Сегодня</span>`,
-    sub: `Пройдите диагностический тест из 40 вопросов — 20 по математике и 20 по английскому — и получите результат, уровень CEFR и сертификат за 45 минут.`,
-    stat1: `Вопросов`, stat2: `Минут`, stat3: `Сертификат`,
-    btnBegin: `Начать Тест →`,
-    formTitle: `Ваши Данные`,
-    formSub: `Пожалуйста, заполните данные перед началом теста.`,
-    lblName: `Полное имя`, lblPhone: `Номер телефона`, lblClass: `Текущий класс`, lblLevel: `Самооценка уровня`,
-    btnStart: `Начать Тест →`,
-    errName: `Пожалуйста, введите полное имя.`,
-    errPhone: `Пожалуйста, введите номер телефона.`,
-    errClass: `Пожалуйста, выберите класс.`,
-    errLevel: `Пожалуйста, выберите уровень английского.`,
-    sectionMath: `Математика`, sectionEng: `Английский`,
-    tagMath: `Математика`, tagEng: `Английский`,
-    qCounter: (n, t) => `Вопрос ${n} из ${t}`,
-    btnNext: `Далее →`, btnFinish: `Завершить Тест`,
-    warnTab: `⚠ Обнаружено переключение вкладок — оставайтесь на этой странице во время теста`,
-    resTitle: `Ваши Результаты`, resSub: `Ниже приведена разбивка вашего диагностического балла.`,
-    resTotalLabel: `Общий Балл`, resMathLabel: `Математика`, resEngLabel: `Английский`,
-    resMathSub: `из 20`, resEngSub: `из 20`,
-    btnCert: `Посмотреть Сертификат`, btnRetake: `Пройти Снова`,
-    certLbl: `Настоящим подтверждается, что`,
-    certDesc: `успешно прошёл(а) Диагностический Тест SAT Samarkand`,
-    btnDownload: `⬇ Скачать Сертификат`,
-    btnBackResults: `← Результаты`,
+  ru:{
+    eyebrow:`Диагностический Тест`,
+    title:`Узнайте Уровень SAT <span>Сегодня</span>`,
+    desc:`40 вопросов — 20 английский + 20 математика — результат, CEFR и сертификат мгновенно.`,
+    stat1:`Вопросов`,stat2:`Минут`,stat3:`Сертификат`,
+    trust:`Регистрация не нужна · Результат за секунды`,
+    btnBegin:`Начать Тест →`,
+    formTitle:`Ваши Данные`,formSub:`Заполните форму — займёт 30 секунд.`,
+    lblName:`Полное имя`,lblPhone:`Номер телефона`,lblClass:`Текущий класс`,lblLevel:`Уровень английского`,
+    btnStart:`Начать Тест →`,
+    errName:`Пожалуйста, введите полное имя.`,errPhone:`Пожалуйста, введите номер телефона.`,
+    errClass:`Пожалуйста, выберите класс.`,errLevel:`Пожалуйста, выберите уровень.`,
+    secEng:`Раздел 1 из 2 — Английский`,secEngSub:`Грамматика · Лексика · Чтение`,
+    secMath:`Раздел 2 из 2 — Математика`,secMathSub:`Алгебра · Геометрия · Статистика`,
+    tagEng:`Английский`,tagMath:`Математика`,tagGrammar:`Грамматика`,tagVocab:`Лексика`,tagReading:`Чтение`,
+    qOf:(n,t) => `Вопрос ${n} из ${t}`,
+    btnNext:`Далее →`,btnFinish:`Завершить тест`,
+    warnTab:`⚠ Переключение вкладок — оставайтесь на этой странице`,
+    breakChip:`Раздел 1 завершён`,
+    breakTitle:`Английский раздел завершён!`,
+    breakSub:`Отдохните — математический раздел начнётся когда вы будете готовы.`,
+    breakNextInfo:`📐 Далее: Математика — 20 вопросов · 20 минут`,
+    btnContinue:`Перейти к Математике →`,
+    resEyebrow:`Ваши Результаты`,resTitle:`Диагностика завершена`,resSub:`Полная разбивка баллов.`,
+    resTotalLabel:`Общий балл`,resEngLabel:`Английский`,resMathLabel:`Математика`,
+    resMathSub:`из 20`,
+    btnCert:`Посмотреть Сертификат`,btnRetake:`Пройти Снова`,
+    certPresents:`Настоящим подтверждается, что`,
+    certStatement:`успешно прошёл(а) Диагностический тест SAT Samarkand`,
+    btnDownload:`⬇ Скачать Сертификат`,btnBack:`← К Результатам`,
   }
 };
 
-// ═══════════════════════════════════════════════
-// MATH QUESTION BANK — 20 types × 3 variants
-// q: question text object {en,uz,ru}  options: [{en,uz,ru}×4]  ans: 0-3
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════
+// MATH BANK — 20 types × 3 variants
+// ═══════════════════════════════════
 const MATH_BANK = [
-  // TYPE 0 — Linear equation
-  { variants: [
-    { q:{en:`If \\(3x + 7 = 22\\), what is the value of \\(x\\)?`,uz:`Agar \\(3x + 7 = 22\\) bo'lsa, \\(x\\) ning qiymati nima?`,ru:`Если \\(3x + 7 = 22\\), чему равно \\(x\\)?`}, options:[`3`,`5`,`7`,`9`], ans:1 },
-    { q:{en:`If \\(5x - 3 = 17\\), what is the value of \\(x\\)?`,uz:`Agar \\(5x - 3 = 17\\) bo'lsa, \\(x\\) ning qiymati nima?`,ru:`Если \\(5x - 3 = 17\\), чему равно \\(x\\)?`}, options:[`2`,`3`,`4`,`5`], ans:2 },
-    { q:{en:`If \\(2x + 9 = 1\\), what is the value of \\(x\\)?`,uz:`Agar \\(2x + 9 = 1\\) bo'lsa, \\(x\\) ning qiymati nima?`,ru:`Если \\(2x + 9 = 1\\), чему равно \\(x\\)?`}, options:[`-5`,`-4`,`-3`,`4`], ans:1 },
+  {variants:[
+    {q:{en:`If \\(3x + 7 = 22\\), what is the value of \\(x\\)?`,uz:`Agar \\(3x + 7 = 22\\) bo'lsa, \\(x\\) qiymati nima?`,ru:`Если \\(3x + 7 = 22\\), чему равно \\(x\\)?`},options:[`3`,`5`,`7`,`9`],ans:1},
+    {q:{en:`If \\(5x - 3 = 17\\), what is the value of \\(x\\)?`,uz:`Agar \\(5x - 3 = 17\\) bo'lsa, \\(x\\) qiymati nima?`,ru:`Если \\(5x - 3 = 17\\), чему равно \\(x\\)?`},options:[`2`,`3`,`4`,`5`],ans:2},
+    {q:{en:`If \\(2x + 9 = 1\\), what is the value of \\(x\\)?`,uz:`Agar \\(2x + 9 = 1\\) bo'lsa, \\(x\\) qiymati nima?`,ru:`Если \\(2x + 9 = 1\\), чему равно \\(x\\)?`},options:[`-5`,`-4`,`-3`,`4`],ans:1},
   ]},
-  // TYPE 1 — Systems of equations
-  { variants: [
-    { q:{en:`If \\(x + y = 10\\) and \\(x - y = 4\\), what is \\(x\\)?`,uz:`Agar \\(x + y = 10\\) va \\(x - y = 4\\) bo'lsa, \\(x\\) nima?`,ru:`Если \\(x + y = 10\\) и \\(x - y = 4\\), чему равно \\(x\\)?`}, options:[`3`,`5`,`7`,`9`], ans:2 },
-    { q:{en:`If \\(2x + y = 11\\) and \\(x - y = 1\\), what is \\(x\\)?`,uz:`Agar \\(2x + y = 11\\) va \\(x - y = 1\\) bo'lsa, \\(x\\) nima?`,ru:`Если \\(2x + y = 11\\) и \\(x - y = 1\\), чему равно \\(x\\)?`}, options:[`2`,`3`,`4`,`5`], ans:2 },
-    { q:{en:`If \\(x + 2y = 8\\) and \\(x - y = 2\\), what is \\(y\\)?`,uz:`Agar \\(x + 2y = 8\\) va \\(x - y = 2\\) bo'lsa, \\(y\\) nima?`,ru:`Если \\(x + 2y = 8\\) и \\(x - y = 2\\), чему равно \\(y\\)?`}, options:[`1`,`2`,`3`,`4`], ans:1 },
+  {variants:[
+    {q:{en:`If \\(x + y = 10\\) and \\(x - y = 4\\), what is \\(x\\)?`,uz:`\\(x + y = 10\\) va \\(x - y = 4\\) bo'lsa, \\(x\\) nima?`,ru:`Если \\(x + y = 10\\) и \\(x - y = 4\\), чему равно \\(x\\)?`},options:[`3`,`5`,`7`,`9`],ans:2},
+    {q:{en:`If \\(2x + y = 11\\) and \\(x - y = 1\\), what is \\(x\\)?`,uz:`\\(2x + y = 11\\) va \\(x - y = 1\\) bo'lsa, \\(x\\) nima?`,ru:`Если \\(2x + y = 11\\) и \\(x - y = 1\\), чему равно \\(x\\)?`},options:[`2`,`3`,`4`,`5`],ans:2},
+    {q:{en:`If \\(x + 2y = 8\\) and \\(x - y = 2\\), what is \\(y\\)?`,uz:`\\(x + 2y = 8\\) va \\(x - y = 2\\) bo'lsa, \\(y\\) nima?`,ru:`Если \\(x + 2y = 8\\) и \\(x - y = 2\\), чему равно \\(y\\)?`},options:[`1`,`2`,`3`,`4`],ans:1},
   ]},
-  // TYPE 2 — Quadratic
-  { variants: [
-    { q:{en:`What are the solutions of \\(x^2 - 5x + 6 = 0\\)?`,uz:`\\(x^2 - 5x + 6 = 0\\) tenglamaning yechimlari nima?`,ru:`Каковы решения уравнения \\(x^2 - 5x + 6 = 0\\)?`}, options:[`1 and 6`,`2 and 3`,`-2 and -3`,`3 and 5`], ans:1 },
-    { q:{en:`What are the solutions of \\(x^2 - 7x + 12 = 0\\)?`,uz:`\\(x^2 - 7x + 12 = 0\\) tenglamaning yechimlari nima?`,ru:`Каковы решения уравнения \\(x^2 - 7x + 12 = 0\\)?`}, options:[`3 and 4`,`2 and 6`,`1 and 12`,`-3 and -4`], ans:0 },
-    { q:{en:`What are the solutions of \\(x^2 + x - 6 = 0\\)?`,uz:`\\(x^2 + x - 6 = 0\\) tenglamaning yechimlari nima?`,ru:`Каковы решения уравнения \\(x^2 + x - 6 = 0\\)?`}, options:[`2 and -3`,`-2 and 3`,`1 and -6`,`3 and 4`], ans:0 },
+  {variants:[
+    {q:{en:`What are the solutions of \\(x^2 - 5x + 6 = 0\\)?`,uz:`\\(x^2 - 5x + 6 = 0\\) yechimlari?`,ru:`Решения \\(x^2 - 5x + 6 = 0\\)?`},options:[`1 and 6`,`2 and 3`,`-2 and -3`,`3 and 5`],ans:1},
+    {q:{en:`What are the solutions of \\(x^2 - 7x + 12 = 0\\)?`,uz:`\\(x^2 - 7x + 12 = 0\\) yechimlari?`,ru:`Решения \\(x^2 - 7x + 12 = 0\\)?`},options:[`3 and 4`,`2 and 6`,`1 and 12`,`-3 and -4`],ans:0},
+    {q:{en:`What are the solutions of \\(x^2 + x - 6 = 0\\)?`,uz:`\\(x^2 + x - 6 = 0\\) yechimlari?`,ru:`Решения \\(x^2 + x - 6 = 0\\)?`},options:[`2 and -3`,`-2 and 3`,`1 and -6`,`3 and 4`],ans:0},
   ]},
-  // TYPE 3 — Inequality
-  { variants: [
-    { q:{en:`Which values of \\(x\\) satisfy \\(2x - 3 > 7\\)?`,uz:`\\(2x - 3 > 7\\) tengsizlikni qanoatlantiradigan \\(x\\) qiymatlari?`,ru:`Какие значения \\(x\\) удовлетворяют \\(2x - 3 > 7\\)?`}, options:[`x > 2`,`x > 5`,`x < 5`,`x > 7`], ans:1 },
-    { q:{en:`Which values of \\(x\\) satisfy \\(3x + 1 \\le 10\\)?`,uz:`\\(3x + 1 \\le 10\\) tengsizlikni qanoatlantiradigan \\(x\\) qiymatlari?`,ru:`Какие значения \\(x\\) удовлетворяют \\(3x + 1 \\le 10\\)?`}, options:[`x \\le 2`,`x \\le 3`,`x \\le 4`,`x \\le 5`], ans:1 },
-    { q:{en:`Which values of \\(x\\) satisfy \\(4 - 2x < 10\\)?`,uz:`\\(4 - 2x < 10\\) tengsizlikni qanoatlantiradigan \\(x\\) qiymatlari?`,ru:`Какие значения \\(x\\) удовлетворяют \\(4 - 2x < 10\\)?`}, options:[`x > -3`,`x < -3`,`x > 3`,`x < 3`], ans:0 },
+  {variants:[
+    {q:{en:`Which values of \\(x\\) satisfy \\(2x - 3 > 7\\)?`,uz:`\\(2x - 3 > 7\\) ni qanoatlantiradigan \\(x\\)?`,ru:`Значения \\(x\\) при \\(2x - 3 > 7\\)?`},options:[`x > 2`,`x > 5`,`x < 5`,`x > 7`],ans:1},
+    {q:{en:`Which values of \\(x\\) satisfy \\(3x + 1 \\le 10\\)?`,uz:`\\(3x + 1 \\le 10\\) ni qanoatlantiradigan \\(x\\)?`,ru:`Значения \\(x\\) при \\(3x + 1 \\le 10\\)?`},options:[`x \\le 2`,`x \\le 3`,`x \\le 4`,`x \\le 5`],ans:1},
+    {q:{en:`Which values of \\(x\\) satisfy \\(4 - 2x < 10\\)?`,uz:`\\(4 - 2x < 10\\) ni qanoatlantiradigan \\(x\\)?`,ru:`Значения \\(x\\) при \\(4 - 2x < 10\\)?`},options:[`x > -3`,`x < -3`,`x > 3`,`x < 3`],ans:0},
   ]},
-  // TYPE 4 — Function evaluation
-  { variants: [
-    { q:{en:`If \\(f(x) = 2x^2 - 3x + 1\\), what is \\(f(3)\\)?`,uz:`Agar \\(f(x) = 2x^2 - 3x + 1\\) bo'lsa, \\(f(3)\\) nima?`,ru:`Если \\(f(x) = 2x^2 - 3x + 1\\), чему равно \\(f(3)\\)?`}, options:[`8`,`10`,`12`,`14`], ans:1 },
-    { q:{en:`If \\(f(x) = x^2 + 4x - 5\\), what is \\(f(2)\\)?`,uz:`Agar \\(f(x) = x^2 + 4x - 5\\) bo'lsa, \\(f(2)\\) nima?`,ru:`Если \\(f(x) = x^2 + 4x - 5\\), чему равно \\(f(2)\\)?`}, options:[`5`,`6`,`7`,`8`], ans:2 },
-    { q:{en:`If \\(f(x) = 3x - x^2 + 2\\), what is \\(f(4)\\)?`,uz:`Agar \\(f(x) = 3x - x^2 + 2\\) bo'lsa, \\(f(4)\\) nima?`,ru:`Если \\(f(x) = 3x - x^2 + 2\\), чему равно \\(f(4)\\)?`}, options:[`2`,`-2`,`4`,`-4`], ans:1 },
+  {variants:[
+    {q:{en:`If \\(f(x) = 2x^2 - 3x + 1\\), what is \\(f(3)\\)?`,uz:`\\(f(x) = 2x^2 - 3x + 1\\) bo'lsa, \\(f(3)\\)?`,ru:`\\(f(x) = 2x^2 - 3x + 1\\), чему равно \\(f(3)\\)?`},options:[`8`,`10`,`12`,`14`],ans:1},
+    {q:{en:`If \\(f(x) = x^2 + 4x - 5\\), what is \\(f(2)\\)?`,uz:`\\(f(x) = x^2 + 4x - 5\\) bo'lsa, \\(f(2)\\)?`,ru:`\\(f(x) = x^2 + 4x - 5\\), чему равно \\(f(2)\\)?`},options:[`5`,`6`,`7`,`8`],ans:2},
+    {q:{en:`If \\(f(x) = 3x - x^2 + 2\\), what is \\(f(4)\\)?`,uz:`\\(f(x) = 3x - x^2 + 2\\) bo'lsa, \\(f(4)\\)?`,ru:`\\(f(x) = 3x - x^2 + 2\\), чему равно \\(f(4)\\)?`},options:[`2`,`-2`,`4`,`-4`],ans:1},
   ]},
-  // TYPE 5 — Exponents
-  { variants: [
-    { q:{en:`Simplify: \\(x^3 \\cdot x^5\\)`,uz:`Soddalashtiring: \\(x^3 \\cdot x^5\\)`,ru:`Упростите: \\(x^3 \\cdot x^5\\)`}, options:[`x^{15}`,`x^8`,`x^2`,`2x^8`], ans:1 },
-    { q:{en:`Simplify: \\((x^2)^4\\)`,uz:`Soddalashtiring: \\((x^2)^4\\)`,ru:`Упростите: \\((x^2)^4\\)`}, options:[`x^6`,`x^8`,`x^{16}`,`4x^2`], ans:1 },
-    { q:{en:`Simplify: \\(x^6 \\div x^2\\)`,uz:`Soddalashtiring: \\(x^6 \\div x^2\\)`,ru:`Упростите: \\(x^6 \\div x^2\\)`}, options:[`x^3`,`x^4`,`x^8`,`x^{12}`], ans:1 },
+  {variants:[
+    {q:{en:`Simplify: \\(x^3 \\cdot x^5\\)`,uz:`Soddalashtiring: \\(x^3 \\cdot x^5\\)`,ru:`Упростите: \\(x^3 \\cdot x^5\\)`},options:[`x^{15}`,`x^8`,`x^2`,`2x^8`],ans:1},
+    {q:{en:`Simplify: \\((x^2)^4\\)`,uz:`Soddalashtiring: \\((x^2)^4\\)`,ru:`Упростите: \\((x^2)^4\\)`},options:[`x^6`,`x^8`,`x^{16}`,`4x^2`],ans:1},
+    {q:{en:`Simplify: \\(x^6 \\div x^2\\)`,uz:`Soddalashtiring: \\(x^6 \\div x^2\\)`,ru:`Упростите: \\(x^6 \\div x^2\\)`},options:[`x^3`,`x^4`,`x^8`,`x^{12}`],ans:1},
   ]},
-  // TYPE 6 — Ratio/proportion
-  { variants: [
-    { q:{en:`The ratio of boys to girls is 3:5. If there are 24 boys, how many girls are there?`,uz:`O'g'illar va qizlar nisbati 3:5. Agar 24 ta o'g'il bo'lsa, nechta qiz bor?`,ru:`Соотношение мальчиков к девочкам 3:5. Если мальчиков 24, сколько девочек?`}, options:[`32`,`36`,`40`,`45`], ans:2 },
-    { q:{en:`A recipe uses flour and sugar in a ratio of 4:1. If you use 20 cups of flour, how many cups of sugar are needed?`,uz:`Retseptda un va shakar 4:1 nisbatda ishlatiladi. 20 stakan un ishlatsangiz, necha stakan shakar kerak?`,ru:`В рецепте муки и сахара берётся в соотношении 4:1. Если муки 20 стаканов, сколько нужно сахара?`}, options:[`4`,`5`,`6`,`8`], ans:1 },
-    { q:{en:`Two numbers are in a ratio of 2:7. If their sum is 27, what is the larger number?`,uz:`Ikki son nisbati 2:7. Agar ularning yig'indisi 27 bo'lsa, katta son nima?`,ru:`Два числа в отношении 2:7. Если их сумма 27, чему равно большее число?`}, options:[`6`,`14`,`18`,`21`], ans:3 },
+  {variants:[
+    {q:{en:`The ratio of boys to girls is 3:5. If there are 24 boys, how many girls are there?`,uz:`O'g'il va qizlar nisbati 3:5. 24 ta o'g'il bo'lsa, qizlar soni?`,ru:`Соотношение мальчиков к девочкам 3:5. Мальчиков 24, сколько девочек?`},options:[`32`,`36`,`40`,`45`],ans:2},
+    {q:{en:`A recipe uses flour and sugar in a ratio of 4:1. If you use 20 cups of flour, how many cups of sugar are needed?`,uz:`Retseptda un:shakar = 4:1. 20 stakan un uchun necha stakan shakar?`,ru:`Муки и сахара 4:1. На 20 стаканов муки — сколько сахара?`},options:[`4`,`5`,`6`,`8`],ans:1},
+    {q:{en:`Two numbers are in a ratio of 2:7. If their sum is 27, what is the larger number?`,uz:`Ikki son nisbati 2:7. Yig'indisi 27 bo'lsa, katta son?`,ru:`Два числа в отношении 2:7. Сумма 27, каково большее число?`},options:[`6`,`14`,`18`,`21`],ans:3},
   ]},
-  // TYPE 7 — Percentage
-  { variants: [
-    { q:{en:`A shirt costs $80 and is on sale for 25% off. What is the sale price?`,uz:`Ko'ylak $80 turadi va 25% chegirma bilan sotilmoqda. Chegirmali narx nechchi dollar?`,ru:`Рубашка стоит $80 и продаётся со скидкой 25%. Какова цена со скидкой?`}, options:[`$55`,`$60`,`$65`,`$70`], ans:1 },
-    { q:{en:`A store increases prices by 20%. If an item originally costs $50, what is the new price?`,uz:`Do'kon narxlarini 20% oshirdi. Agar tovar avval $50 bo'lsa, yangi narx nechchi dollar?`,ru:`Магазин поднял цены на 20%. Если товар стоил $50, какова новая цена?`}, options:[`$55`,`$60`,`$65`,`$70`], ans:1 },
-    { q:{en:`35 is what percent of 140?`,uz:`35 soni 140 ning necha foizi?`,ru:`35 — это какой процент от 140?`}, options:[`20%`,`25%`,`30%`,`35%`], ans:1 },
+  {variants:[
+    {q:{en:`A shirt costs $80 and is on sale for 25% off. What is the sale price?`,uz:`Ko'ylak $80 turadi, 25% chegirma. Chegirmali narx?`,ru:`Рубашка $80, скидка 25%. Цена со скидкой?`},options:[`$55`,`$60`,`$65`,`$70`],ans:1},
+    {q:{en:`A store increases prices by 20%. If an item originally costs $50, what is the new price?`,uz:`Do'kon narxlarini 20% oshirdi. $50 li tovar yangi narxi?`,ru:`Магазин поднял цены на 20%. Товар стоил $50, новая цена?`},options:[`$55`,`$60`,`$65`,`$70`],ans:1},
+    {q:{en:`35 is what percent of 140?`,uz:`35 soni 140 ning necha foizi?`,ru:`35 — это какой процент от 140?`},options:[`20%`,`25%`,`30%`,`35%`],ans:1},
   ]},
-  // TYPE 8 — Statistics / mean
-  { variants: [
-    { q:{en:`The test scores of 5 students are 72, 85, 90, 68, 75. What is the mean score?`,uz:`5 o'quvchining test ballari: 72, 85, 90, 68, 75. O'rtacha ball nechchi?`,ru:`Оценки 5 учеников: 72, 85, 90, 68, 75. Каков средний балл?`}, options:[`75`,`76`,`78`,`80`], ans:2 },
-    { q:{en:`The ages of 4 siblings are 8, 12, 15, 9. What is the mean age?`,uz:`4 aka-ukaning yoshi: 8, 12, 15, 9. O'rtacha yosh nechchi?`,ru:`Возраст 4 братьев и сестёр: 8, 12, 15, 9. Каков средний возраст?`}, options:[`10`,`11`,`12`,`13`], ans:1 },
-    { q:{en:`Daily temperatures for a week: 24, 28, 22, 30, 26, 25, 27°C. What is the mean?`,uz:`Haftaning kunlik harorati: 24, 28, 22, 30, 26, 25, 27°C. O'rtacha harorat nechchi?`,ru:`Температура за неделю: 24, 28, 22, 30, 26, 25, 27°C. Каково среднее значение?`}, options:[`25°C`,`26°C`,`27°C`,`28°C`], ans:1 },
+  {variants:[
+    {q:{en:`The test scores of 5 students are 72, 85, 90, 68, 75. What is the mean score?`,uz:`5 o'quvchi ballari: 72, 85, 90, 68, 75. O'rtacha ball?`,ru:`Оценки 5 учеников: 72, 85, 90, 68, 75. Средний балл?`},options:[`75`,`76`,`78`,`80`],ans:2},
+    {q:{en:`The ages of 4 siblings are 8, 12, 15, 9. What is the mean age?`,uz:`4 aka-ukaning yoshi: 8, 12, 15, 9. O'rtacha yosh?`,ru:`Возраст 4 братьев: 8, 12, 15, 9. Средний возраст?`},options:[`10`,`11`,`12`,`13`],ans:1},
+    {q:{en:`Daily temperatures for a week: 24, 28, 22, 30, 26, 25, 27°C. What is the mean?`,uz:`Haftaning haroratlari: 24, 28, 22, 30, 26, 25, 27°C. O'rtacha?`,ru:`Температуры за неделю: 24, 28, 22, 30, 26, 25, 27°C. Среднее?`},options:[`25°C`,`26°C`,`27°C`,`28°C`],ans:1},
   ]},
-  // TYPE 9 — Area / geometry
-  { variants: [
-    { q:{en:`A rectangle has length 12 and width 7. What is its area?`,uz:`To'g'ri to'rtburchak uzunligi 12, eni 7. Yuzasi nechchi?`,ru:`Прямоугольник имеет длину 12 и ширину 7. Какова его площадь?`}, options:[`38`,`72`,`84`,`96`], ans:2 },
-    { q:{en:`A triangle has a base of 10 and a height of 8. What is its area?`,uz:`Uchburchak asosi 10, balandligi 8. Yuzasi nechchi?`,ru:`Треугольник с основанием 10 и высотой 8. Какова его площадь?`}, options:[`18`,`32`,`40`,`80`], ans:2 },
-    { q:{en:`A circle has a radius of 6. What is its area? (Use \\(\\pi \\approx 3.14\\))`,uz:`Doira radiusi 6. Yuzasi nechchi? (\\(\\pi \\approx 3.14\\))`,ru:`Круг радиуса 6. Какова его площадь? (\\(\\pi \\approx 3.14\\))`}, options:[`37.68`,`75.36`,`113.04`,`150.72`], ans:2 },
+  {variants:[
+    {q:{en:`A rectangle has length 12 and width 7. What is its area?`,uz:`To'g'ri to'rtburchak: uzunlik 12, en 7. Yuzasi?`,ru:`Прямоугольник: длина 12, ширина 7. Площадь?`},options:[`38`,`72`,`84`,`96`],ans:2},
+    {q:{en:`A triangle has a base of 10 and a height of 8. What is its area?`,uz:`Uchburchak: asos 10, balandlik 8. Yuzasi?`,ru:`Треугольник: основание 10, высота 8. Площадь?`},options:[`18`,`32`,`40`,`80`],ans:2},
+    {q:{en:`A circle has a radius of 6. What is its area? (\\(\\pi \\approx 3.14\\))`,uz:`Doira: radius 6. Yuzasi? (\\(\\pi \\approx 3.14\\))`,ru:`Круг: радиус 6. Площадь? (\\(\\pi \\approx 3.14\\))`},options:[`37.68`,`75.36`,`113.04`,`150.72`],ans:2},
   ]},
-  // TYPE 10 — Slope / coordinate geometry
-  { variants: [
-    { q:{en:`What is the slope of the line through \\((2, 3)\\) and \\((6, 11)\\)?`,uz:`\\((2, 3)\\) va \\((6, 11)\\) orqali o'tadigan to'g'ri chiziq qiyaligi nima?`,ru:`Каков наклон прямой, проходящей через \\((2, 3)\\) и \\((6, 11)\\)?`}, options:[`1`,`2`,`3`,`4`], ans:1 },
-    { q:{en:`What is the slope of the line \\(3x - 2y = 6\\)?`,uz:`\\(3x - 2y = 6\\) to'g'ri chiziq qiyaligi nima?`,ru:`Каков наклон прямой \\(3x - 2y = 6\\)?`}, options:[`-\\tfrac{2}{3}`,`\\tfrac{2}{3}`,`\\tfrac{3}{2}`,`-\\tfrac{3}{2}`], ans:2 },
-    { q:{en:`A line passes through \\((0, 4)\\) with slope \\(-3\\). What is its equation?`,uz:`\\((0, 4)\\) nuqtadan o'tadigan va qiyaligi \\(-3\\) bo'lgan to'g'ri chiziq tenglamasi nima?`,ru:`Прямая проходит через \\((0, 4)\\) с наклоном \\(-3\\). Какова её уравнение?`}, options:[`y = -3x + 4`,`y = 3x - 4`,`y = -3x - 4`,`y = 4x - 3`], ans:0 },
+  {variants:[
+    {q:{en:`What is the slope of the line through \\((2, 3)\\) and \\((6, 11)\\)?`,uz:`\\((2,3)\\) va \\((6,11)\\) orqali o'tgan to'g'ri chiziq qiyaligi?`,ru:`Наклон прямой через \\((2,3)\\) и \\((6,11)\\)?`},options:[`1`,`2`,`3`,`4`],ans:1},
+    {q:{en:`What is the slope of the line \\(3x - 2y = 6\\)?`,uz:`\\(3x - 2y = 6\\) to'g'ri chiziqning qiyaligi?`,ru:`Наклон прямой \\(3x - 2y = 6\\)?`},options:[`-\\tfrac{2}{3}`,`\\tfrac{2}{3}`,`\\tfrac{3}{2}`,`-\\tfrac{3}{2}`],ans:2},
+    {q:{en:`A line passes through \\((0, 4)\\) with slope \\(-3\\). What is its equation?`,uz:`\\((0,4)\\) dan o'tuvchi, qiyaligi \\(-3\\) bo'lgan chiziq tenglamasi?`,ru:`Прямая через \\((0,4)\\) с наклоном \\(-3\\). Уравнение?`},options:[`y = -3x + 4`,`y = 3x - 4`,`y = -3x - 4`,`y = 4x - 3`],ans:0},
   ]},
-  // TYPE 11 — Arithmetic sequence
-  { variants: [
-    { q:{en:`An arithmetic sequence has first term 3 and common difference 4. What is the 10th term?`,uz:`Arifmetik progressiyaning birinchi hadi 3, ayirmasi 4. 10-had nechchi?`,ru:`Арифметическая прогрессия: первый член 3, разность 4. Каков 10-й член?`}, options:[`35`,`39`,`40`,`43`], ans:1 },
-    { q:{en:`In the sequence 5, 9, 13, 17, … what is the 8th term?`,uz:`5, 9, 13, 17, … ketma-ketligida 8-had nechchi?`,ru:`В последовательности 5, 9, 13, 17, … каков 8-й член?`}, options:[`33`,`35`,`37`,`39`], ans:0 },
-    { q:{en:`A geometric sequence has first term 2 and common ratio 3. What is the 5th term?`,uz:`Geometrik progressiyaning birinchi hadi 2, maxrajи 3. 5-had nechchi?`,ru:`Геометрическая прогрессия: первый член 2, знаменатель 3. Каков 5-й член?`}, options:[`54`,`162`,`486`,`972`], ans:1 },
+  {variants:[
+    {q:{en:`An arithmetic sequence has first term 3 and common difference 4. What is the 10th term?`,uz:`Arifmetik progressiya: a₁=3, d=4. 10-had?`,ru:`Арифметическая прогрессия: a₁=3, d=4. 10-й член?`},options:[`35`,`39`,`40`,`43`],ans:1},
+    {q:{en:`In the sequence 5, 9, 13, 17, … what is the 8th term?`,uz:`5, 9, 13, 17, … ketma-ketligida 8-had?`,ru:`В последовательности 5, 9, 13, 17, … 8-й член?`},options:[`33`,`35`,`37`,`39`],ans:0},
+    {q:{en:`A geometric sequence has first term 2 and common ratio 3. What is the 5th term?`,uz:`Geometrik progressiya: b₁=2, q=3. 5-had?`,ru:`Геометрическая прогрессия: b₁=2, q=3. 5-й член?`},options:[`54`,`162`,`486`,`972`],ans:1},
   ]},
-  // TYPE 12 — Distance / rate / time
-  { variants: [
-    { q:{en:`A car travels at 60 mph. How long to travel 180 miles?`,uz:`Avtomobil 60 mil/soat tezlikda harakatlanadi. 180 milni bosib o'tish uchun qancha vaqt kerak?`,ru:`Автомобиль едет 60 миль/ч. Сколько времени нужно, чтобы проехать 180 миль?`}, options:[`2 hours`,`2.5 hours`,`3 hours`,`3.5 hours`], ans:2 },
-    { q:{en:`Two trains start 300 km apart, traveling toward each other at 80 km/h and 70 km/h. When do they meet?`,uz:`Ikki poezd 300 km masofada bir-biriga qarab 80 km/soat va 70 km/soat tezlikda harakatlanadi. Qachon uchrashadilar?`,ru:`Два поезда на расстоянии 300 км движутся навстречу со скоростью 80 и 70 км/ч. Когда они встретятся?`}, options:[`1.5 h`,`2 h`,`2.5 h`,`3 h`], ans:1 },
-    { q:{en:`A cyclist rides 45 km in 3 hours. What is her average speed?`,uz:`Velosiped haydovchi 3 soatda 45 km bosib o'tadi. O'rtacha tezlik nechchi km/soat?`,ru:`Велосипедист едет 45 км за 3 часа. Какова его средняя скорость?`}, options:[`12 km/h`,`15 km/h`,`18 km/h`,`20 km/h`], ans:1 },
+  {variants:[
+    {q:{en:`A car travels at 60 mph. How long to travel 180 miles?`,uz:`Avtomobil 60 mil/soat. 180 mil uchun qancha vaqt?`,ru:`Автомобиль 60 миль/ч. Время для 180 миль?`},options:[`2 hours`,`2.5 hours`,`3 hours`,`3.5 hours`],ans:2},
+    {q:{en:`Two trains start 300 km apart and travel toward each other at 80 and 70 km/h. When do they meet?`,uz:`Ikki poezd 300 km masofada, tezliklari 80 va 70 km/soat. Qachon uchrashadilar?`,ru:`Два поезда: 300 км, 80 и 70 км/ч навстречу. Когда встретятся?`},options:[`1.5 h`,`2 h`,`2.5 h`,`3 h`],ans:1},
+    {q:{en:`A cyclist rides 45 km in 3 hours. What is her average speed?`,uz:`Velosipedchi 3 soatda 45 km. O'rtacha tezlik?`,ru:`Велосипедист 45 км за 3 часа. Средняя скорость?`},options:[`12 km/h`,`15 km/h`,`18 km/h`,`20 km/h`],ans:1},
   ]},
-  // TYPE 13 — Probability
-  { variants: [
-    { q:{en:`A bag has 4 red, 3 blue, and 5 green marbles. What is the probability of drawing a red marble?`,uz:`Sumkada 4 qizil, 3 ko'k va 5 yashil shar bor. Qizil shar tortib olish ehtimoli nima?`,ru:`В мешке 4 красных, 3 синих и 5 зелёных шаров. Какова вероятность достать красный?`}, options:[`\\tfrac{1}{4}`,`\\tfrac{1}{3}`,`\\tfrac{2}{5}`,`\\tfrac{1}{2}`], ans:1 },
-    { q:{en:`A die is rolled once. What is the probability of getting an even number?`,uz:`Zar bir marta tashlandi. Juft son tushish ehtimoli nima?`,ru:`Кубик брошен один раз. Какова вероятность выпадения чётного числа?`}, options:[`\\tfrac{1}{6}`,`\\tfrac{1}{3}`,`\\tfrac{1}{2}`,`\\tfrac{2}{3}`], ans:2 },
-    { q:{en:`A card is drawn from a standard 52-card deck. What is the probability it is a king?`,uz:`52 ta kartadan iborat to'plamdan bir karta olindi. U qirol bo'lish ehtimoli nima?`,ru:`Из стандартной колоды 52 карт вытащена одна. Какова вероятность, что это король?`}, options:[`\\tfrac{1}{52}`,`\\tfrac{1}{26}`,`\\tfrac{1}{13}`,`\\tfrac{1}{4}`], ans:2 },
+  {variants:[
+    {q:{en:`A bag has 4 red, 3 blue, and 5 green marbles. Probability of drawing red?`,uz:`Sumkada: 4 qizil, 3 ko'k, 5 yashil shar. Qizil tortish ehtimoli?`,ru:`В мешке: 4 красных, 3 синих, 5 зелёных. Вероятность красного?`},options:[`\\tfrac{1}{4}`,`\\tfrac{1}{3}`,`\\tfrac{2}{5}`,`\\tfrac{1}{2}`],ans:1},
+    {q:{en:`A die is rolled once. What is the probability of getting an even number?`,uz:`Zar bir marta tashlandi. Juft son tushish ehtimoli?`,ru:`Кубик брошен. Вероятность чётного числа?`},options:[`\\tfrac{1}{6}`,`\\tfrac{1}{3}`,`\\tfrac{1}{2}`,`\\tfrac{2}{3}`],ans:2},
+    {q:{en:`A card is drawn from a 52-card deck. What is the probability it is a king?`,uz:`52 ta kartadan biri olindi. U qirol bo'lish ehtimoli?`,ru:`Из 52 карт. Вероятность короля?`},options:[`\\tfrac{1}{52}`,`\\tfrac{1}{26}`,`\\tfrac{1}{13}`,`\\tfrac{1}{4}`],ans:2},
   ]},
-  // TYPE 14 — Polynomial operations
-  { variants: [
-    { q:{en:`Expand: \\((2x + 3)(x - 4)\\)`,uz:`Ochib yozing: \\((2x + 3)(x - 4)\\)`,ru:`Раскройте скобки: \\((2x + 3)(x - 4)\\)`}, options:[`2x^2 - 5x - 12`,`2x^2 + 5x - 12`,`2x^2 - 5x + 12`,`2x^2 - 8x - 12`], ans:0 },
-    { q:{en:`Expand: \\((x + 5)^2\\)`,uz:`Ochib yozing: \\((x + 5)^2\\)`,ru:`Раскройте скобки: \\((x + 5)^2\\)`}, options:[`x^2 + 25`,`x^2 + 5x + 25`,`x^2 + 10x + 25`,`x^2 + 10x - 25`], ans:2 },
-    { q:{en:`Factor completely: \\(x^2 - 9\\)`,uz:`To'liq ko'paytuvchilarga ajrating: \\(x^2 - 9\\)`,ru:`Разложите на множители: \\(x^2 - 9\\)`}, options:[`(x-3)(x+3)`,`(x-3)^2`,`(x+3)^2`,`(x-9)(x+1)`], ans:0 },
+  {variants:[
+    {q:{en:`Expand: \\((2x + 3)(x - 4)\\)`,uz:`Ochib yozing: \\((2x + 3)(x - 4)\\)`,ru:`Раскройте: \\((2x + 3)(x - 4)\\)`},options:[`2x^2 - 5x - 12`,`2x^2 + 5x - 12`,`2x^2 - 5x + 12`,`2x^2 - 8x - 12`],ans:0},
+    {q:{en:`Expand: \\((x + 5)^2\\)`,uz:`Ochib yozing: \\((x + 5)^2\\)`,ru:`Раскройте: \\((x + 5)^2\\)`},options:[`x^2 + 25`,`x^2 + 5x + 25`,`x^2 + 10x + 25`,`x^2 + 10x - 25`],ans:2},
+    {q:{en:`Factor completely: \\(x^2 - 9\\)`,uz:`Ko'paytuvchilarga ajrating: \\(x^2 - 9\\)`,ru:`Разложите на множители: \\(x^2 - 9\\)`},options:[`(x-3)(x+3)`,`(x-3)^2`,`(x+3)^2`,`(x-9)(x+1)`],ans:0},
   ]},
-  // TYPE 15 — Absolute value
-  { variants: [
-    { q:{en:`Solve \\(|2x - 3| = 7\\). What are the solutions?`,uz:`\\(|2x - 3| = 7\\) tenglamani yeching.`,ru:`Решите уравнение \\(|2x - 3| = 7\\).`}, options:[`x = 5 \\text{ and } x = -2`,`x = 2 \\text{ and } x = -5`,`x = 5 \\text{ and } x = 2`,`x = -2 \\text{ and } x = 3`], ans:0 },
-    { q:{en:`What is the value of \\(|-15| + |7| - |-3|\\)?`,uz:`\\(|-15| + |7| - |-3|\\) ning qiymati nima?`,ru:`Чему равно \\(|-15| + |7| - |-3|\\)?`}, options:[`5`,`19`,`25`,`-5`], ans:1 },
-    { q:{en:`Solve \\(|3x + 6| = 12\\). What are the solutions?`,uz:`\\(|3x + 6| = 12\\) tenglamani yeching.`,ru:`Решите уравнение \\(|3x + 6| = 12\\).`}, options:[`x = 2 \\text{ and } x = -6`,`x = 6 \\text{ and } x = -2`,`x = 2 \\text{ and } x = 6`,`x = -2 \\text{ and } x = -6`], ans:0 },
+  {variants:[
+    {q:{en:`Solve \\(|2x - 3| = 7\\). What are the solutions?`,uz:`\\(|2x - 3| = 7\\) ni yeching.`,ru:`Решите \\(|2x - 3| = 7\\).`},options:[`x=5 \\text{ and } x=-2`,`x=2 \\text{ and } x=-5`,`x=5 \\text{ and } x=2`,`x=-2 \\text{ and } x=3`],ans:0},
+    {q:{en:`What is the value of \\(|-15| + |7| - |-3|\\)?`,uz:`\\(|-15| + |7| - |-3|\\) qiymati?`,ru:`Чему равно \\(|-15| + |7| - |-3|\\)?`},options:[`5`,`19`,`25`,`-5`],ans:1},
+    {q:{en:`Solve \\(|3x + 6| = 12\\). What are the solutions?`,uz:`\\(|3x + 6| = 12\\) ni yeching.`,ru:`Решите \\(|3x + 6| = 12\\).`},options:[`x=2 \\text{ and } x=-6`,`x=6 \\text{ and } x=-2`,`x=2 \\text{ and } x=6`,`x=-2 \\text{ and } x=-6`],ans:0},
   ]},
-  // TYPE 16 — Number properties
-  { variants: [
-    { q:{en:`What is the greatest common factor (GCF) of 36 and 48?`,uz:`36 va 48 sonlarining eng katta umumiy bo'luvchisi (EKUB) nima?`,ru:`Каков наибольший общий делитель (НОД) чисел 36 и 48?`}, options:[`6`,`9`,`12`,`18`], ans:2 },
-    { q:{en:`What is the least common multiple (LCM) of 4, 6, and 9?`,uz:`4, 6 va 9 sonlarining eng kichik umumiy karrali (EKUK) nima?`,ru:`Каково наименьшее общее кратное (НОК) чисел 4, 6 и 9?`}, options:[`18`,`24`,`36`,`72`], ans:2 },
-    { q:{en:`Which of the following is NOT a prime number?`,uz:`Quyidagilardan qaysi biri tub son emas?`,ru:`Какое из следующих чисел НЕ является простым?`}, options:[`11`,`17`,`23`,`27`], ans:3 },
+  {variants:[
+    {q:{en:`What is the GCF of 36 and 48?`,uz:`36 va 48 ning EKUB?`,ru:`НОД чисел 36 и 48?`},options:[`6`,`9`,`12`,`18`],ans:2},
+    {q:{en:`What is the LCM of 4, 6, and 9?`,uz:`4, 6 va 9 ning EKUK?`,ru:`НОК чисел 4, 6 и 9?`},options:[`18`,`24`,`36`,`72`],ans:2},
+    {q:{en:`Which of the following is NOT a prime number?`,uz:`Qaysi biri tub son emas?`,ru:`Какое из чисел НЕ является простым?`},options:[`11`,`17`,`23`,`27`],ans:3},
   ]},
-  // TYPE 17 — Fractions / decimals
-  { variants: [
-    { q:{en:`What is \\(\\dfrac{3}{4} + \\dfrac{2}{3}\\)?`,uz:`\\(\\dfrac{3}{4} + \\dfrac{2}{3}\\) nima?`,ru:`Чему равно \\(\\dfrac{3}{4} + \\dfrac{2}{3}\\)?`}, options:[`\\tfrac{5}{7}`,`\\tfrac{6}{7}`,`\\tfrac{17}{12}`,`\\tfrac{5}{12}`], ans:2 },
-    { q:{en:`Which fraction is equivalent to 0.375?`,uz:`Qaysi kasr 0.375 ga teng?`,ru:`Какая дробь равна 0,375?`}, options:[`\\tfrac{1}{4}`,`\\tfrac{3}{8}`,`\\tfrac{2}{5}`,`\\tfrac{5}{8}`], ans:1 },
-    { q:{en:`What is \\(\\dfrac{5}{6} \\div \\dfrac{10}{3}\\)?`,uz:`\\(\\dfrac{5}{6} \\div \\dfrac{10}{3}\\) nima?`,ru:`Чему равно \\(\\dfrac{5}{6} \\div \\dfrac{10}{3}\\)?`}, options:[`\\tfrac{1}{4}`,`\\tfrac{1}{3}`,`\\tfrac{1}{2}`,`\\tfrac{2}{3}`], ans:0 },
+  {variants:[
+    {q:{en:`What is \\(\\dfrac{3}{4} + \\dfrac{2}{3}\\)?`,uz:`\\(\\dfrac{3}{4} + \\dfrac{2}{3}\\) nima?`,ru:`Чему равно \\(\\dfrac{3}{4} + \\dfrac{2}{3}\\)?`},options:[`\\tfrac{5}{7}`,`\\tfrac{6}{7}`,`\\tfrac{17}{12}`,`\\tfrac{5}{12}`],ans:2},
+    {q:{en:`Which fraction is equivalent to 0.375?`,uz:`0.375 ga teng kasr?`,ru:`Дробь, равная 0,375?`},options:[`\\tfrac{1}{4}`,`\\tfrac{3}{8}`,`\\tfrac{2}{5}`,`\\tfrac{5}{8}`],ans:1},
+    {q:{en:`What is \\(\\dfrac{5}{6} \\div \\dfrac{10}{3}\\)?`,uz:`\\(\\dfrac{5}{6} \\div \\dfrac{10}{3}\\) nima?`,ru:`Чему равно \\(\\dfrac{5}{6} \\div \\dfrac{10}{3}\\)?`},options:[`\\tfrac{1}{4}`,`\\tfrac{1}{3}`,`\\tfrac{1}{2}`,`\\tfrac{2}{3}`],ans:0},
   ]},
-  // TYPE 18 — Scientific notation
-  { variants: [
-    { q:{en:`Express \\(0.000047\\) in scientific notation.`,uz:`\\(0.000047\\) sonini ilmiy yozuvda ifodalang.`,ru:`Запишите \\(0{,}000047\\) в научной записи.`}, options:[`4.7 \\times 10^{-5}`,`4.7 \\times 10^{-4}`,`47 \\times 10^{-6}`,`4.7 \\times 10^{5}`], ans:0 },
-    { q:{en:`What is \\((3 \\times 10^4) \\times (2 \\times 10^3)\\)?`,uz:`\\((3 \\times 10^4) \\times (2 \\times 10^3)\\) nima?`,ru:`Чему равно \\((3 \\times 10^4) \\times (2 \\times 10^3)\\)?`}, options:[`6 \\times 10^7`,`6 \\times 10^{12}`,`5 \\times 10^7`,`6 \\times 10^8`], ans:0 },
-    { q:{en:`Which of the following equals \\(5.2 \\times 10^{-3}\\)?`,uz:`Quyidagilardan qaysi biri \\(5.2 \\times 10^{-3}\\) ga teng?`,ru:`Что из следующего равно \\(5{,}2 \\times 10^{-3}\\)?`}, options:[`0.052`,`0.0052`,`0.00052`,`520`], ans:1 },
+  {variants:[
+    {q:{en:`Express \\(0.000047\\) in scientific notation.`,uz:`\\(0.000047\\) ni ilmiy yozuvda ifodalang.`,ru:`Запишите \\(0{,}000047\\) в научной записи.`},options:[`4.7 \\times 10^{-5}`,`4.7 \\times 10^{-4}`,`47 \\times 10^{-6}`,`4.7 \\times 10^5`],ans:0},
+    {q:{en:`What is \\((3 \\times 10^4) \\times (2 \\times 10^3)\\)?`,uz:`\\((3 \\times 10^4) \\times (2 \\times 10^3)\\) nima?`,ru:`Чему равно \\((3 \\times 10^4) \\times (2 \\times 10^3)\\)?`},options:[`6 \\times 10^7`,`6 \\times 10^{12}`,`5 \\times 10^7`,`6 \\times 10^8`],ans:0},
+    {q:{en:`Which equals \\(5.2 \\times 10^{-3}\\)?`,uz:`\\(5.2 \\times 10^{-3}\\) ga teng qaysi?`,ru:`Что равно \\(5{,}2 \\times 10^{-3}\\)?`},options:[`0.052`,`0.0052`,`0.00052`,`520`],ans:1},
   ]},
-  // TYPE 19 — Triangle / angle geometry
-  { variants: [
-    { q:{en:`In a right triangle, one leg is 5 and the hypotenuse is 13. What is the other leg?`,uz:`To'g'ri burchakli uchburchakda bir kateti 5, gipotenuza 13. Ikkinchi katet nechchi?`,ru:`В прямоугольном треугольнике один катет 5, гипотенуза 13. Чему равен другой катет?`}, options:[`8`,`10`,`12`,`14`], ans:2 },
-    { q:{en:`The angles of a triangle are in the ratio 1:2:3. What is the largest angle?`,uz:`Uchburchak burchaklari 1:2:3 nisbatda. Eng katta burchak nechchi gradus?`,ru:`Углы треугольника в отношении 1:2:3. Каков наибольший угол?`}, options:[`45°`,`60°`,`90°`,`120°`], ans:2 },
-    { q:{en:`Two angles of a triangle are 35° and 75°. What is the third angle?`,uz:`Uchburchakning ikki burchagi 35° va 75°. Uchinchi burchak nechchi gradus?`,ru:`Два угла треугольника 35° и 75°. Чему равен третий угол?`}, options:[`60°`,`70°`,`80°`,`90°`], ans:1 },
+  {variants:[
+    {q:{en:`In a right triangle, one leg is 5 and the hypotenuse is 13. What is the other leg?`,uz:`To'g'ri burchakli uchburchak: katet 5, gipotenuza 13. Ikkinchi katet?`,ru:`Прямоугольный треугольник: катет 5, гипотенуза 13. Другой катет?`},options:[`8`,`10`,`12`,`14`],ans:2},
+    {q:{en:`The angles of a triangle are in ratio 1:2:3. What is the largest angle?`,uz:`Uchburchak burchaklari 1:2:3. Eng katta burchak?`,ru:`Углы треугольника 1:2:3. Наибольший угол?`},options:[`45°`,`60°`,`90°`,`120°`],ans:2},
+    {q:{en:`Two angles of a triangle are 35° and 75°. What is the third angle?`,uz:`Uchburchakning ikki burchagi 35° va 75°. Uchinchi burchak?`,ru:`Два угла 35° и 75°. Третий угол?`},options:[`60°`,`70°`,`80°`,`90°`],ans:1},
   ]},
 ];
 
-// ═══════════════════════════════════════════════
-// ENGLISH GRAMMAR BANK — 7 types × 3 variants
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════
+// GRAMMAR BANK — 7 types × 3 variants
+// ═══════════════════════════════════
 const ENG_GRAMMAR = [
-  // G0 — Subject-verb agreement
-  { variants: [
-    { q:`The team of players _____ training hard every day.`, options:[`are`,`is`,`were`,`have been`], ans:1 },
-    { q:`Neither the teacher nor the students _____ arrived yet.`, options:[`has`,`have`,`was`,`were`], ans:1 },
-    { q:`Every student and teacher _____ required to attend the meeting.`, options:[`are`,`were`,`is`,`have`], ans:2 },
+  {variants:[
+    {q:`The team of players _____ training hard every day.`,options:[`are`,`is`,`were`,`have been`],ans:1},
+    {q:`Neither the teacher nor the students _____ arrived yet.`,options:[`has`,`have`,`was`,`were`],ans:1},
+    {q:`Every student and teacher _____ required to attend the meeting.`,options:[`are`,`were`,`is`,`have`],ans:2},
   ]},
-  // G1 — Verb tense
-  { variants: [
-    { q:`By the time she arrived, they _____ for two hours.`, options:[`waited`,`have waited`,`had waited`,`were waiting`], ans:2 },
-    { q:`I _____ here since 2020 and I enjoy working here.`, options:[`work`,`worked`,`have worked`,`had worked`], ans:2 },
-    { q:`She _____ when the phone rang and woke her up.`, options:[`slept`,`was sleeping`,`had slept`,`sleeps`], ans:1 },
+  {variants:[
+    {q:`By the time she arrived, they _____ for two hours.`,options:[`waited`,`have waited`,`had waited`,`were waiting`],ans:2},
+    {q:`I _____ here since 2020 and I enjoy working here.`,options:[`work`,`worked`,`have worked`,`had worked`],ans:2},
+    {q:`She _____ when the phone rang and woke her up.`,options:[`slept`,`was sleeping`,`had slept`,`sleeps`],ans:1},
   ]},
-  // G2 — Conditional
-  { variants: [
-    { q:`If I _____ more time, I would study harder for the exam.`, options:[`have`,`had`,`will have`,`would have`], ans:1 },
-    { q:`If it rains tomorrow, we _____ stay indoors all day.`, options:[`would`,`will`,`had`,`were`], ans:1 },
-    { q:`If he _____ studied harder, he would have passed the test.`, options:[`has`,`had`,`would have`,`would`], ans:1 },
+  {variants:[
+    {q:`If I _____ more time, I would study harder for the exam.`,options:[`have`,`had`,`will have`,`would have`],ans:1},
+    {q:`If it rains tomorrow, we _____ stay indoors all day.`,options:[`would`,`will`,`had`,`were`],ans:1},
+    {q:`If he _____ studied harder, he would have passed the test.`,options:[`has`,`had`,`would have`,`would`],ans:1},
   ]},
-  // G3 — Articles
-  { variants: [
-    { q:`She is _____ honest person who always tells the truth.`, options:[`a`,`an`,`the`,`—`], ans:1 },
-    { q:`_____ Sahara is the largest hot desert in the world.`, options:[`A`,`An`,`The`,`—`], ans:2 },
-    { q:`He plays _____ piano beautifully at the concert hall every Friday.`, options:[`a`,`an`,`the`,`—`], ans:2 },
+  {variants:[
+    {q:`She is _____ honest person who always tells the truth.`,options:[`a`,`an`,`the`,`—`],ans:1},
+    {q:`_____ Sahara is the largest hot desert in the world.`,options:[`A`,`An`,`The`,`—`],ans:2},
+    {q:`He plays _____ piano beautifully at the concert hall every Friday.`,options:[`a`,`an`,`the`,`—`],ans:2},
   ]},
-  // G4 — Prepositions
-  { variants: [
-    { q:`She has been working at this company _____ five years.`, options:[`since`,`for`,`during`,`from`], ans:1 },
-    { q:`The book was written _____ a famous author in the 19th century.`, options:[`from`,`with`,`by`,`for`], ans:2 },
-    { q:`He is very good _____ solving complex mathematical problems.`, options:[`in`,`for`,`at`,`with`], ans:2 },
+  {variants:[
+    {q:`She has been working at this company _____ five years.`,options:[`since`,`for`,`during`,`from`],ans:1},
+    {q:`The book was written _____ a famous author in the 19th century.`,options:[`from`,`with`,`by`,`for`],ans:2},
+    {q:`He is very good _____ solving complex mathematical problems.`,options:[`in`,`for`,`at`,`with`],ans:2},
   ]},
-  // G5 — Pronoun agreement
-  { variants: [
-    { q:`Each of the students must bring _____ own pencil to the exam.`, options:[`their`,`his or her`,`our`,`its`], ans:1 },
-    { q:`The company announced _____ new environmental policy last week.`, options:[`their`,`its`,`our`,`his`], ans:1 },
-    { q:`Everyone should do _____ best to contribute to the group project.`, options:[`their`,`his or her`,`our`,`its`], ans:0 },
+  {variants:[
+    {q:`Each of the students must bring _____ own pencil to the exam.`,options:[`their`,`his or her`,`our`,`its`],ans:1},
+    {q:`The company announced _____ new environmental policy last week.`,options:[`their`,`its`,`our`,`his`],ans:1},
+    {q:`Everyone should do _____ best to contribute to the group project.`,options:[`their`,`his or her`,`our`,`its`],ans:0},
   ]},
-  // G6 — Parallel structure
-  { variants: [
-    { q:`She enjoys reading, writing, and _____ to classical music.`, options:[`listen`,`listened`,`listening`,`to listen`], ans:2 },
-    { q:`The report was thorough, detailed, and _____ organized for easy reading.`, options:[`clear`,`clearly`,`more clear`,`clearest`], ans:0 },
-    { q:`Not only did he win the competition, but he _____ set a new record.`, options:[`also`,`too`,`as well`,`even`], ans:0 },
+  {variants:[
+    {q:`She enjoys reading, writing, and _____ to classical music.`,options:[`listen`,`listened`,`listening`,`to listen`],ans:2},
+    {q:`The report was thorough, detailed, and _____ organized for easy reading.`,options:[`clear`,`clearly`,`more clear`,`clearest`],ans:0},
+    {q:`Not only did he win the competition, but he _____ set a new record.`,options:[`also`,`too`,`as well`,`even`],ans:0},
   ]},
 ];
 
-// ═══════════════════════════════════════════════
-// ENGLISH VOCABULARY BANK — 7 types × 3 variants
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════
+// VOCAB BANK — 7 types × 3 variants
+// ═══════════════════════════════════
 const ENG_VOCAB = [
-  // V0 — Word in context
-  { variants: [
-    { q:`"The scientist's theory was initially met with _____, but later experiments proved her right." Choose the best word.`, options:[`acclaim`,`skepticism`,`enthusiasm`,`indifference`], ans:1 },
-    { q:`"The software upgrade will significantly _____ the system's processing speed and efficiency." Choose the best word.`, options:[`diminish`,`hinder`,`enhance`,`compromise`], ans:2 },
-    { q:`"Despite losing the first set, she remained _____ and went on to win the match." Choose the best word.`, options:[`discouraged`,`resilient`,`defeated`,`anxious`], ans:1 },
+  {variants:[
+    {q:`"The scientist's theory was initially met with _____, but later experiments proved her right."`,options:[`acclaim`,`skepticism`,`enthusiasm`,`indifference`],ans:1},
+    {q:`"The software upgrade will significantly _____ the system's processing speed and efficiency."`,options:[`diminish`,`hinder`,`enhance`,`compromise`],ans:2},
+    {q:`"Despite losing the first set, she remained _____ and went on to win the match."`,options:[`discouraged`,`resilient`,`defeated`,`anxious`],ans:1},
   ]},
-  // V1 — Synonym
-  { variants: [
-    { q:`The word "benevolent" most nearly means:`, options:[`harmful`,`kind`,`cautious`,`clever`], ans:1 },
-    { q:`The word "meticulous" most nearly means:`, options:[`careless`,`stubborn`,`precise`,`hasty`], ans:2 },
-    { q:`The word "ambiguous" most nearly means:`, options:[`clear`,`uncertain`,`obvious`,`definite`], ans:1 },
+  {variants:[
+    {q:`The word "benevolent" most nearly means:`,options:[`harmful`,`kind`,`cautious`,`clever`],ans:1},
+    {q:`The word "meticulous" most nearly means:`,options:[`careless`,`stubborn`,`precise`,`hasty`],ans:2},
+    {q:`The word "ambiguous" most nearly means:`,options:[`clear`,`uncertain`,`obvious`,`definite`],ans:1},
   ]},
-  // V2 — Antonym
-  { variants: [
-    { q:`The opposite of "conceal" is:`, options:[`hide`,`protect`,`reveal`,`avoid`], ans:2 },
-    { q:`The opposite of "magnify" is:`, options:[`enlarge`,`reduce`,`improve`,`distort`], ans:1 },
-    { q:`The opposite of "turbulent" is:`, options:[`stormy`,`chaotic`,`peaceful`,`violent`], ans:2 },
+  {variants:[
+    {q:`The opposite of "conceal" is:`,options:[`hide`,`protect`,`reveal`,`avoid`],ans:2},
+    {q:`The opposite of "magnify" is:`,options:[`enlarge`,`reduce`,`improve`,`distort`],ans:1},
+    {q:`The opposite of "turbulent" is:`,options:[`stormy`,`chaotic`,`peaceful`,`violent`],ans:2},
   ]},
-  // V3 — Word form / usage
-  { variants: [
-    { q:`"The medication can _____ your ability to concentrate while driving." Choose the correct word.`, options:[`affect`,`effect`,`infect`,`reflect`], ans:0 },
-    { q:`"The storm caused widespread _____ to the city's infrastructure and buildings." Choose the correct word.`, options:[`damage`,`damages`,`damaging`,`damaged`], ans:0 },
-    { q:`"He gave a _____ performance that impressed all the judges and the audience." Choose the correct form.`, options:[`remarked`,`remarkable`,`remarkably`,`remark`], ans:1 },
+  {variants:[
+    {q:`"The medication can _____ your ability to concentrate while driving." Choose the correct word.`,options:[`affect`,`effect`,`infect`,`reflect`],ans:0},
+    {q:`"The storm caused widespread _____ to the city's infrastructure." Choose the correct word.`,options:[`damage`,`damages`,`damaging`,`damaged`],ans:0},
+    {q:`"He gave a _____ performance that impressed all the judges." Choose the correct form.`,options:[`remarked`,`remarkable`,`remarkably`,`remark`],ans:1},
   ]},
-  // V4 — Academic vocabulary
-  { variants: [
-    { q:`"The author's _____ use of metaphors makes the poem difficult to understand." Choose the best word.`, options:[`simple`,`excessive`,`sparing`,`clear`], ans:1 },
-    { q:`"Researchers must _____ their findings carefully before publishing them." Choose the best word.`, options:[`fabricate`,`ignore`,`verify`,`dismiss`], ans:2 },
-    { q:`"The new regulation will _____ stricter penalties for companies that violate environmental laws." Choose the best word.`, options:[`reduce`,`impose`,`remove`,`avoid`], ans:1 },
+  {variants:[
+    {q:`"The author's _____ use of metaphors makes the poem difficult to understand."`,options:[`simple`,`excessive`,`sparing`,`clear`],ans:1},
+    {q:`"Researchers must _____ their findings carefully before publishing them."`,options:[`fabricate`,`ignore`,`verify`,`dismiss`],ans:2},
+    {q:`"The new regulation will _____ stricter penalties for companies that violate environmental laws."`,options:[`reduce`,`impose`,`remove`,`avoid`],ans:1},
   ]},
-  // V5 — Phrasal verbs / idioms
-  { variants: [
-    { q:`"She decided to take _____ the opportunity when it arose unexpectedly." Choose the correct form.`, options:[`advantage of`,`charge on`,`note with`,`credit for`], ans:0 },
-    { q:`"The outdoor concert was _____ due to the sudden thunderstorm." Choose the best phrase.`, options:[`called off`,`called in`,`called up`,`called out`], ans:0 },
-    { q:`"He _____ to complete his dissertation two days before the official deadline." Choose the best word.`, options:[`managed`,`succeeded`,`achieved`,`accomplished`], ans:0 },
+  {variants:[
+    {q:`"She decided to take _____ the opportunity when it arose unexpectedly."`,options:[`advantage of`,`charge on`,`note with`,`credit for`],ans:0},
+    {q:`"The outdoor concert was _____ due to the sudden thunderstorm."`,options:[`called off`,`called in`,`called up`,`called out`],ans:0},
+    {q:`"He _____ to complete his dissertation two days before the official deadline."`,options:[`managed`,`succeeded`,`achieved`,`accomplished`],ans:0},
   ]},
-  // V6 — Register / formal language
-  { variants: [
-    { q:`Which sentence is most appropriate for a formal academic essay?`, options:[`The experiment showed some pretty cool results.`,`The experiment yielded significant findings.`,`We found out the experiment worked really well.`,`The experiment was totally successful.`], ans:1 },
-    { q:`Which word best replaces "get" in a formal context: "We hope to get better results next time."`, options:[`acquire`,`grab`,`achieve`,`snag`], ans:2 },
-    { q:`Which sentence uses the most formal language?`, options:[`The company wants to help its customers.`,`The firm seeks to assist its clientele.`,`The company aims to help customers out.`,`The business wants to do right by its clients.`], ans:1 },
+  {variants:[
+    {q:`Which sentence is most appropriate for a formal academic essay?`,options:[`The experiment showed some pretty cool results.`,`The experiment yielded significant findings.`,`We found out the experiment worked really well.`,`The experiment was totally successful.`],ans:1},
+    {q:`Which word best replaces "get" in: "We hope to get better results next time."`,options:[`acquire`,`grab`,`achieve`,`snag`],ans:2},
+    {q:`Which sentence uses the most formal language?`,options:[`The company wants to help its customers.`,`The firm seeks to assist its clientele.`,`The company aims to help customers out.`,`The business wants to do right by its clients.`],ans:1},
   ]},
 ];
 
-// ═══════════════════════════════════════════════
-// READING SETS — 3 passage sets × 6 questions
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════
+// READING SETS — 3 × 6 questions
+// ═══════════════════════════════════
 const READING_SETS = [
   {
-    passage: `Bioluminescence is the production and emission of light by living organisms. This phenomenon occurs in a wide variety of species, including certain fish, jellyfish, bacteria, and fungi. The light is produced through a chemical reaction involving a molecule called luciferin, which reacts with oxygen in the presence of an enzyme called luciferase. Unlike incandescent light, bioluminescence produces little to no heat, making it highly efficient. Scientists have studied bioluminescence for decades, and researchers have now found ways to use these biological light-producing mechanisms in medical imaging and environmental monitoring.`,
-    questions: [
-      { q:`What is bioluminescence, according to the passage?`, options:[`Light produced by chemical reactions in laboratories`,`Light produced and emitted by living organisms`,`Heat produced by deep-sea creatures`,`A type of radiation found in oceans`], ans:1 },
-      { q:`Which molecule is essential for producing bioluminescent light?`, options:[`Luciferase`,`Oxygen`,`Luciferin`,`Hemoglobin`], ans:2 },
-      { q:`How does bioluminescence differ from incandescent light?`, options:[`It produces more heat`,`It requires electricity`,`It produces little to no heat`,`It only occurs underwater`], ans:2 },
-      { q:`The word "phenomenon" in the passage most nearly means:`, options:[`problem`,`mystery`,`event or occurrence`,`experiment`], ans:2 },
-      { q:`What practical applications are mentioned for bioluminescence research?`, options:[`Agriculture and construction`,`Medical imaging and environmental monitoring`,`Navigation and communication`,`Food production and preservation`], ans:1 },
-      { q:`The author's primary purpose in this passage is to:`, options:[`Argue bioluminescence should be used more in medicine`,`Describe bioluminescence and explain its scientific basis`,`Warn about dangers of bioluminescent organisms`,`Compare bioluminescence to other forms of light`], ans:1 },
+    passage:`Bioluminescence is the production and emission of light by living organisms. This phenomenon occurs in a wide variety of species, including certain fish, jellyfish, bacteria, and fungi. The light is produced through a chemical reaction involving a molecule called luciferin, which reacts with oxygen in the presence of an enzyme called luciferase. Unlike incandescent light, bioluminescence produces little to no heat, making it highly efficient. Scientists have studied bioluminescence for decades, and researchers have now found ways to use these biological light-producing mechanisms in medical imaging and environmental monitoring.`,
+    questions:[
+      {q:`What is bioluminescence, according to the passage?`,options:[`Light produced by chemical reactions in labs`,`Light produced and emitted by living organisms`,`Heat produced by deep-sea creatures`,`A type of radiation found in oceans`],ans:1},
+      {q:`Which molecule is essential for producing bioluminescent light?`,options:[`Luciferase`,`Oxygen`,`Luciferin`,`Hemoglobin`],ans:2},
+      {q:`How does bioluminescence differ from incandescent light?`,options:[`It produces more heat`,`It requires electricity`,`It produces little to no heat`,`It only occurs underwater`],ans:2},
+      {q:`The word "phenomenon" in the passage most nearly means:`,options:[`problem`,`mystery`,`event or occurrence`,`experiment`],ans:2},
+      {q:`What practical applications are mentioned for bioluminescence research?`,options:[`Agriculture and construction`,`Medical imaging and environmental monitoring`,`Navigation and communication`,`Food production and preservation`],ans:1},
+      {q:`The author's primary purpose in this passage is to:`,options:[`Argue bioluminescence should be used more in medicine`,`Describe bioluminescence and explain its scientific basis`,`Warn about dangers of bioluminescent organisms`,`Compare bioluminescence to other forms of light`],ans:1},
     ]
   },
   {
-    passage: `Urbanization — the movement of people from rural areas to cities — has accelerated dramatically over the past century. In 1900, only about 13% of the world's population lived in cities. Today, more than half of all people are urban dwellers, and projections suggest that by 2050, nearly 70% of humanity will live in urban areas. This shift has profound implications for infrastructure, public health, and the environment. Cities consume approximately 75% of global energy and generate about 80% of greenhouse gas emissions. However, cities also tend to be centers of innovation, economic growth, and cultural exchange, driving much of the world's progress.`,
-    questions: [
-      { q:`What percentage of the world's population lived in cities in 1900?`, options:[`About 13%`,`About 30%`,`About 50%`,`About 70%`], ans:0 },
-      { q:`According to the passage, what percentage of people will live in urban areas by 2050?`, options:[`50%`,`60%`,`70%`,`80%`], ans:2 },
-      { q:`How much of global energy do cities consume, according to the passage?`, options:[`50%`,`60%`,`75%`,`80%`], ans:2 },
-      { q:`The word "implications" in the passage most nearly means:`, options:[`problems`,`consequences`,`solutions`,`causes`], ans:1 },
-      { q:`According to the passage, which is a POSITIVE aspect of urbanization?`, options:[`Increased greenhouse gas emissions`,`Greater energy consumption`,`Innovation and economic growth`,`Population displacement from rural areas`], ans:2 },
-      { q:`What is the main idea of this passage?`, options:[`Cities are responsible for most environmental damage`,`Urbanization is harmful and should be reversed`,`Urbanization is a complex trend with both benefits and drawbacks`,`Rural areas are better places to live than cities`], ans:2 },
+    passage:`Urbanization — the movement of people from rural areas to cities — has accelerated dramatically over the past century. In 1900, only about 13% of the world's population lived in cities. Today, more than half of all people are urban dwellers, and projections suggest that by 2050, nearly 70% of humanity will live in urban areas. This shift has profound implications for infrastructure, public health, and the environment. Cities consume approximately 75% of global energy and generate about 80% of greenhouse gas emissions. However, cities also tend to be centers of innovation, economic growth, and cultural exchange.`,
+    questions:[
+      {q:`What percentage of the world's population lived in cities in 1900?`,options:[`About 13%`,`About 30%`,`About 50%`,`About 70%`],ans:0},
+      {q:`According to the passage, what percentage will live in urban areas by 2050?`,options:[`50%`,`60%`,`70%`,`80%`],ans:2},
+      {q:`How much of global energy do cities consume?`,options:[`50%`,`60%`,`75%`,`80%`],ans:2},
+      {q:`The word "implications" most nearly means:`,options:[`problems`,`consequences`,`solutions`,`causes`],ans:1},
+      {q:`Which is a POSITIVE aspect of urbanization according to the passage?`,options:[`Increased greenhouse gas emissions`,`Greater energy consumption`,`Innovation and economic growth`,`Population displacement from rural areas`],ans:2},
+      {q:`What is the main idea of this passage?`,options:[`Cities are responsible for most environmental damage`,`Urbanization is harmful and should be reversed`,`Urbanization is a complex trend with both benefits and drawbacks`,`Rural areas are better places to live than cities`],ans:2},
     ]
   },
   {
-    passage: `Abstract expressionism emerged in New York in the 1940s and 1950s as the first distinctly American movement to achieve international influence. Artists such as Jackson Pollock, Mark Rothko, and Willem de Kooning rejected traditional forms of representation in favor of spontaneous, expressive techniques. Pollock developed his famous "drip painting" method, pouring and splashing paint directly onto canvas laid on the floor. The movement emphasized emotional intensity and individual expression over technical precision. Critics initially dismissed abstract expressionism as chaotic and meaningless, but the movement ultimately transformed how the world understood modern art.`,
-    questions: [
-      { q:`Where did abstract expressionism originate?`, options:[`Paris`,`London`,`New York`,`Chicago`], ans:2 },
-      { q:`Which artist is associated with the "drip painting" technique?`, options:[`Mark Rothko`,`Willem de Kooning`,`Jackson Pollock`,`Andy Warhol`], ans:2 },
-      { q:`What did abstract expressionists reject?`, options:[`The use of color`,`Traditional forms of representation`,`Emotional expression`,`The use of canvas`], ans:1 },
-      { q:`The word "spontaneous" in the passage most nearly means:`, options:[`planned carefully`,`occurring naturally without planning`,`technical`,`repetitive`], ans:1 },
-      { q:`How did critics initially respond to abstract expressionism?`, options:[`With immediate enthusiasm`,`By calling it the greatest art movement`,`By dismissing it as chaotic and meaningless`,`By comparing it favorably to European art`], ans:2 },
-      { q:`What was the ultimate significance of abstract expressionism according to the passage?`, options:[`It helped America win World War II`,`It transformed how the world understood modern art`,`It replaced all European art forms`,`It made American artists wealthy`], ans:1 },
+    passage:`Abstract expressionism emerged in New York in the 1940s and 1950s as the first distinctly American movement to achieve international influence. Artists such as Jackson Pollock, Mark Rothko, and Willem de Kooning rejected traditional forms of representation in favor of spontaneous, expressive techniques. Pollock developed his famous "drip painting" method, pouring and splashing paint directly onto canvas laid on the floor. The movement emphasized emotional intensity and individual expression over technical precision. Critics initially dismissed abstract expressionism as chaotic and meaningless, but the movement ultimately transformed how the world understood modern art.`,
+    questions:[
+      {q:`Where did abstract expressionism originate?`,options:[`Paris`,`London`,`New York`,`Chicago`],ans:2},
+      {q:`Which artist is associated with the "drip painting" technique?`,options:[`Mark Rothko`,`Willem de Kooning`,`Jackson Pollock`,`Andy Warhol`],ans:2},
+      {q:`What did abstract expressionists reject?`,options:[`The use of color`,`Traditional forms of representation`,`Emotional expression`,`The use of canvas`],ans:1},
+      {q:`The word "spontaneous" most nearly means:`,options:[`planned carefully`,`occurring naturally without planning`,`technical`,`repetitive`],ans:1},
+      {q:`How did critics initially respond to abstract expressionism?`,options:[`With immediate enthusiasm`,`By calling it the greatest art movement`,`By dismissing it as chaotic and meaningless`,`By comparing it favorably to European art`],ans:2},
+      {q:`What was the ultimate significance of abstract expressionism?`,options:[`It helped America win World War II`,`It transformed how the world understood modern art`,`It replaced all European art forms`,`It made American artists wealthy`],ans:1},
     ]
   },
 ];
 
-// ═══════════════════════════════════════════════
-// SESSION STATE
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════
+// STATE
+// ═══════════════════════════════════
 let currentLang = `en`;
 let session = {
-  name:``, phone:``, grade:``, level:``,
-  questions: [],   // array of 40 question objects
-  answers: {},     // index → chosen option index
-  current: 0,
-  timerInterval: null,
-  timeLeft: 45 * 60,
-  tabSwitches: 0,
-  startTime: null,
-  mathScore: 0, engScore: 0,
+  name:``,phone:``,grade:``,level:``,
+  questions:[],
+  answers:{},
+  current:0,
+  timerInterval:null,
+  timeLeft:ENG_SECONDS,
+  currentSection:`eng`,
+  tabSwitches:0,
+  startTime:null,
+  engScore:0, mathScore:0,
 };
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════
 // LANGUAGE
-// ═══════════════════════════════════════════════
-function T(key) {
-  const s = STRINGS[currentLang];
-  return s[key] !== undefined ? s[key] : STRINGS.en[key];
-}
+// ═══════════════════════════════════
+function T(key){ return STRINGS[currentLang]?.[key] ?? STRINGS.en[key]; }
 
-function setLang(lang) {
+function setLang(lang){
   currentLang = lang;
-  // update nav lang buttons
-  document.querySelectorAll(`#nav-lang .lang-btn`).forEach(b => {
-    b.classList.toggle(`active`, b.textContent === lang.toUpperCase());
+  [`#nav-lang`,`#test-lang-btns`].forEach(sel => {
+    document.querySelectorAll(sel + ` .lang-btn`).forEach(b => {
+      b.classList.toggle(`active`, b.textContent === lang.toUpperCase());
+    });
   });
-  document.querySelectorAll(`#test-lang-btns .lang-btn`).forEach(b => {
-    b.classList.toggle(`active`, b.textContent === lang.toUpperCase());
-  });
-  // update static UI
-  updateUIStrings();
-  // if test is active and on math section, re-render current question
-  const testActive = document.getElementById(`screen-test`).classList.contains(`active`);
-  if (testActive && session.current < 20) {
+  applyStrings();
+  // re-render current question if on math section
+  if(document.getElementById(`screen-test`).classList.contains(`active`) && session.current >= 20){
     renderQuestion(session.current);
   }
 }
 
-function updateUIStrings() {
-  const set = (id, val) => { const el = document.getElementById(id); if(el) el.innerHTML = val; };
-  set(`intro-badge`, T(`badge`));
+function applyStrings(){
+  const s = id => { const el = document.getElementById(id); return el; };
+  const set = (id, v) => { const el = s(id); if(el) el.innerHTML = v; };
+  set(`intro-eyebrow`, T(`eyebrow`));
   set(`intro-title`, T(`title`));
-  set(`intro-sub`, T(`sub`));
+  set(`intro-desc`, T(`desc`));
   set(`stat1`, T(`stat1`));
   set(`stat2`, T(`stat2`));
   set(`stat3`, T(`stat3`));
+  set(`intro-trust`, T(`trust`));
   set(`btn-begin`, T(`btnBegin`));
   set(`form-title`, T(`formTitle`));
   set(`form-sub`, T(`formSub`));
@@ -685,228 +829,167 @@ function updateUIStrings() {
   set(`lbl-class`, T(`lblClass`));
   set(`lbl-level`, T(`lblLevel`));
   set(`btn-start`, T(`btnStart`));
+  set(`break-chip`, T(`breakChip`));
+  set(`break-title`, T(`breakTitle`));
+  set(`break-sub`, T(`breakSub`));
+  set(`break-next-info`, T(`breakNextInfo`));
+  set(`btn-continue-math`, T(`btnContinue`));
+  set(`res-eyebrow`, T(`resEyebrow`));
   set(`res-title`, T(`resTitle`));
   set(`res-sub`, T(`resSub`));
   set(`res-total-label`, T(`resTotalLabel`));
-  set(`res-math-label`, T(`resMathLabel`));
   set(`res-eng-label`, T(`resEngLabel`));
+  set(`res-math-label`, T(`resMathLabel`));
   set(`res-math-sub`, T(`resMathSub`));
   set(`btn-see-cert`, T(`btnCert`));
   set(`btn-retake`, T(`btnRetake`));
-  set(`cert-lbl`, T(`certLbl`));
-  set(`cert-desc`, T(`certDesc`));
+  set(`cert-presents`, T(`certPresents`));
+  set(`cert-statement`, T(`certStatement`));
   set(`btn-download`, T(`btnDownload`));
-  set(`btn-back-results`, T(`btnBackResults`));
+  set(`btn-back-results`, T(`btnBack`));
 }
 
-// ═══════════════════════════════════════════════
-// SCREEN NAVIGATION
-// ═══════════════════════════════════════════════
-function showScreen(id) {
+// ═══════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════
+function showScreen(id){
   document.querySelectorAll(`.screen`).forEach(s => s.classList.remove(`active`));
   document.getElementById(`screen-${id}`).classList.add(`active`);
-  window.scrollTo(0, 0);
-  // show/hide test lang switcher
-  const testLangBtns = document.getElementById(`test-lang-btns`);
-  testLangBtns.style.display = (id === `test` && session.current < 20) ? `flex` : `none`;
-  // push history state for back-button blocking
-  history.pushState({ screen: id }, ``);
+  window.scrollTo(0,0);
+  history.pushState({screen:id}, ``);
 }
-
-window.addEventListener(`popstate`, e => {
-  // prevent going back during test
-  const testActive = document.getElementById(`screen-test`).classList.contains(`active`);
-  if (testActive) {
-    history.pushState({ screen:`test` }, ``);
+window.addEventListener(`popstate`, () => {
+  if(document.getElementById(`screen-test`).classList.contains(`active`)){
+    history.pushState({screen:`test`}, ``);
   }
 });
 
-// ═══════════════════════════════════════════════
-// FORM → START TEST
-// ═══════════════════════════════════════════════
-function startTest() {
-  const name = document.getElementById(`inp-name`).value.trim();
-  const phone = document.getElementById(`inp-phone`).value.trim();
-  const grade = document.getElementById(`inp-class`).value;
-  const level = document.getElementById(`inp-level`).value;
-  const err = document.getElementById(`form-err`);
-
-  if (!name) { showErr(T(`errName`)); return; }
-  if (!phone) { showErr(T(`errPhone`)); return; }
-  if (!grade) { showErr(T(`errClass`)); return; }
-  if (!level) { showErr(T(`errLevel`)); return; }
-
-  err.style.display = `none`;
-  session.name = name; session.phone = phone; session.grade = grade; session.level = level;
-
-  buildQuestions();
-  showScreen(`test`);
-  startTimer();
-  setupAntiCheat();
-  renderQuestion(0);
-
-  // Register to sheet (fire and forget)
-  fireAndForget({ action:`register`, name, phone, grade, level, timestamp: new Date().toISOString() });
+// ═══════════════════════════════════
+// PHONE FORMATTING
+// ═══════════════════════════════════
+function formatPhone(input){
+  let v = input.value.replace(/\D/g,``);
+  if(!v.startsWith(`998`)) v = `998` + v.replace(/^998/,``);
+  v = v.slice(0,12);
+  let out = `+998`;
+  if(v.length > 3) out += ` ` + v.slice(3,5);
+  if(v.length > 5) out += `-` + v.slice(5,8);
+  if(v.length > 8) out += `-` + v.slice(8,10);
+  if(v.length > 10) out += `-` + v.slice(10,12);
+  input.value = out;
+}
+function isValidPhone(v){
+  return /^\+998 \d{2}-\d{3}-\d{2}-\d{2}$/.test(v.trim());
 }
 
-function showErr(msg) {
-  const el = document.getElementById(`form-err`);
+// ═══════════════════════════════════
+// FORM STEP 1 → STEP 2
+// ═══════════════════════════════════
+function goStep2(){
+  const name = document.getElementById(`inp-name`).value.trim();
+  const phone = document.getElementById(`inp-phone`).value.trim();
+  if(!name){ showErr(`form-err`, T(`errName`)); return; }
+  if(!isValidPhone(phone)){ showErr(`form-err`, `Phone must be in format +998 XX-XXX-XX-XX`); return; }
+  document.getElementById(`form-err`).style.display = `none`;
+  session.name = name; session.phone = phone;
+  showScreen(`form2`);
+}
+
+// ═══════════════════════════════════
+// FORM STEP 2 → START TEST
+// ═══════════════════════════════════
+function startTest(){
+  const grade = document.getElementById(`inp-class`).value;
+  const level = document.getElementById(`inp-level`).value;
+  if(!grade){ showErr(`form2-err`, T(`errClass`)); return; }
+  if(!level){ showErr(`form2-err`, T(`errLevel`)); return; }
+  document.getElementById(`form2-err`).style.display = `none`;
+  session.grade = grade; session.level = level;
+  buildQuestions();
+  showScreen(`test`);
+  startSectionTimer(`eng`);
+  setupAntiCheat();
+  renderQuestion(0);
+  fireAndForget({action:`register`,name:session.name,phone:session.phone,grade,level,timestamp:new Date().toISOString()});
+}
+function showErr(id, msg){
+  const el = document.getElementById(id);
   el.textContent = msg; el.style.display = `block`;
 }
 
-// ═══════════════════════════════════════════════
-// BUILD SESSION QUESTIONS
-// ═══════════════════════════════════════════════
-function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+// ═══════════════════════════════════
+// BUILD QUESTIONS (English first)
+// ═══════════════════════════════════
+function pickRandom(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
 
-function buildQuestions() {
+function buildQuestions(){
   session.questions = [];
-  // Math: 20 types, pick 1 variant each
+  // SECTION 1: English (0–19)
+  shuffle([0,1,2,3,4,5,6]).forEach(i => {
+    const v = pickRandom(ENG_GRAMMAR[i].variants);
+    session.questions.push({...v, section:`eng`, subtype:`grammar`});
+  });
+  shuffle([0,1,2,3,4,5,6]).forEach(i => {
+    const v = pickRandom(ENG_VOCAB[i].variants);
+    session.questions.push({...v, section:`eng`, subtype:`vocab`});
+  });
+  const rs = pickRandom(READING_SETS);
+  rs.questions.forEach(rq => session.questions.push({...rq, section:`eng`, subtype:`reading`, passage:rs.passage}));
+  // SECTION 2: Math (20–39)
   MATH_BANK.forEach((type, ti) => {
     const v = pickRandom(type.variants);
-    session.questions.push({ ...v, section:`math`, typeIdx: ti });
-  });
-  // English: 7 grammar + 7 vocab (pick 1 variant each) + 1 reading set (6 Q)
-  const grIdx = shuffleArr([0,1,2,3,4,5,6]);
-  grIdx.forEach(i => {
-    const v = pickRandom(ENG_GRAMMAR[i].variants);
-    session.questions.push({ ...v, section:`eng`, subtype:`grammar` });
-  });
-  const voIdx = shuffleArr([0,1,2,3,4,5,6]);
-  voIdx.forEach(i => {
-    const v = pickRandom(ENG_VOCAB[i].variants);
-    session.questions.push({ ...v, section:`eng`, subtype:`vocab` });
-  });
-  const rSet = pickRandom(READING_SETS);
-  rSet.questions.forEach(rq => {
-    session.questions.push({ ...rq, section:`eng`, subtype:`reading`, passage: rSet.passage });
+    session.questions.push({...v, section:`math`, typeIdx:ti});
   });
   session.answers = {};
   session.current = 0;
   session.startTime = Date.now();
+  buildProgressDots();
 }
 
-function shuffleArr(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-// ═══════════════════════════════════════════════
-// RENDER QUESTION
-// ═══════════════════════════════════════════════
-function renderQuestion(idx) {
-  const q = session.questions[idx];
-  const total = session.questions.length;
-  const isMath = q.section === `math`;
-
-  // progress bar
-  document.getElementById(`progress-bar`).style.width = `${(idx / total) * 100}%`;
-
-  // section label
-  document.getElementById(`test-section-label`).textContent = isMath ? T(`sectionMath`) : T(`sectionEng`);
-
-  // counter
-  document.getElementById(`q-counter`).textContent = T(`qCounter`)(idx + 1, total);
-
-  // section tag
-  const tag = document.getElementById(`q-tag`);
-  tag.textContent = isMath ? T(`tagMath`) : T(`tagEng`);
-  tag.className = `q-section-tag ${isMath ? `tag-math` : `tag-eng`}`;
-
-  // passage
-  const passageEl = document.getElementById(`q-passage`);
-  if (q.passage) {
-    passageEl.textContent = q.passage;
-    passageEl.style.display = `block`;
-  } else {
-    passageEl.style.display = `none`;
-  }
-
-  // question text — use current language for math, always en for english
-  const qText = isMath ? (q.q[currentLang] || q.q.en) : q.q;
-  document.getElementById(`q-text`).innerHTML = qText;
-
-  // options
-  const optionsEl = document.getElementById(`options`);
-  optionsEl.innerHTML = ``;
-  const letters = [`A`,`B`,`C`,`D`];
-  q.options.forEach((opt, oi) => {
-    const btn = document.createElement(`button`);
-    btn.className = `option-btn${session.answers[idx] === oi ? ` selected` : ``}`;
-    btn.innerHTML = `<span class="option-letter">${letters[oi]}</span><span>${opt}</span>`;
-    btn.onclick = () => selectOption(idx, oi);
-    optionsEl.appendChild(btn);
+function buildProgressDots(){
+  const container = document.getElementById(`progress-dots`);
+  container.innerHTML = ``;
+  session.questions.forEach((_, i) => {
+    const d = document.createElement(`div`);
+    d.className = `dot${i === 0 ? ` current` : ``}`;
+    d.id = `dot-${i}`;
+    container.appendChild(d);
   });
-
-  // next button
-  const nextBtn = document.getElementById(`btn-next`);
-  nextBtn.disabled = session.answers[idx] === undefined;
-  nextBtn.textContent = idx === total - 1 ? T(`btnFinish`) : T(`btnNext`);
-
-  // test lang switcher visibility
-  document.getElementById(`test-lang-btns`).style.display = isMath ? `flex` : `none`;
-
-  // render KaTeX after DOM update
-  setTimeout(() => {
-    if (window.renderMathInElement) {
-      renderMathInElement(document.getElementById(`q-text`), {
-        delimiters:[{left:`\\(`,right:`\\)`,display:false},{left:`\\[`,right:`\\]`,display:true}],
-        throwOnError:false
-      });
-      renderMathInElement(optionsEl, {
-        delimiters:[{left:`\\(`,right:`\\)`,display:false},{left:`\\[`,right:`\\]`,display:true}],
-        throwOnError:false
-      });
-    }
-  }, 30);
 }
 
-// ═══════════════════════════════════════════════
-// SELECT OPTION
-// ═══════════════════════════════════════════════
-function selectOption(qIdx, optIdx) {
-  session.answers[qIdx] = optIdx;
-  document.querySelectorAll(`.option-btn`).forEach((btn, i) => {
-    btn.classList.toggle(`selected`, i === optIdx);
+function updateProgressDots(idx){
+  session.questions.forEach((_, i) => {
+    const d = document.getElementById(`dot-${i}`);
+    if(!d) return;
+    d.className = `dot${i === idx ? ` current` : session.answers[i] !== undefined ? ` answered` : ``}`;
   });
-  document.getElementById(`btn-next`).disabled = false;
+  const answered = Object.keys(session.answers).length;
+  document.getElementById(`progress-pct`).textContent = `${answered} / ${session.questions.length}`;
 }
 
-// ═══════════════════════════════════════════════
-// NEXT / FINISH
-// ═══════════════════════════════════════════════
-function nextQuestion() {
-  const total = session.questions.length;
-  if (session.current < total - 1) {
-    session.current++;
-    renderQuestion(session.current);
-    window.scrollTo(0, 0);
-  } else {
-    finishTest();
-  }
-}
-
-// ═══════════════════════════════════════════════
-// TIMER
-// ═══════════════════════════════════════════════
-function startTimer() {
-  session.timeLeft = 45 * 60;
+// ═══════════════════════════════════
+// TIMERS
+// ═══════════════════════════════════
+function startSectionTimer(section){
+  clearInterval(session.timerInterval);
+  session.currentSection = section;
+  session.timeLeft = section === `eng` ? ENG_SECONDS : MATH_SECONDS;
   updateTimerDisplay();
+  const timerEl = document.getElementById(`timer`);
+  timerEl.classList.remove(`warn`);
   session.timerInterval = setInterval(() => {
     session.timeLeft--;
     updateTimerDisplay();
-    if (session.timeLeft <= 0) {
+    if(session.timeLeft <= 0){
       clearInterval(session.timerInterval);
-      finishTest();
+      if(section === `eng`) showBreakScreen(true);
+      else finishTest();
     }
   }, 1000);
 }
 
-function updateTimerDisplay() {
+function updateTimerDisplay(){
   const m = Math.floor(session.timeLeft / 60);
   const s = session.timeLeft % 60;
   const el = document.getElementById(`timer`);
@@ -914,142 +997,331 @@ function updateTimerDisplay() {
   el.classList.toggle(`warn`, session.timeLeft <= 300);
 }
 
-// ═══════════════════════════════════════════════
-// ANTI-CHEAT
-// ═══════════════════════════════════════════════
-function setupAntiCheat() {
-  document.addEventListener(`visibilitychange`, () => {
-    if (document.hidden) {
-      session.tabSwitches++;
-      const banner = document.getElementById(`warn-banner`);
-      banner.textContent = T(`warnTab`);
-      banner.style.display = `block`;
-      setTimeout(() => { banner.style.display = `none`; }, 5000);
+// ═══════════════════════════════════
+// RENDER QUESTION
+// ═══════════════════════════════════
+function renderQuestion(idx){
+  const q = session.questions[idx];
+  const total = session.questions.length;
+  const isMath = q.section === `math`;
+
+  // top bar
+  if(isMath){
+    document.getElementById(`test-section-main`).textContent = T(`secMath`);
+    document.getElementById(`test-section-sub`).textContent = T(`secMathSub`);
+    document.getElementById(`test-lang-btns`).style.display = `flex`;
+  } else {
+    document.getElementById(`test-section-main`).textContent = T(`secEng`);
+    document.getElementById(`test-section-sub`).textContent = T(`secEngSub`);
+    document.getElementById(`test-lang-btns`).style.display = `none`;
+  }
+
+  // counter
+  document.getElementById(`q-counter`).textContent = T(`qOf`)(idx+1, total);
+
+  // tag
+  const tag = document.getElementById(`q-tag`);
+  const subMap = {grammar:`tagGrammar`,vocab:`tagVocab`,reading:`tagReading`};
+  const tagKey = isMath ? `tagMath` : (subMap[q.subtype] || `tagEng`);
+  const tagClass = {tagMath:`tag-math`,tagGrammar:`tag-grammar`,tagVocab:`tag-vocab`,tagReading:`tag-reading`,tagEng:`tag-eng`}[tagKey] || `tag-eng`;
+  tag.textContent = T(tagKey);
+  tag.className = `q-tag ${tagClass}`;
+
+  // passage
+  const pe = document.getElementById(`q-passage`);
+  if(q.passage){ pe.textContent = q.passage; pe.style.display = `block`; }
+  else { pe.style.display = `none`; }
+
+  // question
+  const qText = isMath ? (q.q[currentLang] || q.q.en) : q.q;
+  document.getElementById(`q-text`).innerHTML = qText;
+
+  // options
+  const optEl = document.getElementById(`options`);
+  optEl.innerHTML = ``;
+  const letters = [`A`,`B`,`C`,`D`];
+  q.options.forEach((opt, oi) => {
+    const btn = document.createElement(`button`);
+    const sel = session.answers[idx] === oi;
+    btn.className = `option-btn${sel ? ` selected` : ``}`;
+    btn.innerHTML = `<span class="option-letter">${letters[oi]}</span><span>${opt}</span>`;
+    btn.onclick = () => selectOption(idx, oi);
+    optEl.appendChild(btn);
+  });
+
+  // footer hint
+  document.getElementById(`footer-hint`).textContent = ``;
+
+  // next btn
+  const nb = document.getElementById(`btn-next`);
+  nb.disabled = session.answers[idx] === undefined;
+  const isLast = idx === total - 1;
+  nb.textContent = isLast ? T(`btnFinish`) : T(`btnNext`);
+  nb.className = `btn-next${isLast ? ` finish` : ``}`;
+
+  // update dots
+  updateProgressDots(idx);
+
+  // KaTeX
+  setTimeout(() => {
+    if(window.renderMathInElement){
+      [`q-text`, `options`].forEach(id => {
+        renderMathInElement(document.getElementById(id), {
+          delimiters:[{left:`\\(`,right:`\\)`,display:false},{left:`\\[`,right:`\\]`,display:true}],
+          throwOnError:false
+        });
+      });
     }
-  });
-  document.addEventListener(`copy`, e => e.preventDefault());
-  document.addEventListener(`contextmenu`, e => {
-    const testActive = document.getElementById(`screen-test`).classList.contains(`active`);
-    if (testActive) e.preventDefault();
-  });
+  }, 30);
 }
 
-// ═══════════════════════════════════════════════
-// FINISH TEST + SCORE
-// ═══════════════════════════════════════════════
-function finishTest() {
+// ═══════════════════════════════════
+// OPTION SELECT
+// ═══════════════════════════════════
+function selectOption(qIdx, optIdx){
+  session.answers[qIdx] = optIdx;
+  document.querySelectorAll(`.option-btn`).forEach((btn, i) => {
+    btn.classList.toggle(`selected`, i === optIdx);
+  });
+  document.getElementById(`btn-next`).disabled = false;
+  updateProgressDots(qIdx);
+}
+
+// ═══════════════════════════════════
+// NEXT
+// ═══════════════════════════════════
+function nextQuestion(){
+  const total = session.questions.length;
+  const cur = session.current;
+
+  // crossing from English (19) → Math (20)
+  if(cur === 19){
+    showBreakScreen(false);
+    return;
+  }
+
+  if(cur < total - 1){
+    session.current++;
+    renderQuestion(session.current);
+    window.scrollTo(0,0);
+  } else {
+    finishTest();
+  }
+}
+
+// ═══════════════════════════════════
+// SECTION BREAK
+// ═══════════════════════════════════
+function showBreakScreen(timedOut){
+  clearInterval(session.timerInterval);
+  // calculate partial english score
+  let engScore = 0;
+  for(let i = 0; i < 20; i++){
+    if(session.answers[i] === session.questions[i].ans) engScore++;
+  }
+  const engPct = Math.round((engScore/20)*100);
+  const cefr = calcCEFR(engPct);
+  document.getElementById(`break-eng-val`).textContent = `${engScore}/20`;
+  document.getElementById(`break-cefr`).textContent = cefr;
+  showScreen(`break`);
+}
+
+function startMathSection(){
+  session.current = 20;
+  showScreen(`test`);
+  startSectionTimer(`math`);
+  renderQuestion(20);
+}
+
+// ═══════════════════════════════════
+// FINISH
+// ═══════════════════════════════════
+function finishTest(){
   clearInterval(session.timerInterval);
   const duration = Math.round((Date.now() - session.startTime) / 1000);
-
-  let mathScore = 0, engScore = 0;
-  session.questions.forEach((q, i) => {
-    if (session.answers[i] === q.ans) {
-      if (q.section === `math`) mathScore++; else engScore++;
+  let engScore=0, mathScore=0;
+  session.questions.forEach((q,i) => {
+    if(session.answers[i] === q.ans){
+      if(q.section === `eng`) engScore++; else mathScore++;
     }
   });
-  session.mathScore = mathScore;
-  session.engScore = engScore;
-
-  const total = mathScore + engScore;
+  session.engScore = engScore; session.mathScore = mathScore;
+  const total = engScore + mathScore;
   const totalMax = session.questions.length;
-  const totalPct = Math.round((total / totalMax) * 100);
-  const engPct = Math.round((engScore / 20) * 100);
+  const totalPct = Math.round((total/totalMax)*100);
+  const engPct = Math.round((engScore/20)*100);
+  const mathPct = Math.round((mathScore/20)*100);
   const cefr = calcCEFR(engPct);
 
-  // fill results screen
+  // results
   document.getElementById(`res-pct`).textContent = `${totalPct}%`;
   document.getElementById(`res-raw`).textContent = `${total} / ${totalMax}`;
-  document.getElementById(`res-math-val`).textContent = `${mathScore}/20`;
   document.getElementById(`res-eng-val`).textContent = `${engScore}/20`;
+  document.getElementById(`res-math-val`).textContent = `${mathScore}/20`;
   document.getElementById(`res-cefr`).textContent = cefr;
+  setTimeout(() => {
+    document.getElementById(`hero-fill`).style.width = `${totalPct}%`;
+    document.getElementById(`eng-fill`).style.width = `${engPct}%`;
+    document.getElementById(`math-fill`).style.width = `${mathPct}%`;
+  }, 200);
 
-  // fill certificate
+  // certificate
   const now = new Date();
   document.getElementById(`cert-name`).textContent = session.name;
   document.getElementById(`cert-total`).textContent = `${total}/${totalMax}`;
-  document.getElementById(`cert-math`).textContent = `${mathScore}/20`;
   document.getElementById(`cert-eng`).textContent = `${engScore}/20`;
+  document.getElementById(`cert-math`).textContent = `${mathScore}/20`;
   document.getElementById(`cert-cefr`).textContent = cefr;
-  document.getElementById(`cert-date`).textContent = now.toLocaleDateString(`en-GB`, { year:`numeric`, month:`long`, day:`numeric` });
+  document.getElementById(`cert-date`).textContent = now.toLocaleDateString(`en-GB`,{year:`numeric`,month:`long`,day:`numeric`});
 
   showScreen(`results`);
-
-  // submit to Apps Script
   fireAndForget({
-    action: `diagnostic`,
-    name: session.name,
-    phone: session.phone,
-    grade: session.grade,
-    selfLevel: session.level,
-    mathScore, engScore,
-    totalScore: total,
-    mathTotal: 20, engTotal: 20, totalMax,
+    action:`diagnostic`, name:session.name, phone:session.phone,
+    grade:session.grade, selfLevel:session.level,
+    mathScore, engScore, totalScore:total,
+    mathTotal:20, engTotal:20, totalMax,
     totalPct, engPct, cefr,
-    tabSwitches: session.tabSwitches,
-    duration,
-    timestamp: now.toISOString(),
+    tabSwitches:session.tabSwitches, duration,
+    timestamp:now.toISOString()
   });
 }
 
-function calcCEFR(pct) {
-  if (pct >= 90) return `C1`;
-  if (pct >= 75) return `B2`;
-  if (pct >= 55) return `B1`;
-  if (pct >= 35) return `A2`;
+function calcCEFR(pct){
+  if(pct>=90) return `C1`;
+  if(pct>=75) return `B2`;
+  if(pct>=55) return `B1`;
+  if(pct>=35) return `A2`;
   return `A1`;
 }
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════
 // RETAKE
-// ═══════════════════════════════════════════════
-function retake() {
+// ═══════════════════════════════════
+function retake(){
   clearInterval(session.timerInterval);
   showScreen(`intro`);
 }
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════
 // CERTIFICATE DOWNLOAD
-// ═══════════════════════════════════════════════
-function downloadCert() {
+// ═══════════════════════════════════
+function downloadCert(){
   const card = document.getElementById(`cert-card`);
-  html2canvas(card, { scale: 2, useCORS: true, backgroundColor: `#ffffff` }).then(canvas => {
-    const link = document.createElement(`a`);
-    link.download = `SAT_Samarkand_Certificate_${session.name.replace(/\s+/g,`_`)}.png`;
-    link.href = canvas.toDataURL(`image/png`);
-    link.click();
+  html2canvas(card, {scale:2,useCORS:true,backgroundColor:`#ffffff`}).then(canvas => {
+    const a = document.createElement(`a`);
+    a.download = `SAT_Samarkand_Certificate_${session.name.replace(/\s+/g,`_`)}.png`;
+    a.href = canvas.toDataURL(`image/png`);
+    a.click();
   });
 }
 
-// ═══════════════════════════════════════════════
-// FIRE-AND-FORGET SUBMIT
-// ═══════════════════════════════════════════════
-function fireAndForget(data) {
+// ═══════════════════════════════════
+// ANTI-CHEAT
+// ═══════════════════════════════════
+function setupAntiCheat(){
+  document.addEventListener(`visibilitychange`, () => {
+    if(document.hidden){
+      session.tabSwitches++;
+      const b = document.getElementById(`warn-bar`);
+      b.textContent = T(`warnTab`);
+      b.style.display = `block`;
+      setTimeout(() => { b.style.display = `none`; }, 5000);
+    }
+  });
+  document.addEventListener(`copy`, e => e.preventDefault());
+  document.addEventListener(`contextmenu`, e => {
+    if(document.getElementById(`screen-test`).classList.contains(`active`)) e.preventDefault();
+  });
+}
+
+// ═══════════════════════════════════
+// REVIEW ANSWERS
+// ═══════════════════════════════════
+function showReview(){
+  const list = document.getElementById(`review-list`);
+  list.innerHTML = ``;
+  const letters = [`A`,`B`,`C`,`D`];
+
+  session.questions.forEach((q, idx) => {
+    const userAns = session.answers[idx];
+    const correct = q.ans;
+    const isMath = q.section === `math`;
+    const sectionNum = idx < 20 ? 1 : 2;
+
+    const item = document.createElement(`div`);
+    item.className = `review-item`;
+
+    let statusHTML = ``;
+    if(userAns === undefined) statusHTML = `<span class="review-status status-skip">—</span>`;
+    else if(userAns === correct) statusHTML = `<span class="review-status status-correct">✓</span>`;
+    else statusHTML = `<span class="review-status status-wrong">✗</span>`;
+
+    const tagLabel = isMath ? `Math` : {grammar:`Grammar`,vocab:`Vocabulary`,reading:`Reading`}[q.subtype] || `English`;
+    const sectionLabel = isMath ? `Section 2 — Math` : `Section 1 — English`;
+
+    let html = `<div class="review-q-num">${statusHTML} Q${idx+1} &nbsp;·&nbsp; ${sectionLabel} &nbsp;·&nbsp; ${tagLabel}</div>`;
+
+    if(q.passage){
+      const preview = q.passage.length > 200 ? q.passage.slice(0,200) + `…` : q.passage;
+      html += `<div class="review-passage">${preview}</div>`;
+    }
+
+    const qText = isMath ? (q.q[currentLang] || q.q.en) : q.q;
+    html += `<div class="review-q-text">${qText}</div><div class="review-options">`;
+
+    q.options.forEach((opt, oi) => {
+      let cls = `neutral`;
+      if(oi === correct) cls = `correct`;
+      else if(oi === userAns) cls = `wrong`;
+      html += `<div class="review-opt ${cls}"><span class="review-opt-letter">${letters[oi]}</span><span>${opt}</span></div>`;
+    });
+
+    html += `</div>`;
+    item.innerHTML = html;
+    list.appendChild(item);
+
+    // render KaTeX for this item
+    if(isMath && window.renderMathInElement){
+      setTimeout(() => {
+        renderMathInElement(item, {
+          delimiters:[{left:`\\(`,right:`\\)`,display:false},{left:`\\[`,right:`\\]`,display:true}],
+          throwOnError:false
+        });
+      }, 50);
+    }
+  });
+
+  showScreen(`review`);
+}
+
+// ═══════════════════════════════════
+// SUBMIT — hidden iframe, no page nav
+// ═══════════════════════════════════
+function fireAndForget(data){
   try {
+    const iframeName = `ff-${Date.now()}`;
     const iframe = document.createElement(`iframe`);
-    iframe.style.display = `none`;
+    iframe.name = iframeName;
+    iframe.style.cssText = `display:none;width:0;height:0;border:0;position:absolute;left:-9999px`;
     document.body.appendChild(iframe);
+
     const form = document.createElement(`form`);
-    form.method = `POST`;
-    form.action = SCRIPT_URL;
-    form.target = `_blank`;
-    Object.entries(data).forEach(([k, v]) => {
-      const inp = document.createElement(`input`);
-      inp.type = `hidden`; inp.name = k; inp.value = v;
-      form.appendChild(inp);
+    form.method = `POST`; form.action = SCRIPT_URL; form.target = iframeName;
+    Object.entries(data).forEach(([k,v]) => {
+      const i = document.createElement(`input`);
+      i.type=`hidden`; i.name=k; i.value=String(v); form.appendChild(i);
     });
     document.body.appendChild(form);
     form.submit();
-    setTimeout(() => { form.remove(); }, 3000);
-  } catch(e) { /* silent */ }
+    setTimeout(() => { try{form.remove();iframe.remove();}catch(e){} }, 5000);
+  } catch(e){ /* silent */ }
 }
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════
 // INIT
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════
 document.addEventListener(`DOMContentLoaded`, () => {
-  updateUIStrings();
-  // hide test lang btns initially
-  document.getElementById(`test-lang-btns`).style.display = `none`;
+  applyStrings();
 });
 </script>
 </body>
