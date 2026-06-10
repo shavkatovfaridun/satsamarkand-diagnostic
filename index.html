@@ -141,7 +141,8 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
 .cheat-overlay.show{display:flex}
 .cheat-modal{background:#fff;border-radius:20px;padding:40px 36px;max-width:420px;width:90%;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.4);animation:modalPop .25s ease}
 @keyframes modalPop{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
-.cheat-icon{font-size:2.8rem;margin-bottom:16px;line-height:1}
+.cheat-icon{width:56px;height:56px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center}
+.cheat-icon svg{width:56px;height:56px}
 .cheat-title{font-size:1.3rem;font-weight:900;color:#c62828;margin-bottom:10px;letter-spacing:-.3px}
 .cheat-msg{font-size:.93rem;color:#4a5a7a;line-height:1.6;margin-bottom:24px}
 .cheat-count{display:inline-block;background:#ffebee;color:#c62828;border-radius:20px;padding:4px 14px;font-size:.8rem;font-weight:700;margin-bottom:20px}
@@ -162,7 +163,8 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
 .score-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
 .score-card{background:var(--card);border-radius:16px;padding:24px;box-shadow:var(--shadow);border:1px solid var(--border)}
 .score-card-top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.score-card-icon{font-size:1.5rem}
+.score-card-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.score-card-icon svg{width:24px;height:24px}
 .score-card-name{font-size:.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
 .score-card-val{font-size:2rem;font-weight:900;color:var(--navy);line-height:1;margin-bottom:6px}
 .score-card-bar{background:var(--bg);border-radius:50px;height:6px;overflow:hidden}
@@ -261,7 +263,7 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
 <!-- ANTI-CHEAT MODAL -->
 <div class="cheat-overlay" id="cheat-overlay">
   <div class="cheat-modal">
-    <div class="cheat-icon" id="cheat-icon">⚠️</div>
+    <div class="cheat-icon" id="cheat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#c62828" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
     <div class="cheat-title" id="cheat-title">Warning!</div>
     <div class="cheat-msg" id="cheat-msg">Switching tabs or leaving the page during the test is not allowed.</div>
     <div class="cheat-count" id="cheat-count">Violation #1</div>
@@ -438,13 +440,13 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
     </div>
     <div class="score-grid">
       <div class="score-card">
-        <div class="score-card-top"><span class="score-card-icon">📖</span><span class="score-card-name" id="res-eng-label">English</span></div>
+        <div class="score-card-top"><span class="score-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#0350b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></span><span class="score-card-name" id="res-eng-label">English</span></div>
         <div class="score-card-val" id="res-eng-val">—</div>
         <div class="score-card-bar"><div class="score-card-fill fill-eng" id="eng-fill" style="width:0%"></div></div>
         <div class="score-card-sub"><span class="cefr-badge" id="res-cefr">B1</span></div>
       </div>
       <div class="score-card">
-        <div class="score-card-top"><span class="score-card-icon">📐</span><span class="score-card-name" id="res-math-label">Math</span></div>
+        <div class="score-card-top"><span class="score-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#3949ab" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></span><span class="score-card-name" id="res-math-label">Math</span></div>
         <div class="score-card-val" id="res-math-val">—</div>
         <div class="score-card-bar"><div class="score-card-fill fill-math" id="math-fill" style="width:0%"></div></div>
         <div class="score-card-sub" id="res-math-sub">out of 20</div>
@@ -521,21 +523,21 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
       <div class="cert-right">
         <div class="cert-qr-item">
           <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fwww.instagram.com%2Fsat_samarkand&size=128x128&margin=4" alt="Instagram QR">
-          <div class="cert-qr-label">📸 Instagram</div>
+          <div class="cert-qr-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:10px;height:10px"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> Instagram</div>
         </div>
         <div class="cert-qr-item">
           <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Ft.me%2Fsat_samarkand&size=128x128&margin=4" alt="Telegram QR">
-          <div class="cert-qr-label">✈️ Telegram</div>
+          <div class="cert-qr-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:10px;height:10px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Telegram</div>
         </div>
         <div class="cert-qr-item">
           <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fsatsamarkand.uz&size=128x128&margin=4" alt="Website QR">
-          <div class="cert-qr-label">🌐 Website</div>
+          <div class="cert-qr-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:10px;height:10px"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> Website</div>
         </div>
       </div>
 
     </div>
     <div class="cert-actions">
-      <button class="btn-cta" onclick="downloadCert()" id="btn-download">⬇ Download Certificate</button>
+      <button class="btn-cta" onclick="downloadCert()" id="btn-download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;margin-bottom:2px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download Certificate</button>
       <button class="btn-secondary" onclick="showScreen('results')" id="btn-back-results">← Back to Results</button>
     </div>
   </div>
@@ -1432,7 +1434,7 @@ function showCheatModal(type){
   if(type === `fullscreen`){
     const exits = session.fullscreenExits || 0;
     const remaining = Math.max(0, 5 - exits);
-    icon.textContent  = `🖥️`;
+    icon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="#0661de" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`;
     title.textContent = `Return to Fullscreen`;
     msg.textContent   = `The test must be taken in fullscreen mode. Your timer is paused until you return.`;
     count.textContent = remaining > 0
@@ -1442,7 +1444,7 @@ function showCheatModal(type){
     btn.className   = `cheat-btn fs-btn`;
     btn.onclick     = returnToFullscreen;
   } else if(type === `refresh`){
-    icon.textContent  = `🚫`;
+    icon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="#c62828" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>`;
     title.textContent = `Page Refresh Blocked`;
     msg.textContent   = `Refreshing during the test will reset your progress. Please finish the test without refreshing.`;
     count.textContent = `Violation detected`;
@@ -1450,7 +1452,7 @@ function showCheatModal(type){
     btn.className     = `cheat-btn`;
     btn.onclick       = closeCheatModal;
   } else {
-    icon.textContent  = `⚠️`;
+    icon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="#c62828" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
     title.textContent = `Tab Switch Detected`;
     msg.textContent   = `Leaving the test tab is not allowed. Each violation is recorded.`;
     count.textContent = `Violation #${session.tabSwitches}`;
