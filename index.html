@@ -143,6 +143,8 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
 .cheat-count{display:inline-block;background:#ffebee;color:#c62828;border-radius:20px;padding:4px 14px;font-size:.8rem;font-weight:700;margin-bottom:20px}
 .cheat-btn{background:var(--blue);color:#fff;border:none;padding:13px 36px;border-radius:50px;font-size:.97rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s}
 .cheat-btn:hover{background:var(--blue2)}
+.cheat-btn.fs-btn{background:#16a34a}
+.cheat-btn.fs-btn:hover{background:#15803d}
 
 /* ══ RESULTS ══ */
 #screen-results{padding:48px 24px}
@@ -259,7 +261,7 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
     <div class="cheat-title" id="cheat-title">Warning!</div>
     <div class="cheat-msg" id="cheat-msg">Switching tabs or leaving the page during the test is not allowed.</div>
     <div class="cheat-count" id="cheat-count">Violation #1</div>
-    <button class="cheat-btn" onclick="closeCheatModal()">Return to Test</button>
+    <button class="cheat-btn" id="cheat-action-btn" onclick="closeCheatModal()">Return to Test</button>
   </div>
 </div>
 
@@ -1342,17 +1344,38 @@ function setupAntiCheat(){
     }
   });
 
-  // Fullscreen exit tracking
-  document.addEventListener(`fullscreenchange`, () => {
-    if(!document.fullscreenElement && document.getElementById(`screen-test`).classList.contains(`active`)){
+  // Fullscreen exit — pause test, show return-to-fullscreen modal
+  const FS_EXIT_LIMIT = 5;
+  function onFullscreenChange(){
+    const inFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement);
+    const testActive   = document.getElementById(`screen-test`).classList.contains(`active`);
+    if(!inFullscreen && testActive){
       session.fullscreenExits = (session.fullscreenExits || 0) + 1;
+      if(session.fullscreenExits <= FS_EXIT_LIMIT){
+        // Pause timer
+        clearInterval(session.timerInterval);
+        session.timerPaused = true;
+        showCheatModal(`fullscreen`);
+      }
+      // After limit: don't block anymore, just track
+    } else if(inFullscreen && session.timerPaused){
+      // Resumed fullscreen — restart timer
+      session.timerPaused = false;
+      const section = session.currentSection || `eng`;
+      session.timerInterval = setInterval(() => {
+        session.timeLeft--;
+        updateTimerDisplay();
+        if(session.timeLeft <= 0){
+          clearInterval(session.timerInterval);
+          if(section === `eng`) showBreakScreen(true);
+          else finishTest();
+        }
+      }, 1000);
+      document.getElementById(`cheat-overlay`).classList.remove(`show`);
     }
-  });
-  document.addEventListener(`webkitfullscreenchange`, () => {
-    if(!document.webkitFullscreenElement && document.getElementById(`screen-test`).classList.contains(`active`)){
-      session.fullscreenExits = (session.fullscreenExits || 0) + 1;
-    }
-  });
+  }
+  document.addEventListener(`fullscreenchange`, onFullscreenChange);
+  document.addEventListener(`webkitfullscreenchange`, onFullscreenChange);
 
   // Abandon beacon — fires on page close/refresh
   window.addEventListener(`beforeunload`, e => {
@@ -1401,18 +1424,61 @@ function showCheatModal(type){
   const msg     = document.getElementById(`cheat-msg`);
   const icon    = document.getElementById(`cheat-icon`);
   const count   = document.getElementById(`cheat-count`);
+  const btn     = document.getElementById(`cheat-action-btn`);
 
-  if(type === `refresh`){
+  if(type === `fullscreen`){
+    const exits = session.fullscreenExits || 0;
+    const remaining = Math.max(0, 5 - exits);
+    icon.textContent  = `🖥️`;
+    title.textContent = `Return to Fullscreen`;
+    msg.textContent   = `The test must be taken in fullscreen mode. Your timer is paused until you return.`;
+    count.textContent = remaining > 0
+      ? `Warning ${exits}/5 — ${remaining} left before fullscreen is no longer enforced`
+      : `Final warning — fullscreen no longer enforced after this`;
+    btn.textContent = `Return to Fullscreen`;
+    btn.className   = `cheat-btn fs-btn`;
+    btn.onclick     = returnToFullscreen;
+  } else if(type === `refresh`){
     icon.textContent  = `🚫`;
     title.textContent = `Page Refresh Blocked`;
     msg.textContent   = `Refreshing during the test will reset your progress. Please finish the test without refreshing.`;
+    count.textContent = `Violation detected`;
+    btn.textContent   = `Continue Test`;
+    btn.className     = `cheat-btn`;
+    btn.onclick       = closeCheatModal;
   } else {
     icon.textContent  = `⚠️`;
     title.textContent = `Tab Switch Detected`;
     msg.textContent   = `Leaving the test tab is not allowed. Each violation is recorded.`;
+    count.textContent = `Violation #${session.tabSwitches}`;
+    btn.textContent   = `Return to Test`;
+    btn.className     = `cheat-btn`;
+    btn.onclick       = closeCheatModal;
   }
-  count.textContent = `Violation #${session.tabSwitches}`;
   overlay.classList.add(`show`);
+}
+
+function returnToFullscreen(){
+  const el = document.documentElement;
+  try {
+    if(el.requestFullscreen) el.requestFullscreen();
+    else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+  } catch(e){
+    // If fullscreen fails (e.g. browser blocks it), just close and resume
+    session.timerPaused = false;
+    const section = session.currentSection || `eng`;
+    session.timerInterval = setInterval(() => {
+      session.timeLeft--;
+      updateTimerDisplay();
+      if(session.timeLeft <= 0){
+        clearInterval(session.timerInterval);
+        if(section === `eng`) showBreakScreen(true);
+        else finishTest();
+      }
+    }, 1000);
+    document.getElementById(`cheat-overlay`).classList.remove(`show`);
+  }
+  // Modal closes automatically via fullscreenchange event when fullscreen re-enters
 }
 
 function closeCheatModal(){
