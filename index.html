@@ -767,9 +767,9 @@ const MATH_BANK = [
     {q:{en:`Factor completely: \\(x^2 - 9\\)`,uz:`Ko'paytuvchilarga ajrating: \\(x^2 - 9\\)`,ru:`Разложите на множители: \\(x^2 - 9\\)`},options:[`(x-3)(x+3)`,`(x-3)^2`,`(x+3)^2`,`(x-9)(x+1)`],ans:0},
   ]},
   {variants:[
-    {q:{en:`Solve \\(|2x - 3| = 7\\). What are the solutions?`,uz:`\\(|2x - 3| = 7\\) ni yeching.`,ru:`Решите \\(|2x - 3| = 7\\).`},options:[`x=5 \\text{ and } x=-2`,`x=2 \\text{ and } x=-5`,`x=5 \\text{ and } x=2`,`x=-2 \\text{ and } x=3`],ans:0},
+    {q:{en:`Solve \\(|2x - 3| = 7\\). What are the solutions?`,uz:`\\(|2x - 3| = 7\\) ni yeching.`,ru:`Решите \\(|2x - 3| = 7\\).`},options:[`\\(x=5\\) and \\(x=-2\\)`,`\\(x=2\\) and \\(x=-5\\)`,`\\(x=5\\) and \\(x=2\\)`,`\\(x=-2\\) and \\(x=3\\)`],ans:0},
     {q:{en:`What is the value of \\(|-15| + |7| - |-3|\\)?`,uz:`\\(|-15| + |7| - |-3|\\) qiymati?`,ru:`Чему равно \\(|-15| + |7| - |-3|\\)?`},options:[`5`,`19`,`25`,`-5`],ans:1},
-    {q:{en:`Solve \\(|3x + 6| = 12\\). What are the solutions?`,uz:`\\(|3x + 6| = 12\\) ni yeching.`,ru:`Решите \\(|3x + 6| = 12\\).`},options:[`x=2 \\text{ and } x=-6`,`x=6 \\text{ and } x=-2`,`x=2 \\text{ and } x=6`,`x=-2 \\text{ and } x=-6`],ans:0},
+    {q:{en:`Solve \\(|3x + 6| = 12\\). What are the solutions?`,uz:`\\(|3x + 6| = 12\\) ni yeching.`,ru:`Решите \\(|3x + 6| = 12\\).`},options:[`\\(x=2\\) and \\(x=-6\\)`,`\\(x=6\\) and \\(x=-2\\)`,`\\(x=2\\) and \\(x=6\\)`,`\\(x=-2\\) and \\(x=-6\\)`],ans:0},
   ]},
   {variants:[
     {q:{en:`What is the GCF of 36 and 48?`,uz:`36 va 48 ning EKUB?`,ru:`НОД чисел 36 и 48?`},options:[`6`,`9`,`12`,`18`],ans:2},
@@ -1199,7 +1199,8 @@ function renderQuestion(idx){
     // For math questions: wrap option in \(...\) if it doesn't already contain delimiters
     const optDisplay = isMath && !opt.includes(`\\(`) && !opt.includes(`\\[`)
       ? `\\(${opt}\\)` : opt;
-    btn.innerHTML = `<span class="option-letter">${letters[oi]}</span><span>${optDisplay}</span>`;
+    const safeOpt = optDisplay.replace(/&/g, `&amp;`).replace(/</g, `&lt;`).replace(/>/g, `&gt;`);
+    btn.innerHTML = `<span class="option-letter">${letters[oi]}</span><span>${safeOpt}</span>`;
     btn.onclick = () => selectOption(idx, oi);
     optEl.appendChild(btn);
   });
@@ -1654,7 +1655,8 @@ function showReview(){
       else if(oi === userAns) cls = `wrong`;
       const optDisplay = isMath && !opt.includes(`\\(`) && !opt.includes(`\\[`)
         ? `\\(${opt}\\)` : opt;
-      html += `<div class="review-opt ${cls}"><span class="review-opt-letter">${letters[oi]}</span><span>${optDisplay}</span></div>`;
+      const safeOpt = optDisplay.replace(/&/g, `&amp;`).replace(/</g, `&lt;`).replace(/>/g, `&gt;`);
+      html += `<div class="review-opt ${cls}"><span class="review-opt-letter">${letters[oi]}</span><span>${safeOpt}</span></div>`;
     });
 
     html += `</div>`;
