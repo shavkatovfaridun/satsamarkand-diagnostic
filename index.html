@@ -46,7 +46,8 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
 #screen-intro{min-height:calc(100vh - 62px);flex-direction:column;align-items:center;justify-content:center;padding:72px 24px;text-align:center;background:linear-gradient(170deg,#f4f7ff 0%,#e8eeff 60%,#dde8ff 100%);position:relative;overflow:hidden}
 #screen-intro.active{display:flex}
 #intro-canvas{position:absolute;inset:0;pointer-events:none;z-index:0}
-.intro-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
+.intro-orb{z-index:0!important}
+.intro-content{position:relative;display:flex;flex-direction:column;align-items:center}
 /* floating orbs */
 .intro-orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0}
 .intro-orb-1{width:340px;height:340px;background:radial-gradient(circle,rgba(6,97,222,.1) 0%,transparent 70%);top:-80px;right:-80px;animation:orbDrift1 8s ease-in-out infinite}
