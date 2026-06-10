@@ -25,7 +25,7 @@
   --shadow-lg:0 8px 40px rgba(6,97,222,.16);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;overscroll-behavior:none}
 
 /* ══ NAV ══ */
 .nav{background:#fff;padding:0 28px;height:62px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:0 1px 0 rgba(2,32,73,.08)}
@@ -291,6 +291,20 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
     <div class="cheat-msg" id="cheat-msg">Switching tabs or leaving the page during the test is not allowed.</div>
     <div class="cheat-count" id="cheat-count">Violation #1</div>
     <button class="cheat-btn" id="cheat-action-btn" onclick="closeCheatModal()">Return to Test</button>
+  </div>
+</div>
+
+<!-- QUIT CONFIRM MODAL -->
+<div class="cheat-overlay" id="quit-overlay">
+  <div class="cheat-modal">
+    <div class="cheat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#c62828" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
+    <div class="cheat-title" style="color:#c62828">Leave the test?</div>
+    <div class="cheat-msg">If you leave now, your progress will be lost and your result will not be saved.</div>
+    <div class="cheat-count">This cannot be undone</div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:4px">
+      <button class="cheat-btn" style="background:#f0f4ff;color:var(--navy);flex:1" onclick="closeQuitConfirm()">Stay in Test</button>
+      <button class="cheat-btn" style="background:#c62828;flex:1" onclick="confirmQuit()">Leave & Lose Result</button>
+    </div>
   </div>
 </div>
 
@@ -984,8 +998,11 @@ function showScreen(id){
   history.pushState({screen:id}, ``);
 }
 window.addEventListener(`popstate`, () => {
-  if(document.getElementById(`screen-test`).classList.contains(`active`)){
-    history.pushState({screen:`test`}, ``);
+  const testActive = document.getElementById(`screen-test`).classList.contains(`active`);
+  const breakActive = document.getElementById(`screen-break`).classList.contains(`active`);
+  if(testActive || breakActive){
+    history.pushState({screen: testActive ? `test` : `break`}, ``);
+    showQuitConfirm();
   }
 });
 
@@ -1377,7 +1394,7 @@ function setupAntiCheat(){
   });
 
   // Fullscreen exit — pause test, show return-to-fullscreen modal
-  const FS_EXIT_LIMIT = 5;
+  const FS_EXIT_LIMIT = 3;
   function onFullscreenChange(){
     const inFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement);
     const testActive   = document.getElementById(`screen-test`).classList.contains(`active`);
@@ -1411,12 +1428,13 @@ function setupAntiCheat(){
   document.addEventListener(`fullscreenchange`, onFullscreenChange);
   document.addEventListener(`webkitfullscreenchange`, onFullscreenChange);
 
-  // Abandon beacon — fires on page close/refresh
+  // Abandon beacon — fires on page close/refresh (shows browser "Leave site?" dialog)
   window.addEventListener(`beforeunload`, e => {
     const testActive = document.getElementById(`screen-test`).classList.contains(`active`);
-    if(testActive){
+    const breakActive = document.getElementById(`screen-break`).classList.contains(`active`);
+    if(testActive || breakActive){
       e.preventDefault();
-      e.returnValue = ``;
+      e.returnValue = `Your test is in progress. If you leave, your result will be lost.`;
       // Determine stage
       const cur = session.current || 0;
       const sec = cur < 20 ? `English Section` : `Math Section`;
@@ -1450,6 +1468,56 @@ function setupAntiCheat(){
     const isRefresh = e.key === `F5` || ((e.ctrlKey || e.metaKey) && e.key === `r`);
     if(isRefresh){ e.preventDefault(); showCheatModal(`refresh`); }
   });
+}
+
+function showQuitConfirm(){
+  // Pause timer while confirm is shown
+  if(!session.timerPaused){
+    clearInterval(session.timerInterval);
+    session.timerPaused = true;
+    session._quitPaused = true;
+  }
+  document.getElementById(`quit-overlay`).classList.add(`show`);
+}
+function closeQuitConfirm(){
+  document.getElementById(`quit-overlay`).classList.remove(`show`);
+  // Resume timer if we paused it for this dialog
+  if(session._quitPaused){
+    session._quitPaused = false;
+    session.timerPaused = false;
+    const section = session.currentSection || `eng`;
+    session.timerInterval = setInterval(() => {
+      session.timeLeft--;
+      updateTimerDisplay();
+      if(session.timeLeft <= 0){
+        clearInterval(session.timerInterval);
+        if(section === `eng`) showBreakScreen(true);
+        else finishTest();
+      }
+    }, 1000);
+  }
+}
+function confirmQuit(){
+  document.getElementById(`quit-overlay`).classList.remove(`show`);
+  clearInterval(session.timerInterval);
+  // Fire abandon beacon
+  const cur = session.current || 0;
+  const sec = cur < 20 ? `English Section` : `Math Section`;
+  const qNum = cur < 20 ? cur + 1 : cur - 19;
+  const stage = `${sec} — Question ${qNum}/20`;
+  const elapsed = session.startTime ? Math.round((Date.now() - session.startTime) / 1000) : 0;
+  const payload = new URLSearchParams({
+    action:`abandon`, name:session.name||``, phone:session.phone||``,
+    stage, duration:`${Math.floor(elapsed/60)}m ${elapsed%60}s`,
+    tabSwitches:session.tabSwitches||0, fullscreenExits:session.fullscreenExits||0
+  });
+  navigator.sendBeacon(SCRIPT_URL, payload);
+  // Exit fullscreen and go back to intro
+  try { if(document.exitFullscreen) document.exitFullscreen(); } catch(e){}
+  showScreen(`intro`);
+  // Reset session
+  session.questions=[]; session.answers={}; session.current=0;
+  session.tabSwitches=0; session.fullscreenExits=0; session.timerPaused=false;
 }
 
 function terminateTest(reason){
@@ -1487,13 +1555,13 @@ function showCheatModal(type){
 
   if(type === `fullscreen`){
     const exits = session.fullscreenExits || 0;
-    const remaining = Math.max(0, 5 - exits);
+    const remaining = Math.max(0, 3 - exits);
     icon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="#0661de" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`;
     title.textContent = `Return to Fullscreen`;
     msg.textContent   = `The test must be taken in fullscreen mode. Your timer is paused until you return.`;
     count.textContent = remaining > 0
-      ? `Warning ${exits}/5 — ${remaining} left before fullscreen is no longer enforced`
-      : `Final warning — fullscreen no longer enforced after this`;
+      ? `Warning ${exits}/3 — ${remaining} left before test is terminated`
+      : `Final warning — test will be terminated on next exit`;
     btn.textContent = `Return to Fullscreen`;
     btn.className   = `cheat-btn fs-btn`;
     btn.onclick     = returnToFullscreen;
