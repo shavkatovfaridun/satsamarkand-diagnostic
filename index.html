@@ -227,13 +227,25 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
   flex:1;
 }
 .cert-statement{font-size:.73rem;color:var(--muted);text-align:center;line-height:1.6;max-width:280px}
-.cert-tagline{font-size:.7rem;color:var(--blue);text-align:center;line-height:1.55;max-width:260px;background:rgba(6,97,222,.07);border:1px solid rgba(6,97,222,.15);border-radius:12px;padding:10px 14px}
+.cert-tagline{font-size:.82rem;color:var(--blue);text-align:center;line-height:1.6;width:100%;background:rgba(6,97,222,.07);border:1px solid rgba(6,97,222,.15);border-radius:14px;padding:14px 18px}
 .cert-tagline strong{font-weight:800;color:var(--navy)}
 .cert-scores-wrap{display:grid;grid-template-columns:repeat(3,1fr);width:100%;border-radius:16px;overflow:hidden;border:1.5px solid rgba(6,97,222,.12);background:#fff;box-shadow:0 2px 12px rgba(6,97,222,.08)}
-.cert-score-item{padding:16px 8px;text-align:center;border-right:1.5px solid rgba(6,97,222,.1)}
+.cert-score-item{padding:14px 8px 12px;text-align:center;border-right:1.5px solid rgba(6,97,222,.1)}
 .cert-score-item:last-child{border-right:none}
 .cert-score-val{font-size:1.6rem;font-weight:900;color:var(--navy);line-height:1}
-.cert-score-lbl{font-size:.55rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-top:5px}
+.cert-score-pct{font-size:.68rem;font-weight:700;color:var(--blue);margin-top:3px;letter-spacing:.2px}
+.cert-score-lbl{font-size:.55rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-top:4px}
+.cert-group-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+.cert-group-item{border-radius:12px;padding:12px 10px;text-align:center;border:1.5px solid transparent}
+.cert-group-item.sat-ready{background:#eaf4ff;border-color:rgba(6,97,222,.2)}
+.cert-group-item.foundation{background:#fff7ed;border-color:rgba(220,100,0,.18)}
+.cert-group-section{font-size:.52rem;font-weight:700;text-transform:uppercase;letter-spacing:1.8px;color:var(--muted);margin-bottom:5px}
+.cert-group-badge{font-size:.82rem;font-weight:900;line-height:1.2}
+.cert-group-item.sat-ready .cert-group-badge{color:var(--blue)}
+.cert-group-item.foundation .cert-group-badge{color:#c45c00}
+.cert-group-sub{font-size:.6rem;margin-top:4px;font-weight:600}
+.cert-group-item.sat-ready .cert-group-sub{color:var(--blue);opacity:.7}
+.cert-group-item.foundation .cert-group-sub{color:#c45c00;opacity:.7}
 /* ── Zone 3: navy bottom QR (≈30%) ── */
 .cert-zone-bot{
   background:linear-gradient(170deg,var(--navy) 0%,var(--navy2) 100%);
@@ -489,6 +501,18 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
         <div class="score-card-sub" id="res-math-sub">out of 20</div>
       </div>
     </div>
+    <div class="cert-group-row" style="margin-bottom:20px">
+      <div class="cert-group-item" id="res-eng-group">
+        <div class="cert-group-section">English</div>
+        <div class="cert-group-badge" id="res-eng-badge">—</div>
+        <div class="cert-group-sub" id="res-eng-group-sub">—</div>
+      </div>
+      <div class="cert-group-item" id="res-math-group">
+        <div class="cert-group-section">Math</div>
+        <div class="cert-group-badge" id="res-math-badge">—</div>
+        <div class="cert-group-sub" id="res-math-group-sub">—</div>
+      </div>
+    </div>
     <div class="results-cta">
       <button class="btn-cta" onclick="showScreen('cert')" id="btn-see-cert">View Certificate</button>
       <button class="btn-secondary" onclick="showReview()" id="btn-review">Review Answers</button>
@@ -536,21 +560,36 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
       <!-- ZONE 2: Light blue — scores -->
       <div class="cert-zone-mid">
         <div class="cert-statement" id="cert-statement">has successfully completed the SAT Samarkand Diagnostic Assessment</div>
-        <div class="cert-tagline">Reach your desired score with SAT Samarkand — <strong>Guaranteed 1500 Program</strong></div>
         <div class="cert-scores-wrap">
           <div class="cert-score-item">
             <div class="cert-score-val" id="cert-total">—</div>
+            <div class="cert-score-pct" id="cert-total-pct">—%</div>
             <div class="cert-score-lbl">Total</div>
           </div>
           <div class="cert-score-item">
             <div class="cert-score-val" id="cert-eng">—</div>
+            <div class="cert-score-pct" id="cert-eng-pct">—%</div>
             <div class="cert-score-lbl">English</div>
           </div>
           <div class="cert-score-item">
             <div class="cert-score-val" id="cert-math">—</div>
+            <div class="cert-score-pct" id="cert-math-pct">—%</div>
             <div class="cert-score-lbl">Math</div>
           </div>
         </div>
+        <div class="cert-group-row">
+          <div class="cert-group-item" id="cert-eng-group">
+            <div class="cert-group-section">English</div>
+            <div class="cert-group-badge" id="cert-eng-badge">—</div>
+            <div class="cert-group-sub" id="cert-eng-sub">—</div>
+          </div>
+          <div class="cert-group-item" id="cert-math-group">
+            <div class="cert-group-section">Math</div>
+            <div class="cert-group-badge" id="cert-math-badge">—</div>
+            <div class="cert-group-sub" id="cert-math-sub">—</div>
+          </div>
+        </div>
+        <div class="cert-tagline">Reach your desired score with SAT Samarkand — <strong>Guaranteed 1500 Program</strong></div>
       </div>
 
       <!-- ZONE 3: Navy — QR codes -->
@@ -1327,7 +1366,24 @@ function finishTest(){
   document.getElementById(`cert-total`).textContent = `${total}/${totalMax}`;
   document.getElementById(`cert-eng`).textContent = `${engScore}/20`;
   document.getElementById(`cert-math`).textContent = `${mathScore}/20`;
-  // cert-cefr removed from new layout
+  document.getElementById(`cert-total-pct`).textContent = `${totalPct}%`;
+  document.getElementById(`cert-eng-pct`).textContent = `${engPct}%`;
+  document.getElementById(`cert-math-pct`).textContent = `${mathPct}%`;
+  [`eng`,`math`].forEach(sec => {
+    const p = sec === `eng` ? engPct : mathPct;
+    const ready = p >= 70;
+    const cls = `cert-group-item ${ready ? `sat-ready` : `foundation`}`;
+    const badge = ready ? `SAT Ready ✓` : `Foundation`;
+    const sub = ready ? `${p}% · accepted` : `${p}% · needs work`;
+    [`cert`,`res`].forEach(prefix => {
+      const el = document.getElementById(`${prefix}-${sec}-group`);
+      if(!el) return;
+      el.className = cls;
+      document.getElementById(`${prefix}-${sec}-badge`).textContent = badge;
+      const subEl = document.getElementById(`${prefix}-${sec}-sub`) || document.getElementById(`${prefix}-${sec}-group-sub`);
+      if(subEl) subEl.textContent = sub;
+    });
+  });
   document.getElementById(`cert-date`).textContent = now.toLocaleDateString(`en-GB`,{year:`numeric`,month:`long`,day:`numeric`});
 
   // Exit fullscreen when test ends
@@ -1355,6 +1411,14 @@ function calcCEFR(pct){
   if(pct>=55) return `B1`;
   if(pct>=35) return `A2`;
   return `A1`;
+}
+
+function calcGroup(pct){
+  if(pct>=85) return {name:`Advanced Group`,      desc:`Top ${pct}% result. Ready for intensive SAT prep.`};
+  if(pct>=65) return {name:`Upper-Intermediate Group`, desc:`${pct}% score. Strong base — focus on accuracy.`};
+  if(pct>=45) return {name:`Intermediate Group`,  desc:`${pct}% score. Core skills in place — needs reinforcement.`};
+  if(pct>=25) return {name:`Elementary Group`,    desc:`${pct}% score. Fundamentals need structured work.`};
+  return       {name:`Beginner Group`,            desc:`${pct}% score. Start from the foundation.`};
 }
 
 // ═══════════════════════════════════
