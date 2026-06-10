@@ -1048,7 +1048,10 @@ function renderQuestion(idx){
     const btn = document.createElement(`button`);
     const sel = session.answers[idx] === oi;
     btn.className = `option-btn${sel ? ` selected` : ``}`;
-    btn.innerHTML = `<span class="option-letter">${letters[oi]}</span><span>${opt}</span>`;
+    // For math questions: wrap option in \(...\) if it doesn't already contain delimiters
+    const optDisplay = isMath && !opt.includes(`\\(`) && !opt.includes(`\\[`)
+      ? `\\(${opt}\\)` : opt;
+    btn.innerHTML = `<span class="option-letter">${letters[oi]}</span><span>${optDisplay}</span>`;
     btn.onclick = () => selectOption(idx, oi);
     optEl.appendChild(btn);
   });
