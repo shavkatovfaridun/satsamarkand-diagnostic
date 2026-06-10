@@ -1,19 +1,17 @@
 // ═══════════════════════════════════════════════════════════════
-// SAT SAMARKAND — GOOGLE APPS SCRIPT (unified)
-// Handles: registrations · diagnostics · token management · admin queries
+// SAT SAMARKAND — GOOGLE APPS SCRIPT
+// Handles: diagnostics · abandoned tests · token management
 // Deploy: New deployment → Web app → Execute as: Me → Anyone
 // ═══════════════════════════════════════════════════════════════
 
 // ─── CONFIGURATION ───────────────────────────────────────────
-const SHEET_ID            = '1nneDzo_Uzj5sNvh5r5DHQHJT73CRPrvOfWUev9e5PXw';
-const TELEGRAM_BOT_TOKEN  = '8790225726:AAGcx7Izzl2fcyZVAoFq0ZEgurS9ZbmfScE';
-const TELEGRAM_CHAT_ID    = '1632587141';
-const ADMIN_PASSWORD      = '@SatSam2026';
+const SHEET_ID           = '1nneDzo_Uzj5sNvh5r5DHQHJT73CRPrvOfWUev9e5PXw';
+const TELEGRAM_BOT_TOKEN = '8790225726:AAGcx7Izzl2fcyZVAoFq0ZEgurS9ZbmfScE';
+const TELEGRAM_CHAT_ID   = '1632587141';
+const ADMIN_PASSWORD     = '@SatSam2026';
 
-// Sheet tab names
-const REGISTRATIONS_TAB = 'Registrations';
-const DIAGNOSTICS_TAB   = 'Diagnostics';
-const TOKENS_TAB        = 'Tokens';
+const DIAGNOSTICS_TAB = 'Diagnostics';
+const TOKENS_TAB      = 'Tokens';
 
 
 // ═══════════════════════════════════════════════════════════════
@@ -23,19 +21,15 @@ const TOKENS_TAB        = 'Tokens';
 function doPost(e) {
   try {
     let data = (e && e.parameter && Object.keys(e.parameter).length > 0)
-      ? e.parameter
-      : {};
+      ? e.parameter : {};
     if (Object.keys(data).length === 0 && e && e.postData && e.postData.contents) {
       try { data = JSON.parse(e.postData.contents); } catch (_) { data = {}; }
     }
 
-    const action = (data.action || data.type || 'register').toLowerCase();
+    const action = (data.action || '').toLowerCase();
 
     if      (action === 'diagnostic') handleDiagnostic(data);
-    else if (action === 'start')      handleStarted(data);
     else if (action === 'abandon')    handleAbandoned(data);
-    else if (action === 'mock_score') handleMockScore(data);
-    else                              handleRegistration(data);
 
     return json({ success: true });
   } catch (err) {
@@ -53,7 +47,6 @@ function doGet(e) {
     let result;
 
     if (action === 'validate') {
-      // validateToken returns a ContentService output directly
       return validateToken(params.token || '');
     } else if (action === 'getsubmissions') {
       if (params.password !== ADMIN_PASSWORD) {
@@ -61,10 +54,6 @@ function doGet(e) {
       } else {
         result = { success: true, submissions: getDiagnosticSubmissions() };
       }
-    } else if (action === 'get_scores') {
-      result = getMockScores();
-    } else if (action === 'get_registrations') {
-      result = getRegistrations();
     } else if (action === 'ping') {
       result = { success: true, status: 'alive', time: new Date().toISOString() };
     } else {
@@ -95,7 +84,6 @@ function validateToken(token) {
   const sheet = ss.getSheetByName(TOKENS_TAB);
   if (!sheet) return json({ valid: false, reason: 'sheet_missing' });
 
-  // Columns: Token | Name | Status | DateIssued | DateStarted | DateCompleted
   const rows = sheet.getDataRange().getValues();
   const tok  = token.trim().toUpperCase();
 
@@ -115,10 +103,7 @@ function validateToken(token) {
   return json({ valid: false, reason: 'not_found' });
 }
 
-/**
- * generateTokens() — run from Apps Script editor to mint tokens.
- * Change COUNT before running.
- */
+// Run from Apps Script editor to mint tokens. Change COUNT first.
 function generateTokens() {
   const COUNT = 30;
   const ss    = SpreadsheetApp.openById(SHEET_ID);
@@ -135,9 +120,7 @@ function generateTokens() {
   SpreadsheetApp.getUi().alert('Done! Generated ' + COUNT + ' tokens.\nSee the "Tokens" sheet.');
 }
 
-/**
- * resetToken('SAT-XXXXXX') — run from editor console
- */
+// Run from editor console: resetToken('SAT-XXXXXX')
 function resetToken(token) {
   const ss    = SpreadsheetApp.openById(SHEET_ID);
   const sheet = ss.getSheetByName(TOKENS_TAB);
@@ -156,9 +139,7 @@ function resetToken(token) {
   Logger.log('Token not found: ' + token);
 }
 
-/**
- * assignTokenToStudent('SAT-XXXXXX', 'Student Name') — run from editor console
- */
+// Run from editor console: assignTokenToStudent('SAT-XXXXXX', 'Student Name')
 function assignTokenToStudent(token, name) {
   const ss    = SpreadsheetApp.openById(SHEET_ID);
   const sheet = ss.getSheetByName(TOKENS_TAB);
@@ -177,71 +158,19 @@ function assignTokenToStudent(token, name) {
 
 
 // ═══════════════════════════════════════════════════════════════
-// REGISTRATION HANDLER
-// ═══════════════════════════════════════════════════════════════
-
-function handleRegistration(data) {
-  const ss    = SpreadsheetApp.openById(SHEET_ID);
-  const sheet = getOrCreateSheet(ss, REGISTRATIONS_TAB,
-    ['Timestamp', 'Name', 'Phone', 'Age', 'Grade', 'School', 'Program', 'Heard', 'Message']);
-
-  const ts = new Date();
-  sheet.appendRow([
-    ts,
-    data.name    || '',
-    data.phone   || '',
-    data.age     || '',
-    data.grade   || '',
-    data.school  || '',
-    data.program || '',
-    data.heard   || '',
-    data.message || ''
-  ]);
-
-  const msg =
-    '🔔 *New Lead — SAT Samarkand*\n\n' +
-    '👤 *Name:* ' + (data.name  || '—') + '\n' +
-    '📞 *Phone:* ' + (data.phone || '—') + '\n' +
-    (data.grade ? '🎓 *Grade:* ' + data.grade + '\n' : '') +
-    (data.level ? '🎯 *Target:* ' + data.level + '\n' : '') +
-    '\n📅 ' + Utilities.formatDate(ts, 'Asia/Tashkent', 'dd MMM yyyy HH:mm') +
-    '\n\n⚡ _Contact within 24 hours_';
-
-  sendTelegram(msg);
-}
-
-
-// ═══════════════════════════════════════════════════════════════
-// STARTED HANDLER — fires when student clicks "Start Test"
-// ═══════════════════════════════════════════════════════════════
-
-function handleStarted(data) {
-  const ts = new Date();
-  const msg =
-    '▶️ *Started Diagnostic — SAT Samarkand*\n\n' +
-    '👤 *Name:* ' + (data.name  || '—') + '\n' +
-    '📞 *Phone:* ' + (data.phone || '—') + '\n' +
-    (data.grade ? '🎓 *Grade:* ' + data.grade + '\n' : '') +
-    (data.level ? '🎯 *Goal:* '  + data.level + '\n' : '') +
-    '\n📅 ' + Utilities.formatDate(ts, 'Asia/Tashkent', 'dd MMM yyyy HH:mm') +
-    '\n\n⏳ _Test in progress…_';
-  sendTelegram(msg);
-}
-
-
-// ═══════════════════════════════════════════════════════════════
-// ABANDONED HANDLER — fires on page close / navigation away
+// ABANDONED HANDLER — fires when student leaves mid-test
 // ═══════════════════════════════════════════════════════════════
 
 function handleAbandoned(data) {
-  const ts = new Date();
+  const ts  = new Date();
   const msg =
     '🚪 *Left Mid-Test — SAT Samarkand*\n\n' +
-    '👤 *Name:* ' + (data.name  || '—') + '\n' +
+    '👤 *Name:* '  + (data.name  || '—') + '\n' +
     '📞 *Phone:* ' + (data.phone || '—') + '\n' +
-    '\n📍 *Left at:* ' + (data.stage    || '—') + '\n' +
+    (data.grade ? '🎓 *Grade:* ' + data.grade + '\n' : '') +
+    '\n📍 *Left at:* ' + (data.stage || '—') + '\n' +
     (data.duration ? '⏱ *Time spent:* ' + data.duration + '\n' : '') +
-    (data.tabSwitches > 0 || data.fullscreenExits > 0
+    (parseInt(data.tabSwitches) > 0 || parseInt(data.fullscreenExits) > 0
       ? '⚠️ *Anti-cheat:* ' + (data.tabSwitches||0) + ' tab switches · ' + (data.fullscreenExits||0) + ' fullscreen exits\n'
       : '') +
     '\n📅 ' + Utilities.formatDate(ts, 'Asia/Tashkent', 'dd MMM yyyy HH:mm');
@@ -250,94 +179,79 @@ function handleAbandoned(data) {
 
 
 // ═══════════════════════════════════════════════════════════════
-// DIAGNOSTIC HANDLER
+// DIAGNOSTIC HANDLER — fires when student completes the test
 // ═══════════════════════════════════════════════════════════════
 
 function handleDiagnostic(data) {
   const ss    = SpreadsheetApp.openById(SHEET_ID);
   const sheet = getOrCreateSheet(ss, DIAGNOSTICS_TAB, [
-    'Timestamp', 'Name', 'Phone', 'Age', 'Grade',
-    'Goal SAT', 'Target Date', 'University',
+    'Timestamp', 'Name', 'Phone', 'Grade', 'Goal SAT',
     'Math Score', 'Math Total', 'Math %',
     'Eng Score',  'Eng Total',  'Eng %',
     'Total Score', 'Total Max', 'Total %',
-    'CEFR Level', 'Status', 'Recommendation',
-    'Tab Switches', 'Fullscreen Exits', 'Duration', 'Token', 'Timestamp'
+    'CEFR', 'Eng Group', 'Math Group', 'Recommendation',
+    'Tab Switches', 'Fullscreen Exits', 'Duration', 'Token'
   ]);
 
   const ts = new Date();
 
-  // Use dynamic totals — works for any question count, forever
-  const mathScore   = parseInt(data.mathScore)   || 0;
-  const mathTotal   = parseInt(data.mathTotal)   || 20;
-  const mathPct     = parseInt(data.mathPct)     || Math.round(mathScore / mathTotal * 100);
-  const engScore    = parseInt(data.engScore)    || 0;
-  const engTotal    = parseInt(data.engTotal)    || 20;
-  const engPct      = parseInt(data.engPct)      || Math.round(engScore / engTotal * 100);
+  const mathScore   = parseInt(data.mathScore) || 0;
+  const mathTotal   = parseInt(data.mathTotal) || 20;
+  const mathPct     = parseInt(data.mathPct)   || Math.round(mathScore / mathTotal * 100);
+  const engScore    = parseInt(data.engScore)  || 0;
+  const engTotal    = parseInt(data.engTotal)  || 20;
+  const engPct      = parseInt(data.engPct)    || Math.round(engScore / engTotal * 100);
   const totalScore  = mathScore + engScore;
   const totalMax    = mathTotal + engTotal;
-  const totalPct    = parseInt(data.totalPct)    || Math.round(totalScore / totalMax * 100);
+  const totalPct    = parseInt(data.totalPct)  || Math.round(totalScore / totalMax * 100);
 
-  const cefr            = data.cefr         || determineCEFR(engPct);
-  const passed          = data.passed === true || data.passed === 'true' || data.passed === 'YES';
-  const status          = passed ? 'Passed' : 'Below threshold';
+  const cefr            = data.cefr || determineCEFR(engPct);
+  const engGroup        = engPct  >= 70 ? 'SAT Ready' : 'Foundation';
+  const mathGroup       = mathPct >= 70 ? 'SAT Ready' : 'Foundation';
   const recommendation  = generateRecommendation(totalPct, mathPct, engPct);
   const tabSwitches     = parseInt(data.tabSwitches)     || 0;
   const fullscreenExits = parseInt(data.fullscreenExits) || 0;
 
   sheet.appendRow([
     ts,
-    data.name       || '',
-    data.phone      || '',
-    data.age        || '',
-    data.grade      || '',
-    data.goal       || '',
-    data.targetDate || '',
-    data.university || '',
+    data.name  || '', data.phone || '', data.grade || '', data.goal || '',
     mathScore, mathTotal, mathPct,
     engScore,  engTotal,  engPct,
     totalScore, totalMax, totalPct,
-    cefr, status, recommendation,
+    cefr, engGroup, mathGroup, recommendation,
     tabSwitches, fullscreenExits,
-    data.duration   || '',
-    data.token      || '',
-    ts.toISOString()
+    data.duration || '', data.token || ''
   ]);
 
-  // Row colour: green = passed, amber = needs work
-  const lastRow = sheet.getLastRow();
-  sheet.getRange(lastRow, 1, 1, 25)
-       .setBackground(passed ? '#dcfce7' : '#fef3c7');
+  // Green row = both sections SAT Ready; amber = at least one Foundation
+  const allReady = engGroup === 'SAT Ready' && mathGroup === 'SAT Ready';
+  sheet.getRange(sheet.getLastRow(), 1, 1, 22)
+       .setBackground(allReady ? '#dcfce7' : '#fef3c7');
 
-  // ── Telegram notification ──────────────────────────────────
-  const passEmoji  = passed ? '✅' : '⚠️';
-  const statusText = passed ? 'PASSED — SAT-Ready' : 'Foundation Needed';
-  const cheatNote  = (tabSwitches > 0 || fullscreenExits > 0)
-    ? '\n⚠️ *Anti-cheat:* ' + tabSwitches + ' tab switches · ' + fullscreenExits + ' fullscreen exits'
-    : '';
-  const durationNote = data.duration ? '\n⏱ *Duration:* ' + data.duration : '';
-
+  // Telegram
+  const engStatus  = engPct  >= 70 ? '✅ SAT Ready' : '🟡 Foundation';
+  const mathStatus = mathPct >= 70 ? '✅ SAT Ready' : '🟡 Foundation';
   const msg =
-    '🎯 *New Diagnostic — SAT Samarkand*\n\n' +
-    '👤 *Name:* ' + (data.name  || '—') + '\n' +
+    '🎯 *Diagnostic Complete — SAT Samarkand*\n\n' +
+    '👤 *Name:* '  + (data.name  || '—') + '\n' +
     '📞 *Phone:* ' + (data.phone || '—') + '\n' +
     (data.grade ? '🎓 *Grade:* ' + data.grade + '\n' : '') +
     (data.goal  ? '🎯 *Goal:* '  + data.goal  + '\n' : '') +
-    '\n📊 *Score:* ' + totalScore + '/' + totalMax + ' (' + totalPct + '%)\n' +
-    '   Math: ' + mathScore + '/' + mathTotal + ' (' + mathPct + '%)\n' +
-    '   English: ' + engScore + '/' + engTotal + ' (' + engPct + '%) — ' + cefr + '\n\n' +
-    passEmoji + ' *STATUS:* ' + statusText + '\n' +
-    '🎓 *RECOMMENDED:* ' + recommendation + '\n' +
+    '\n📊 *Results:*\n' +
+    '  English: ' + engScore  + '/' + engTotal  + ' (' + engPct  + '%) — ' + engStatus  + '\n' +
+    '  Math:    ' + mathScore + '/' + mathTotal + ' (' + mathPct + '%) — ' + mathStatus + '\n' +
+    '  Total:   ' + totalScore + '/' + totalMax + ' (' + totalPct + '%)\n\n' +
+    '🎓 *Recommended:* ' + recommendation + '\n' +
     (tabSwitches > 0 || fullscreenExits > 0
-      ? '⚠️ *Anti-cheat:* ' + tabSwitches + ' tab switches, ' + fullscreenExits + ' fullscreen exits\n'
+      ? '⚠️ *Anti-cheat:* ' + tabSwitches + ' tab switches · ' + fullscreenExits + ' fullscreen exits\n'
       : '') +
-    durationNote +
+    (data.duration ? '⏱ *Duration:* ' + data.duration + '\n' : '') +
     '\n📅 ' + Utilities.formatDate(ts, 'Asia/Tashkent', 'dd MMM yyyy HH:mm') + '\n\n' +
-    (passed ? '🔥 *Hot lead — call within 24h!*' : '💼 Lead needs nurturing.');
+    (allReady ? '🔥 *Both sections ready — hot lead!*' : '💼 *Needs foundation work first.*');
 
   sendTelegram(msg);
 
-  // Mark token as used (if provided)
+  // Mark token as used
   if (data.token) {
     const tokenSheet = ss.getSheetByName(TOKENS_TAB);
     if (tokenSheet) {
@@ -356,70 +270,25 @@ function handleDiagnostic(data) {
 
 
 // ═══════════════════════════════════════════════════════════════
-// MOCK SCORES
-// ═══════════════════════════════════════════════════════════════
-
-function handleMockScore(data) {
-  const ss    = SpreadsheetApp.openById(SHEET_ID);
-  const sheet = getOrCreateSheet(ss, 'MockScores',
-    ['Timestamp', 'Name', 'Score', 'Date', 'Added By']);
-  sheet.appendRow([new Date(), data.name || '', data.score || '', data.date || '', data.added_by || 'Admin']);
-}
-
-function getMockScores() {
-  const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName('MockScores');
-  if (!sheet) return [];
-  const rows = sheet.getDataRange().getValues();
-  const scores = rows.slice(1).filter(r => r[1] && r[2]).map(r => ({ name: r[1], score: Number(r[2]), date: r[3] }));
-  scores.sort((a, b) => b.score - a.score);
-  return scores.slice(0, 10);
-}
-
-
-// ═══════════════════════════════════════════════════════════════
-// ADMIN — fetch submissions
+// ADMIN
 // ═══════════════════════════════════════════════════════════════
 
 function getDiagnosticSubmissions() {
   const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(DIAGNOSTICS_TAB);
   if (!sheet || sheet.getLastRow() <= 1) return [];
-
-  const values = sheet.getRange(2, 1, sheet.getLastRow() - 1, 25).getValues();
+  const values = sheet.getRange(2, 1, sheet.getLastRow() - 1, 22).getValues();
   return values.map((row, i) => ({
-    id:              i + 1,
+    id: i + 1,
     date:            row[0] instanceof Date ? row[0].toISOString() : String(row[0]),
-    name:            row[1],
-    phone:           row[2],
-    age:             row[3],
-    grade:           row[4],
-    goal:            row[5],
-    when:            row[6],
-    uni:             row[7],
-    mathScore:       row[8],
-    mathTotal:       row[9],
-    mathPct:         row[10],
-    engScore:        row[11],
-    engTotal:        row[12],
-    engPct:          row[13],
-    totalScore:      row[14],
-    totalMax:        row[15],
-    totalPct:        row[16],
-    cefr:            row[17],
-    status:          row[18] === 'Passed' ? 'passed' : 'failed',
-    recommendation:  row[19],
-    tabSwitches:     row[20],
-    fullscreenExits: row[21],
-    duration:        row[22],
-    token:           row[23]
-  })).reverse();
-}
-
-function getRegistrations() {
-  const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(REGISTRATIONS_TAB);
-  if (!sheet) return [];
-  const rows = sheet.getDataRange().getValues();
-  return rows.slice(1).filter(r => r[1]).map(r => ({
-    time: r[0], name: r[1], phone: r[2], age: r[3], grade: r[4], school: r[5], program: r[6]
+    name:            row[1],  phone:          row[2],
+    grade:           row[3],  goal:           row[4],
+    mathScore:       row[5],  mathTotal:      row[6],  mathPct:   row[7],
+    engScore:        row[8],  engTotal:       row[9],  engPct:    row[10],
+    totalScore:      row[11], totalMax:       row[12], totalPct:  row[13],
+    cefr:            row[14], engGroup:       row[15], mathGroup: row[16],
+    recommendation:  row[17],
+    tabSwitches:     row[18], fullscreenExits:row[19],
+    duration:        row[20], token:          row[21]
   })).reverse();
 }
 
@@ -457,15 +326,15 @@ function determineCEFR(engPct) {
 }
 
 function generateRecommendation(totalPct, mathPct, engPct) {
-  if (totalPct >= 95) return 'Private 1-on-1';
-  if (totalPct >= 80) return 'SAT MAX (1500+ Guaranteed)';
-  if (totalPct >= 60) {
-    if (mathPct < engPct - 15) return 'Intensive Program (Math Focus)';
-    if (engPct < mathPct - 15) return 'Intensive Program (English Focus)';
-    return 'Intensive Program';
+  if (totalPct >= 85) return 'Advanced Group';
+  if (totalPct >= 65) return 'Upper-Intermediate Group';
+  if (totalPct >= 45) {
+    if (mathPct < engPct - 15) return 'Intermediate Group (Math Focus)';
+    if (engPct < mathPct - 15) return 'Intermediate Group (English Focus)';
+    return 'Intermediate Group';
   }
-  if (totalPct >= 40) return '1 Subject Program (Foundation)';
-  return 'Foundation Program (Pre-SAT)';
+  if (totalPct >= 25) return 'Elementary Group';
+  return 'Beginner Group';
 }
 
 function sendTelegram(text) {
@@ -491,21 +360,24 @@ function sendTelegram(text) {
 
 
 // ═══════════════════════════════════════════════════════════════
-// TESTS — run manually from Apps Script editor
+// TEST — run manually from Apps Script editor
 // ═══════════════════════════════════════════════════════════════
-
-function testRegistration() {
-  handleRegistration({ name: 'Test User', phone: '+998-95-113-16-00', program: 'Full SAT' });
-}
 
 function testDiagnostic() {
   handleDiagnostic({
     name: 'Test Student', phone: '+998-95-113-16-00',
-    age: '17', grade: '11th grade', goal: '1500',
-    targetDate: '6months', university: 'METU',
+    grade: '11th grade', goal: '1500',
     mathScore: '16', mathTotal: '20', mathPct: '80',
-    engScore:  '14', engTotal:  '20', engPct:  '70',
-    totalPct: '75', cefr: 'B2', passed: 'true',
+    engScore:  '12', engTotal:  '20', engPct:  '60',
+    totalPct: '70', cefr: 'B1',
     tabSwitches: '0', fullscreenExits: '0', duration: '28m 12s'
+  });
+}
+
+function testAbandoned() {
+  handleAbandoned({
+    name: 'Test Student', phone: '+998-95-113-16-00',
+    grade: '11th grade', stage: 'English Section — Question 8/20',
+    duration: '12m 5s', tabSwitches: '1', fullscreenExits: '0'
   });
 }

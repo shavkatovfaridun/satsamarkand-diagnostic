@@ -1114,12 +1114,9 @@ function startTest(){
     else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
     else if(el.mozRequestFullScreen) el.mozRequestFullScreen();
   } catch(e){}
-  // Notify: test started
-  fireAndForget({action:`start`, name:session.name, phone:session.phone, grade:session.grade, level:session.level});
   startSectionTimer(`eng`);
   setupAntiCheat();
   renderQuestion(0);
-  fireAndForget({action:`register`,name:session.name,phone:session.phone,grade,level,timestamp:new Date().toISOString()});
 }
 function showErr(id, msg){
   const el = document.getElementById(id);
