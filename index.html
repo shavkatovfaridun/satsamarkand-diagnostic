@@ -132,7 +132,17 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
 .btn-next.finish:hover{background:var(--blue2)}
 
 /* ══ ANTI-CHEAT ══ */
-.warn-bar{display:none;position:fixed;top:0;left:0;right:0;background:#d32f2f;color:#fff;text-align:center;padding:10px 16px;font-weight:700;z-index:9999;font-size:.88rem;letter-spacing:.2px}
+.warn-bar{display:none}
+.cheat-overlay{display:none;position:fixed;inset:0;background:rgba(1,14,36,.85);backdrop-filter:blur(8px);z-index:9999;align-items:center;justify-content:center}
+.cheat-overlay.show{display:flex}
+.cheat-modal{background:#fff;border-radius:20px;padding:40px 36px;max-width:420px;width:90%;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.4);animation:modalPop .25s ease}
+@keyframes modalPop{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
+.cheat-icon{font-size:2.8rem;margin-bottom:16px;line-height:1}
+.cheat-title{font-size:1.3rem;font-weight:900;color:#c62828;margin-bottom:10px;letter-spacing:-.3px}
+.cheat-msg{font-size:.93rem;color:#4a5a7a;line-height:1.6;margin-bottom:24px}
+.cheat-count{display:inline-block;background:#ffebee;color:#c62828;border-radius:20px;padding:4px 14px;font-size:.8rem;font-weight:700;margin-bottom:20px}
+.cheat-btn{background:var(--blue);color:#fff;border:none;padding:13px 36px;border-radius:50px;font-size:.97rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s}
+.cheat-btn:hover{background:var(--blue2)}
 
 /* ══ RESULTS ══ */
 #screen-results{padding:48px 24px}
@@ -210,6 +220,17 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
 <body>
 
 <div class="warn-bar" id="warn-bar"></div>
+
+<!-- ANTI-CHEAT MODAL -->
+<div class="cheat-overlay" id="cheat-overlay">
+  <div class="cheat-modal">
+    <div class="cheat-icon" id="cheat-icon">⚠️</div>
+    <div class="cheat-title" id="cheat-title">Warning!</div>
+    <div class="cheat-msg" id="cheat-msg">Switching tabs or leaving the page during the test is not allowed.</div>
+    <div class="cheat-count" id="cheat-count">Violation #1</div>
+    <button class="cheat-btn" onclick="closeCheatModal()">Return to Test</button>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav class="nav">
@@ -1226,19 +1247,57 @@ function downloadCert(){
 // ANTI-CHEAT
 // ═══════════════════════════════════
 function setupAntiCheat(){
+  // Tab switch / visibility change
   document.addEventListener(`visibilitychange`, () => {
-    if(document.hidden){
+    if(document.hidden && document.getElementById(`screen-test`).classList.contains(`active`)){
       session.tabSwitches++;
-      const b = document.getElementById(`warn-bar`);
-      b.textContent = T(`warnTab`);
-      b.style.display = `block`;
-      setTimeout(() => { b.style.display = `none`; }, 5000);
+      showCheatModal(`tab`);
     }
   });
+
+  // Refresh / close prevention
+  window.addEventListener(`beforeunload`, e => {
+    if(document.getElementById(`screen-test`).classList.contains(`active`)){
+      e.preventDefault();
+      e.returnValue = ``;
+    }
+  });
+
   document.addEventListener(`copy`, e => e.preventDefault());
   document.addEventListener(`contextmenu`, e => {
     if(document.getElementById(`screen-test`).classList.contains(`active`)) e.preventDefault();
   });
+  // Block F5 / Ctrl+R / Cmd+R during test
+  document.addEventListener(`keydown`, e => {
+    if(!document.getElementById(`screen-test`).classList.contains(`active`)) return;
+    const isRefresh = e.key === `F5` || ((e.ctrlKey || e.metaKey) && e.key === `r`);
+    if(isRefresh){ e.preventDefault(); showCheatModal(`refresh`); }
+  });
+}
+
+function showCheatModal(type){
+  const overlay = document.getElementById(`cheat-overlay`);
+  const title   = document.getElementById(`cheat-title`);
+  const msg     = document.getElementById(`cheat-msg`);
+  const icon    = document.getElementById(`cheat-icon`);
+  const count   = document.getElementById(`cheat-count`);
+
+  if(type === `refresh`){
+    icon.textContent  = `🚫`;
+    title.textContent = `Page Refresh Blocked`;
+    msg.textContent   = `Refreshing during the test will reset your progress. Please finish the test without refreshing.`;
+  } else {
+    icon.textContent  = `⚠️`;
+    title.textContent = `Tab Switch Detected`;
+    msg.textContent   = `Leaving the test tab is not allowed. Each violation is recorded.`;
+  }
+  count.textContent = `Violation #${session.tabSwitches}`;
+  overlay.classList.add(`show`);
+}
+
+function closeCheatModal(){
+  document.getElementById(`cheat-overlay`).classList.remove(`show`);
+  window.focus();
 }
 
 // ═══════════════════════════════════
