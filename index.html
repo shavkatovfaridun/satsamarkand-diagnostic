@@ -179,55 +179,59 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
 
 /* ══ CERTIFICATE ══ */
 #screen-cert{padding:40px 24px;background:var(--bg)}
-.cert-wrap{max-width:960px;margin:0 auto;text-align:center}
+.cert-wrap{max-width:440px;margin:0 auto;text-align:center}
 #cert-card{
-  background:#fff;
-  border-radius:20px;
-  max-width:920px;
+  aspect-ratio:9/16;
+  width:100%;
+  max-width:420px;
   margin:0 auto;
+  margin:0 auto;
+  border-radius:28px;
   position:relative;
-  box-shadow:0 12px 48px rgba(6,97,222,.18);
+  box-shadow:0 20px 60px rgba(2,32,73,.28);
   overflow:hidden;
-  display:grid;
-  grid-template-columns:200px 1fr 160px;
+  display:flex;
+  flex-direction:column;
+  background:linear-gradient(170deg,var(--navy2) 0%,var(--navy) 55%,#0a2a5e 100%);
 }
-/* top blue bar */
-#cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--navy2),var(--blue),var(--blue2));border-radius:20px 20px 0 0}
-/* left panel */
-.cert-left{background:linear-gradient(180deg,var(--navy2) 0%,var(--navy) 100%);padding:36px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
-.cert-left-logo svg{width:64px;height:64px}
-.cert-left-org{color:#fff;font-size:.95rem;font-weight:800;letter-spacing:.2px;text-align:center;line-height:1.2}
-.cert-left-sub{color:rgba(255,255,255,.4);font-size:.65rem;letter-spacing:.5px;text-align:center;margin-top:2px}
-.cert-left-divider{width:40px;height:1px;background:rgba(255,255,255,.15);margin:4px 0}
-.cert-left-date{color:rgba(255,255,255,.45);font-size:.68rem;text-align:center;line-height:1.5}
-/* center panel */
-.cert-center{padding:44px 36px;display:flex;flex-direction:column;justify-content:center;text-align:center;border-right:1px solid var(--border)}
-.cert-eyebrow{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--blue);margin-bottom:12px}
-.cert-presents{font-size:.88rem;color:var(--muted);margin-bottom:8px}
-.cert-name{font-size:2rem;font-weight:900;color:var(--navy);letter-spacing:-.5px;margin-bottom:4px;line-height:1.1}
-.cert-name-line{width:160px;height:2.5px;background:linear-gradient(90deg,var(--blue),var(--blue2));margin:0 auto 14px;border-radius:2px}
-.cert-statement{font-size:.82rem;color:var(--muted);margin-bottom:24px;line-height:1.5}
-.cert-scores{display:flex;justify-content:center;gap:0;margin-bottom:0}
-.cert-score-item{padding:14px 24px;text-align:center;border-right:1px solid var(--border)}
+/* decorative glow blobs */
+#cert-card::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(6,97,222,.45) 0%,transparent 70%);pointer-events:none}
+#cert-card::after{content:'';position:absolute;bottom:-40px;left:-40px;width:180px;height:180px;background:radial-gradient(circle,rgba(58,130,247,.3) 0%,transparent 70%);pointer-events:none}
+/* top strip */
+.cert-top-strip{background:linear-gradient(90deg,var(--blue),var(--blue2));height:4px;flex-shrink:0}
+/* header */
+.cert-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 0;flex-shrink:0}
+.cert-logo-block{display:flex;align-items:center;gap:10px}
+.cert-logo-img{width:44px;height:44px;object-fit:contain;mix-blend-mode:screen}
+.cert-logo-name{color:#fff;font-size:.9rem;font-weight:800;line-height:1.15}
+.cert-logo-name span{color:var(--blue2)}
+.cert-logo-sub{font-size:.55rem;color:rgba(255,255,255,.35);letter-spacing:.5px;margin-top:1px}
+.cert-date-badge{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:5px 12px;font-size:.6rem;color:rgba(255,255,255,.5);font-weight:600;letter-spacing:.3px}
+/* eyebrow */
+.cert-eyebrow-wrap{padding:22px 24px 0;text-align:center;flex-shrink:0}
+.cert-eyebrow{display:inline-block;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--blue2);border:1px solid rgba(58,130,247,.3);padding:4px 14px;border-radius:20px;background:rgba(6,97,222,.12)}
+/* name block */
+.cert-name-block{padding:16px 24px 0;text-align:center;flex-shrink:0}
+.cert-presents{font-size:.78rem;color:rgba(255,255,255,.45);margin-bottom:8px}
+.cert-name{font-size:1.7rem;font-weight:900;color:#fff;letter-spacing:-.5px;line-height:1.1;margin-bottom:8px}
+.cert-name-line{width:120px;height:2px;background:linear-gradient(90deg,var(--blue),var(--blue2));margin:0 auto;border-radius:2px}
+.cert-statement{font-size:.72rem;color:rgba(255,255,255,.45);margin-top:12px;line-height:1.5;padding:0 16px}
+/* scores */
+.cert-scores-section{margin:20px 24px 0;flex-shrink:0}
+.cert-scores-wrap{display:grid;grid-template-columns:repeat(3,1fr);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden}
+.cert-score-item{padding:14px 8px;text-align:center;border-right:1px solid rgba(255,255,255,.08)}
 .cert-score-item:last-child{border-right:none}
-.cert-score-val{font-size:1.5rem;font-weight:900;color:var(--navy);line-height:1}
-.cert-score-lbl{font-size:.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
-.cert-scores-wrap{border:1px solid var(--border);border-radius:12px;overflow:hidden;display:inline-flex}
-/* right panel — QR codes */
-.cert-right{padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
-.cert-qr-item{display:flex;flex-direction:column;align-items:center;gap:5px}
-.cert-qr-item img{width:64px;height:64px;border-radius:6px;border:1px solid var(--border)}
-.cert-qr-label{font-size:.6rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:4px}
+.cert-score-val{font-size:1.5rem;font-weight:900;color:#fff;line-height:1}
+.cert-score-lbl{font-size:.56rem;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+/* QR row */
+.cert-right{display:flex;justify-content:center;gap:20px;padding:20px 24px 0;flex-shrink:0}
+.cert-qr-item{display:flex;flex-direction:column;align-items:center;gap:6px}
+.cert-qr-item img{width:68px;height:68px;border-radius:10px;border:2px solid rgba(255,255,255,.1);background:#fff}
+.cert-qr-label{font-size:.58rem;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:4px}
+/* bottom spacer */
+.cert-footer{flex:1;display:flex;align-items:flex-end;justify-content:center;padding:16px 24px;font-size:.55rem;color:rgba(255,255,255,.2);letter-spacing:.5px;text-transform:uppercase}
+/* actions outside card */
 .cert-actions{margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-/* mobile */
-@media(max-width:700px){
-  #cert-card{grid-template-columns:1fr;grid-template-rows:auto auto auto}
-  .cert-left{flex-direction:row;flex-wrap:wrap;padding:20px 24px;gap:10px;justify-content:center}
-  .cert-left-divider{display:none}
-  .cert-center{border-right:none;border-bottom:1px solid var(--border);padding:28px 20px}
-  .cert-right{flex-direction:row;justify-content:center;padding:20px}
-  .cert-score-item{padding:10px 16px}
-}
 
 /* ══ REVIEW ══ */
 .review-item{background:var(--card);border-radius:14px;padding:22px 24px;margin-bottom:16px;border:1.5px solid var(--border);box-shadow:var(--shadow)}
@@ -477,49 +481,52 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
 <section class="screen" id="screen-cert">
   <div class="cert-wrap">
     <div id="cert-card">
+      <div class="cert-top-strip"></div>
 
-      <!-- LEFT: Logo + date -->
-      <div class="cert-left">
-        <div class="cert-left-logo">
-          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path d="M30 110 L30 155 L100 196 L170 155 L170 105 L130 105 L130 145 L100 162 L70 145 L70 110 Z" fill="#022049"/>
-            <path d="M30 45 L100 4 L170 45 L170 95 L130 95 L130 55 L100 38 L70 55 L70 75 L130 75 L130 110 L30 110 Z" fill="#0661de"/>
-          </svg>
+      <!-- HEADER: Logo + date -->
+      <div class="cert-header">
+        <div class="cert-logo-block">
+          <img class="cert-logo-img" src="apple-touch-icon.png" alt="SAT Samarkand">
+          <div>
+            <div class="cert-logo-name">SAT <span>Samarkand</span></div>
+            <div class="cert-logo-sub">diagnostic.satsamarkand.uz</div>
+          </div>
         </div>
-        <div>
-          <div class="cert-left-org">SAT<br>Samarkand</div>
-          <div class="cert-left-sub">diagnostic.satsamarkand.uz</div>
-        </div>
-        <div class="cert-left-divider"></div>
-        <div class="cert-left-date" id="cert-date">—</div>
+        <div class="cert-date-badge" id="cert-date">—</div>
       </div>
 
-      <!-- CENTER: Main content -->
-      <div class="cert-center">
+      <!-- EYEBROW -->
+      <div class="cert-eyebrow-wrap">
         <div class="cert-eyebrow">Certificate of Achievement</div>
+      </div>
+
+      <!-- NAME BLOCK -->
+      <div class="cert-name-block">
         <div class="cert-presents" id="cert-presents">This certifies that</div>
         <div class="cert-name" id="cert-name">—</div>
         <div class="cert-name-line"></div>
         <div class="cert-statement" id="cert-statement">has successfully completed the SAT Samarkand Diagnostic Assessment</div>
-        <div style="display:flex;justify-content:center">
-          <div class="cert-scores-wrap">
-            <div class="cert-score-item">
-              <div class="cert-score-val" id="cert-total">—</div>
-              <div class="cert-score-lbl">Total</div>
-            </div>
-            <div class="cert-score-item">
-              <div class="cert-score-val" id="cert-eng">—</div>
-              <div class="cert-score-lbl">English</div>
-            </div>
-            <div class="cert-score-item">
-              <div class="cert-score-val" id="cert-math">—</div>
-              <div class="cert-score-lbl">Math</div>
-            </div>
+      </div>
+
+      <!-- SCORES -->
+      <div class="cert-scores-section">
+        <div class="cert-scores-wrap">
+          <div class="cert-score-item">
+            <div class="cert-score-val" id="cert-total">—</div>
+            <div class="cert-score-lbl">Total</div>
+          </div>
+          <div class="cert-score-item">
+            <div class="cert-score-val" id="cert-eng">—</div>
+            <div class="cert-score-lbl">English</div>
+          </div>
+          <div class="cert-score-item">
+            <div class="cert-score-val" id="cert-math">—</div>
+            <div class="cert-score-lbl">Math</div>
           </div>
         </div>
       </div>
 
-      <!-- RIGHT: QR codes -->
+      <!-- QR CODES -->
       <div class="cert-right">
         <div class="cert-qr-item">
           <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fwww.instagram.com%2Fsat_samarkand&size=128x128&margin=4" alt="Instagram QR">
@@ -535,6 +542,7 @@ body{font-family:-apple-system,"system-ui","SF Pro Text","Segoe UI",Arial,sans-s
         </div>
       </div>
 
+      <div class="cert-footer">SAT Samarkand · Official Diagnostic</div>
     </div>
     <div class="cert-actions">
       <button class="btn-cta" onclick="downloadCert()" id="btn-download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;margin-bottom:2px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download Certificate</button>
@@ -1345,7 +1353,11 @@ function setupAntiCheat(){
   document.addEventListener(`visibilitychange`, () => {
     if(document.hidden && document.getElementById(`screen-test`).classList.contains(`active`)){
       session.tabSwitches++;
-      showCheatModal(`tab`);
+      if(session.tabSwitches >= 3){
+        terminateTest(`tab`);
+      } else {
+        showCheatModal(`tab`);
+      }
     }
   });
 
@@ -1356,7 +1368,9 @@ function setupAntiCheat(){
     const testActive   = document.getElementById(`screen-test`).classList.contains(`active`);
     if(!inFullscreen && testActive){
       session.fullscreenExits = (session.fullscreenExits || 0) + 1;
-      if(session.fullscreenExits <= FS_EXIT_LIMIT){
+      if(session.fullscreenExits >= 3){
+        terminateTest(`fullscreen`);
+      } else if(session.fullscreenExits <= FS_EXIT_LIMIT){
         // Pause timer
         clearInterval(session.timerInterval);
         session.timerPaused = true;
@@ -1421,6 +1435,31 @@ function setupAntiCheat(){
     const isRefresh = e.key === `F5` || ((e.ctrlKey || e.metaKey) && e.key === `r`);
     if(isRefresh){ e.preventDefault(); showCheatModal(`refresh`); }
   });
+}
+
+function terminateTest(reason){
+  clearInterval(session.timerInterval);
+  session.timerPaused = false;
+  const overlay = document.getElementById(`cheat-overlay`);
+  const title   = document.getElementById(`cheat-title`);
+  const msg     = document.getElementById(`cheat-msg`);
+  const icon    = document.getElementById(`cheat-icon`);
+  const count   = document.getElementById(`cheat-count`);
+  const btn     = document.getElementById(`cheat-action-btn`);
+
+  icon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="#c62828" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>`;
+  title.textContent = `Test Terminated`;
+  title.style.color = `#c62828`;
+  const reason_text = reason === `tab` ? `3 tab switches` : `3 fullscreen exits`;
+  msg.textContent   = `Your test has been stopped due to ${reason_text}. Your answers so far have been submitted.`;
+  count.textContent = `Anti-cheat limit reached`;
+  btn.textContent   = `See My Results`;
+  btn.className     = `cheat-btn`;
+  btn.onclick       = () => {
+    overlay.classList.remove(`show`);
+    finishTest();
+  };
+  overlay.classList.add(`show`);
 }
 
 function showCheatModal(type){
