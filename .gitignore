@@ -1,1 +1,5 @@
 .vercel
+Code.gs
+admin/
+.DS_Store
+.claude/
