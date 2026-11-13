@@ -1145,6 +1145,7 @@ function startTest(){
   if(!level){ showErr(`form2-err`, T(`errLevel`)); return; }
   document.getElementById(`form2-err`).style.display = `none`;
   session.grade = grade; session.level = level;
+  session._crmSent = false;
   buildQuestions();
   showScreen(`test`);
   session.startTime = Date.now();
@@ -1459,6 +1460,7 @@ function finishTest(){
     duration,
     timestamp:now.toISOString()
   });
+  crmLead(`Diagnostic result: ${total}/${totalMax} (Math ${mathScore}/20, English ${engScore}/20, ${cefr})`);
 }
 
 function calcCEFR(pct){
@@ -1651,6 +1653,7 @@ function confirmQuit(){
     tabSwitches:session.tabSwitches||0, fullscreenExits:session.fullscreenExits||0
   });
   navigator.sendBeacon(SCRIPT_URL, payload);
+  crmLead(`Diagnostic started, quit at ${stage}`);
   // Exit fullscreen and go back to intro
   try { if(document.exitFullscreen) document.exitFullscreen(); } catch(e){}
   showScreen(`intro`);
@@ -1818,6 +1821,25 @@ function showReview(){
 // ═══════════════════════════════════
 // SUBMIT — hidden iframe, no page nav
 // ═══════════════════════════════════
+// Also file the lead in the SAT CRM (one post per test session).
+const CRM_URL = `https://script.google.com/macros/s/AKfycbw3SE2fWz_C6XvsX8u7uT8kemHc6k7LXJY3HdwJOR8PyLEO2aw1rxslI-hKSocyTdyc/exec`;
+function crmLead(note){
+  try {
+    if(session._crmSent || !session.name || !session.phone) return;
+    session._crmSent = true;
+    const body = JSON.stringify({
+      source:`diagnostic`, type:`diagnostic`, heard:`diagnostic.satsamarkand.uz`,
+      name:session.name, phone:session.phone,
+      grade:session.grade ? `Grade: ${session.grade}` : ``,
+      program:session.level ? `Goal: ${session.level}` : ``,
+      message:note
+    });
+    if(!(navigator.sendBeacon && navigator.sendBeacon(CRM_URL, body))){
+      fetch(CRM_URL, {method:`POST`, mode:`no-cors`, headers:{'Content-Type':`text/plain`}, body, keepalive:true}).catch(()=>{});
+    }
+  } catch(e){ /* silent */ }
+}
+
 function fireAndForget(data){
   try {
     const iframeName = `ff-${Date.now()}`;
